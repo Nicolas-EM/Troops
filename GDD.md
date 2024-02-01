@@ -66,25 +66,26 @@ Can gather resources.
 ### Building
 - Health
 - Building cost
-- NPC Type
+- Function (spawn NPC / add to max. population)
 
 ### NPC
 - Health
 - Attack Damage
 - Range
+- Movement speed
 
 ## Mechanics
 ### Gather
-Villagers can gather a resource (gold, wood, food) at its source (mine, tree, sheep). Each source provides X > 1 of that resource per Y > 1 seconds passed.
+Villagers can gather a resource (gold, wood, food) at its source (mine, tree, sheep). Each source provides X > 1 of that resource at a rate of Y > 1 per second.
 
 ### Build
 Villagers can build houses or towers by spending gold and wood. Building takes time to complete.
 
 ### Attack
-Soldiers or archers can deal damage within range to enemy NPCs or buildings.
+Soldiers or archers can deal damage to enemy NPCs or buildings within range.
 
 ### Spawn
-A building can be used to spawn NPCs at full health. Spawning takes time and only 1 NPC can be spawned at a time.
+A building can be used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and spawning can be queued.
 
 ## Dynamics
 
@@ -96,7 +97,7 @@ The graphics have been hinted in the components prior to this section. The music
 The keys WASD can be used to move the camera around the map.
 
 ### Mouse
-The mouse can be used to select individual or a group of NPCs as well as a building.
+The mouse can be used to select individual or a group of NPCs, or a building.
 
 ## Tables and data
 ### Spawning/Building Cost
