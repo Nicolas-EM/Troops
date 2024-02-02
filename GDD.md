@@ -111,45 +111,55 @@ The mouse can be used to select individual or a group of NPCs, or a building.
 | Tower     | GOLD_COST_VAR | WOOD_COST_VAR | 0             |
 
 ### Spawning/Building Time
-| Type      | Time (s)      |
-|-----------|:-------------:|
-| Villager  |               |
-| Soldier   |               |
-| Archer    |               |
-| Town Hall |               |
-| House     |               |
-| Tower     |               |
+| Type      | Time (s)                |
+|-----------|:-----------------------:|
+| Villager  |        V_TIME           |
+| Soldier   |        2 * V_TIME       |
+| Archer    |        2.5 * V_TIME     |
+| Town Hall |        INF/NDEF         |
+| House     |        H_TIME           |
+| Tower     |        T_TIME           |
 
 ### Health
-| Type      | Health        |
-|-----------|:-------------:|
-| Villager  |               |
-| Soldier   |               |
-| Archer    |               |
-| Town Hall |               |
-| House     |               |
-| Tower     |               |
+| Type      | Health             |
+|-----------|:------------------:|
+| Villager  |       H_Vil        |
+| Soldier   |       H_Sol        |
+| Archer    |       H_Arc        |
+| Town Hall |       H_Twn        |
+| House     |       H_Hse        |
+| Tower     |       H_Twr        |
 
 ### Attack Stats
-| Type      | Damage        | Range         |
-|-----------|:-------------:|:-------------:|
-| Villager  | 0             | 0             |
-| Soldier   |               |               |
-| Archer    |               |               |
+| Type      | Damage             | Range              |
+|-----------|:------------------:|:------------------:|
+| Villager  | 0                  | 0                  |
+| Soldier   |  S_Atk             | S_Rng              |
+| Archer    |  A_Atk             | A_Rng              |
 
 ### Resource Stats
-| Type      | Production Rate | Total Resources |
-|-----------|:---------------:|:---------------:|
-| Gold      |                 |                 |
-| Wood      |                 |                 |
-| Food      |                 |                 |
+| Type      | Production Rate       | Total Resources      |
+|-----------|:---------------------:|:--------------------:|
+| Gold      |       G_Rate          | G_Ttl                |
+| Wood      |       W_Rate          | W_Ttl                |
+| Food      |       F_Rate          | F_Ttl                |
 
 _Note:_ Total resources per source (e.g. each gold mine generates 500 gold max, after which it no longer generates gold).
 
 ## Story and narrative (characters, plot, ending)
+The game is set in a medieval world, where two rival factions are fighting for control of the land. Each player is the leader of one of these factions, and must build up their base and army to defeat the enemy's Hall to win. (WIP)
 
 ## Emotions
 
-Motivation (intrinsic and extrinsic, rewards, punishment, difficulty)
-Level design → Diseño del mapa?
+_Note:_ Rewards & punishment are not explicit due to the nature of an RTS.
 
+-- Progress serves as an intrinsic motivation, as the player will want to  improve their army to defeat the enemy. 
+-- Keeping track of how many times the player has defeated opposing players (win/loss ratio) serves as extrinsic motivation to keep playing.
+
+## Level Design
+The game will feature three distinct maps, each will have a set of resource spawning points, to attain a balance of resources in each game.
+The three levels will be:
+
+- River Crossing: A symmetrical map with a river in the middle, with <B_Amnt> bridges to cross it.
+- Desert Oasis: A map with a central oasis, and an open terrain.
+- Mountain Pass: A map with obstacles to navigate around.
