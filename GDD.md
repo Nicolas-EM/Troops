@@ -1,15 +1,19 @@
-# Game Design Document - Title In Progress
+# Game Design Document - Troops
 ## Introduction
-### Synopsis (*)
-// TODO
+### Synopsis
+Troops is a competitive multiplayer RTS game set in the medieval era. Two players clash on an island and must manage their resources to build a base and form an army capable of defeating their opponent. The player will attempt to destroy the enemy Town Hall in a fast-paced game filled with thrill, challenging decisions and strategy.
 
-### Basic Information (*)
-|                 |                              |
-|-----------------|------------------------------|
-| Genre           | RTS (Real Time Strategy)     |
-| Age Range       | 12-99                        |
-| PEGI Info       | PEGI 12                      |
-| Target Audience | 4x & strategy games enjoyers |
+### Basic Information
+|                 |                                                                                               |
+|-----------------|-----------------------------------------------------------------------------------------------|
+| Genre           | RTS (Real Time Strategy)                                                                      |
+| Age Range       | 12+                                                                                           |
+| PEGI Info       | PEGI 12                                                                                       |
+| Target Audience | All gender, 25-40-year-olds, West, Low level players, interest in medieval history & strategy |
+
+The age minimum is set at 12 years old due to the nature of this videogame. RTS games imply resource management and long-term planning skills, making it generally more appealing for older teenagers and youngsters (even if a child can understand the mechanics of the game). 
+
+Regarding the target audience, players have been segmented based on gender, age, region, videogame skills and general interests. People aged between 25-40 years old are considered the primary audience for RTS games, as explained earlier. When choosing a recommended level of skills, there are four posibilities: basic, low, medium and high. Troops does not require extensive experience in videogames and the mechanics are easy to learn. However, people who primarily play smartphone apps such as "Candy Crush" may feel overwhelmed due to the ammount of information and resources the player needs to manage simultaneously. This is why the level has been set to "low". Last but not least, all the marketing resources will be directed towards young people interested in medieval history (given the game's setting), resource management, brain grames and strategy.
 
 ## Lore and context (*)
 // TODO
@@ -22,6 +26,9 @@ The player enters the website and can choose from three different options:
 3. **JOIN A GAME**: Use a friend's code to join their game. The joiner can pick a team color, which must be different from the creator's team.
 
 The game begins, with each player spawning randomly on the map with a Town Hall and three villagers. They will progressively explore the map and gather resources to build an army, and they will attempt to destroy the opponent's Town Hall by attacking them. The game has no time limit and cannot be paused, and a player wins by destroying the oponent's Town Hall, regardless of remaining resources or soldiers. There is no point system; it's a binary win or lose outcome. After the game ends, players return to the initial menu and can choose to play again or exit.
+
+## Goal
+The ultimate purpose of Troops is to provide an enjoyable gaming experience for individuals during their leisure time, allowing players to engage in a game that is not overly time-consuming and does not demand advanced skills. Despite this, Troops aims to captivate players with a complexity and depth that sets it apart from basic and repetitive smartphone games.
 
 ## Components
 ### Buildings
@@ -182,13 +189,12 @@ _Note:_ Total resources per source (e.g. each gold mine generates 500 gold max, 
 
 _Note:_ Rewards & punishment are not explicit due to the nature of an RTS.
 
--- Progress serves as an intrinsic motivation, as the player will want to  improve their army to defeat the enemy. 
--- Keeping track of how many times the player has defeated opposing players (win/loss ratio) serves as extrinsic motivation to keep playing.
+-- Progress serves as an intrinsic motivation, as the player will want to improve their army to defeat the enemy. 
 
-## Map Design (*)
-The game will feature three distinct maps, each will have a set of resource spawning points, to attain a balance of resources in each game.
-The three levels will be:
+## Map Design
+The game will feature three distinct maps, each equipped with a set of resource spawning points to achieve a balanced resource distribution in every game. Players can choose from these maps based on the gaming experience they seek.
 
-- River Crossing: A symmetrical map with a river in the middle, with <B_Amnt> bridges to cross it.
-- Desert Oasis: A map with a central oasis, and an open terrain.
-- Mountain Pass: A map with obstacles to navigate around.
+The maps include:
+- River Crossing: A symmetrical map with a river running through the middle, and only <B_Amnt> bridges to cross it. This design creates a high-pressure zone on the bridges, making them the primary route for attacking the opponent.
+- Desert Oasis: This map features a central oasis surrounded by open terrain. Players are encouraged to launch fast attacks due to the vulnerability they face in this open environment.
+- Mountain Pass: Players spawn in a forest at one of the four corners of the map, with a very low visibility level, and limited paths to explore it. This map enables swift attacks along defined routes while offering a strategic advantage for defense, as players can anticipate the directions of potential attacks.
