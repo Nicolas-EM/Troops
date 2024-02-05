@@ -15,8 +15,7 @@ The age minimum is set at 12 years old due to the nature of this videogame. RTS 
 
 Regarding the target audience, players have been segmented based on gender, age, region, videogame skills and general interests. People aged between 25-40 years old are considered the primary audience for RTS games, as explained earlier. When choosing a recommended level of skills, there are four posibilities: basic, low, medium and high. Troops does not require extensive experience in videogames and the mechanics are easy to learn. However, people who primarily play smartphone apps such as "Candy Crush" may feel overwhelmed due to the ammount of information and resources the player needs to manage simultaneously. This is why the level has been set to "low". Last but not least, all the marketing resources will be directed towards young people interested in medieval history (given the game's setting), resource management, brain grames and strategy.
 
-## Lore and context (*)
-// TODO
+## Lore and context //TODO
 The game is set in a medieval world, where two rival factions are fighting for control of the land. Each player is the leader of one of these factions, and must build up their base and army to defeat the enemy's Hall to win. (WIP)
 
 ## Game Session Overview
@@ -91,9 +90,9 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Spawn            | A building is used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and the others will be queued. |
 | Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.                                       |
 
-### Dynamics (*)
+### Dynamics //TODO
 
-### Aesthetics (graphics & sound) (*)
+### Aesthetics (graphics & sound) //TODO
 The graphics have been hinted in the components prior to this section. The music will compliment the overall medieval theme of the game. This will be archived through some epic themes for battle, and village-like themes for collecting resources.
 
 ## Controls
@@ -117,7 +116,7 @@ The graphics have been hinted in the components prior to this section. The music
     - While the Town Hall is selected, the player can left-click on the villager to add it to the spawning queue.
     - While a tower is selected, the player can left-click on the type of NPC (soldier/archer) that will be added to the spawning queue.
 
-## Tables and data (*)
+## Tables and data
 ### Spawning/Building Cost
 | Type      | Gold Cost     | Wood Cost     | Food Cost     |
 |-----------|:-------------:|:-------------:|:-------------:|
@@ -160,11 +159,38 @@ The graphics have been hinted in the components prior to this section. The music
 
 **B_H** = Building health variable
 
-### Vision Range (*)
+### Vision Range
+| Type      | Vision Range       |
+|-----------|:------------------:|
+| Villager  |         VIS        |
+| Soldier   |         VIS        |
+| Archer    |      1.5 * VIS     |
+| Town Hall |       5 * VIS      |
+| House     |       2 * VIS      |
+| Tower     |       3 * VIS      |
 
-### Size (*)
+**VIS** = Vision range variable
 
-### Movement Speed (*)
+### Size
+| Type      | Size (width, height)       |
+|-----------|:--------------------------:|
+| Villager  |      SIZE px, SIZE px      |
+| Soldier   |      SIZE px, SIZE px      |
+| Archer    |      SIZE px, SIZE px      |
+| Town Hall |  4 * SIZE px, 2 * SIZE px  |
+| House     |  3 * SIZE px, 3 * SIZE px  |
+| Tower     | 3 * SIZE px, 2.5 * SIZE px |
+
+**SIZE** = Size in pixels variable
+
+### Movement Speed
+| Type      | Speed (px/s)       |
+|-----------|:------------------:|
+| Villager  |         SPD        |
+| Soldier   |         SPD        |
+| Archer    |         SPD        |
+
+**SPD** = Movement speed variable
 
 ### Attack and Range
 | Type      | Damage             | Range              |
@@ -176,7 +202,7 @@ The graphics have been hinted in the components prior to this section. The music
 
 **RNG** = Range variable
 
-### Resource Stats (*)
+### Resource Stats
 | Type      | Production Rate       | Total Resources      |
 |-----------|:---------------------:|:--------------------:|
 | Gold      |       G_Rate          | G_Ttl                |
@@ -185,7 +211,7 @@ The graphics have been hinted in the components prior to this section. The music
 
 _Note:_ Total resources per source (e.g. each gold mine generates 500 gold max, after which it no longer generates gold).
 
-## Emotions (*)
+## Emotions //TODO
 
 _Note:_ Rewards & punishment are not explicit due to the nature of an RTS.
 
