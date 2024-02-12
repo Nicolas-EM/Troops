@@ -1,4 +1,4 @@
-# Game Design Document - Troops
+# Troops - Game Design Document
 ## Introduction
 ### Synopsis
 Troops is a competitive multiplayer RTS game set in the medieval era. Two players clash on an island and must manage their resources to build a base and form an army capable of defeating their opponent. The player will attempt to destroy the enemy Town Hall in a fast-paced game filled with thrill, challenging decisions and strategy.
@@ -92,8 +92,18 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 
 ### Dynamics //TODO
 
-### Aesthetics (graphics & sound) //TODO
-The graphics have been hinted in the components prior to this section. The music will compliment the overall medieval theme of the game. This will be archived through some epic themes for battle, and village-like themes for collecting resources.
+### Aesthetics
+The overall aesthetic of the videogame is medieval-themed. Despite the game's aggressive nature, Troops aims to be a friendly and enjoyable experience for players of all kinds.
+#### Graphics
+The chosen art style features pixel art, suggesting a classic and easy-to-learn videogame experience, particularly suitable for novice players. Damage animations will be minimalistic, limited to health bars, to reduce the sense of violence. The color palette is not overly saturated to avoid overwhelming the player and maintain the peaceful atmosphere Troops aims to convey. The entire game will adhere to the medieval aesthetic, including the main menu, option menus, and any on-screen text, to keep the player immersed in the context and lore of Troops.
+#### Sound
+There will be four main tracks:
+- Troops' main theme, which will play in the Main Menu.
+- Village music, heard during regular gameplay to convey the peace of villagers' daily lives.
+- Combat music. When a player's team initiates an attack on the opponent, both parties will hear a new action-themed track signaling the onset of battle. This alerts players and conveys the tension of the fight. After <T> seconds of inactivity between NPCs, the music will cease, returning to the village theme.
+- Victory/defeat music. When a player wins or loses, the final screen will be accompanied by music appropriate to the player's outcome.
+
+Additionally, each action performed by NPCs will have corresponding sound effects to inform the player of ongoing events. Sounds will play when villagers gather resources or build, when an NPC takes damage, or when soldiers/archers use their attacks.
 
 ## Controls
 ### Keyboard
@@ -162,14 +172,14 @@ The graphics have been hinted in the components prior to this section. The music
 ### Vision Range
 | Type      | Vision Range       |
 |-----------|:------------------:|
-| Villager  |         VIS        |
-| Soldier   |         VIS        |
-| Archer    |      1.5 * VIS     |
-| Town Hall |       5 * VIS      |
-| House     |       2 * VIS      |
-| Tower     |       3 * VIS      |
+| Villager  |         VRV        |
+| Soldier   |         VRV        |
+| Archer    |      1.5 * VRV     |
+| Town Hall |       5 * VRV      |
+| House     |         VRV        |
+| Tower     |       3 * VRV      |
 
-**VIS** = Vision range variable
+**VRV** = Vision Range Variable
 
 ### Size
 | Type      | Size (width, height)       |
@@ -186,11 +196,11 @@ The graphics have been hinted in the components prior to this section. The music
 ### Movement Speed
 | Type      | Speed (px/s)       |
 |-----------|:------------------:|
-| Villager  |         SPD        |
-| Soldier   |         SPD        |
-| Archer    |         SPD        |
+| Villager  |         MSV        |
+| Soldier   |         MSV        |
+| Archer    |         MSV        |
 
-**SPD** = Movement speed variable
+**MSV** = Movement Speed Variable
 
 ### Attack and Range
 | Type      | Damage             | Range              |
@@ -210,12 +220,6 @@ The graphics have been hinted in the components prior to this section. The music
 | Food      |       F_Rate          | F_Ttl                |
 
 _Note:_ Total resources per source (e.g. each gold mine generates 500 gold max, after which it no longer generates gold).
-
-## Emotions //TODO
-
-_Note:_ Rewards & punishment are not explicit due to the nature of an RTS.
-
--- Progress serves as an intrinsic motivation, as the player will want to improve their army to defeat the enemy. 
 
 ## Map Design
 The game will feature three distinct maps, each equipped with a set of resource spawning points to achieve a balanced resource distribution in every game. Players can choose from these maps based on the gaming experience they seek.
