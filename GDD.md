@@ -16,7 +16,9 @@ The age minimum is set at 12 years old due to the nature of this videogame. RTS 
 Regarding the target audience, players have been segmented based on gender, age, region, videogame skills and general interests. People aged between 25-40 years old are considered the primary audience for RTS games, as explained earlier. When choosing a recommended level of skills, there are four posibilities: basic, low, medium and high. Troops does not require extensive experience in videogames and the mechanics are easy to learn. However, people who primarily play smartphone apps such as "Candy Crush" may feel overwhelmed due to the ammount of information and resources the player needs to manage simultaneously. This is why the level has been set to "low". Last but not least, all the marketing resources will be directed towards young people interested in medieval history (given the game's setting), resource management, brain grames and strategy.
 
 ## Lore and context //TODO
-The game is set in a medieval world, where two rival factions are fighting for control of the land. Each player is the leader of one of these factions, and must build up their base and army to defeat the enemy's Hall to win. (WIP)
+In the far lands of Eliora, there are two rival factions, engaged in perpetual war. You will act as the general of one of these factions, and are tasked with leading your troops to victory, through cunning strategy and tactical prowess, and throughout a variety of battlefields. (WIP 3.1)
+
+
 
 ## Game Session Overview
 The player enters the website and can choose from three different options:
@@ -90,7 +92,14 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Spawn            | A building is used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and the others will be queued. |
 | Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.                                       |
 
-### Dynamics //TODO
+### Dynamics
+|         Name        |                                                   Descriptions                                                  |
+|:-------------------:|:---------------------------------------------------------------------------------------------------------------:|
+|       Explore       |                 Using units to explore and control the map to give you a strategical advantage.                 |
+| Resource Management | Being mindful on how to spend your wealth is key to create a bigger army, as well as build a strong economy.    |
+|       Military      |   The adequate use of your soldiers and their use in battle is incentive to clash and destroy the enemy base.   |
+|       Strategy      | Being an online game, the need to think ahead in real time creates the need to be tactical throughout the game. |
+
 
 ### Aesthetics
 The overall aesthetic of the videogame is medieval-themed. Despite the game's aggressive nature, Troops aims to be a friendly and enjoyable experience for players of all kinds.
