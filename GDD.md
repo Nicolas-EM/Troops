@@ -15,9 +15,12 @@ The age minimum is set at 12 years old due to the nature of this videogame. RTS 
 
 Regarding the target audience, players have been segmented based on gender, age, region, videogame skills and general interests. People aged between 25-40 years old are considered the primary audience for RTS games, as explained earlier. When choosing a recommended level of skills, there are four posibilities: basic, low, medium and high. Troops does not require extensive experience in videogames and the mechanics are easy to learn. However, people who primarily play smartphone apps such as "Candy Crush" may feel overwhelmed due to the ammount of information and resources the player needs to manage simultaneously. This is why the level has been set to "low". Last but not least, all the marketing resources will be directed towards young people interested in medieval history (given the game's setting), resource management, brain grames and strategy.
 
-## Lore and context //TODO
-In the far lands of Eliora, there are two rival factions, engaged in perpetual war. You will act as the general of one of these factions, and are tasked with leading your troops to victory, through cunning strategy and tactical prowess, and throughout a variety of battlefields. (WIP 3.1)
+## Lore and context //TODO comprobar traducción
+The king Aldric Stormborn of Eliora has died. There is no heir and what had been the most prosperous country of the last decades plunges abruptly into a war of secession. Its vast territory, plagued by diverse biomes, has gone from absolute tranquility to the greatest chaos seen in its history.
 
+The people have divided and support the neighboring kings. The candidate from the northern neighbor, Azuremont, is Charles Bluebird. A smart, handsome, and very persuasive man. One should not trust his appearance, as inside he is meticulous in combat and will not miss any opportunity to seize the throne. From the south, the king of Sylveria lurks. Vincent Redwood is a huge, muscular man who will not hesitate to dismember anyone who gets in his way to the crown. The west is represented by Margaret Yellowstone, queen of Solstice. A bold, swift woman with perfect precision that instills fear in those who find themselves in her crosshairs. The east brings with it the rising sun of the kingdom of Novara. Jabari Purpleheart rules the richest country thanks to its naval trade. With wealth capable of buying any man, he will not hesitate to recruit whoever is necessary to carry out his mission.
+
+The fate of Eliora is at stake and only war can decide it...
 
 
 ## Game Session Overview
