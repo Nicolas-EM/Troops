@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import * as Phaser from 'phaser'
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -32,6 +32,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('menu');
+    this.scene.start('game', {mapId: "test"});
   }
 }

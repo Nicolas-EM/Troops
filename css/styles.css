@@ -1,0 +1,18 @@
+body {
+    background-image: url(../img/background.png);
+    background-size: cover;
+}
+
+nav {
+    border-bottom: 0.4rem solid #9d7967;
+    background-color: #e3c288;
+}
+
+nav > div {
+    border-bottom: 0.4rem solid #d6b281;
+}
+
+#div-game {
+    height: 92.5vh;
+    background-color: #000000;
+}
