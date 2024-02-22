@@ -1,8 +1,8 @@
-import Townhall from "./buildings/townhall";
-import building from "./buildings/building";
-import npc from './npcs/npc';
-import resource from './resource';
-import startingData from './magic_numbers/starting_data'
+import startingData from '../magic_numbers/starting_data';
+import Townhall from './Buildings/Townhall';
+import Building from './Buildings/Building';
+import NPC from './NPCs/NPC';
+import Resource from './resource';
 
 export default class Player {
 
@@ -11,10 +11,10 @@ export default class Player {
   private _name: string;
   private _color: number;
   private _townhall: Townhall;
-  private _buildings: building[];
-  private _npcs: npc[];
-  private _resources: resource[];
-  private _selectedGameObjects: npc[] | building;
+  private _buildings: Building[];
+  private _npcs: NPC[];
+  private _resources: Resource[];
+  private _selectedGameObjects: NPC[] | Building;
 
   /**
    * Creates a new player instance.
@@ -27,16 +27,16 @@ export default class Player {
    * @param {Resource[]} resources - Player's resources
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
    */
-  constructor(id: number, name: string, color: number, townhall: Townhall, buildings?: building, npcs?: npc, resources?: resource) {
+  constructor(id: number, name: string, color: number, townhall: Townhall, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
     this._id = id;
     this._name = name;
     this._color = color;
     this._townhall = townhall;
     this._buildings = buildings || [];
-    this._npcs = npcs || defaultStartingUnits();
-    this._resources = resources || defaultStartingResources();
+    this._npcs = npcs || this.defaultStartingUnits();
+    this._resources = resources || this.defaultStartingResources();
     this._selectedGameObjects = []; // por defecto no tienes nada seleccionado.
-    Init();
+    this.Init();
   }
 
  /**
@@ -48,13 +48,13 @@ export default class Player {
 
   /**
    *
-   * @returns {resource[]} Generated starting resources
+   * @returns {Resource[]} Generated starting resources
    * @private
    */
-  private defaultStartingResources(): resource[] {
-    let resources = [];
-    //do for each resource we might add
-    resources.push(startingData.STARTING_PLAYER_GOLD);
+  private defaultStartingResources(): Resource[] {
+    let resources: Resource[] = [];
+    // resources.push(startingData.STARTING_PLAYER_GOLD);
+    // return resources;
     return resources;
   }
 
@@ -63,12 +63,13 @@ export default class Player {
    * @returns {npc[]} starting units (villagers, normally, but we can tweak)
    * @private
    */
-  private defaultStartingUnits(): npc[] {
+  private defaultStartingUnits(): NPC[] {
     let units = [];
     //do for each starting unit (villagers only, but for testing we might wanna start
     //with a few soldiers or something)
-    units.push(startingData.STARTING_PLAYER_VILLAGERS);
-    return units;
+    // units.push(startingData.STARTING_PLAYER_VILLAGERS);
+    // return units;
+    return [];
   }
 
 
@@ -78,7 +79,7 @@ export default class Player {
  * @returns {void}
  */
 public addNpc(unit: NPC): void {
-
+    this._npcs.push(unit);
 }
 
 /**
@@ -87,7 +88,7 @@ public addNpc(unit: NPC): void {
  * @returns {void}
  */
 public addBuilding(building: Building): void {
-
+    this._buildings.push(building);
 }
 
 /**

@@ -1,9 +1,9 @@
-import npc from './npc';
+import Player from '../player';
+import NPC from './NPC';
 
-export default class villager extends npc {
-
-    public villager(id?: string, owner: Player, X: number, Y: number, health: number, visionRange?: number){
-        super(id, owner, X, Y, health, visionRange);
+export default class Villager extends NPC {
+    public Villager(id: string, owner: Player, X: number, Y: number, health: number, visionRange?: number){
+        // super(id, owner, X, Y, health, visionRange);
     }
 
     /**

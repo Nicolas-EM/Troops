@@ -1,8 +1,8 @@
-import * as Phaser from 'phaser';
-import Player from '../player.ts'
-import Entity from '../Entity.ts';
 
-export default abstract class NPC extends Entity {
+import * as Phaser from 'phaser';
+import Player from './player';
+
+export default abstract class Entity extends Phaser.GameObjects.Sprite {
     // protected attributes:
     protected _id: string;
     protected _owner: Player;
@@ -12,18 +12,20 @@ export default abstract class NPC extends Entity {
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
-     * @returns NPC instance
+     * @returns Object
      */
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, id, visionRange, frame);
+        super(scene, x, y, texture, frame);
+        this._owner = owner;
+        this._health = health;
+        this._id = id || "namelessEntity";
+        this._visionRange = visionRange;
     }
 
     /**
-     * @summary executes move order on X Y cordinates
-     * @param x is X coordinate to move on board
-     * @param y is Y coordinate to move on board
+     * @param damage
      */
-    move(X: number, Y: number): void{
-        
+    onAttackReceived(damage: number): void {
+        this._health -= damage;
     }
 }

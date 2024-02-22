@@ -10,7 +10,7 @@ import Game from './Scenes/game';
  */
 let config: Phaser.Types.Core.GameConfig = {
     title: 'Troops',
-    parent: "game",
+    parent: "game", // ID canvas
     type: Phaser.AUTO,
     width: 1000,
     height: 500,

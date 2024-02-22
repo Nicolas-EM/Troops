@@ -8,16 +8,13 @@ import * as Phaser from 'phaser'
  * sobre cómo hacer una barra de progreso.
  */
 export default class Boot extends Phaser.Scene {
-  /**
-   * Constructor de la escena
-   */
+  
+  // Constructor de la escena
   constructor() {
     super({ key: 'boot' });
   }
 
-  /**
-   * Carga de los assets del juego
-   */
+  // Carga de los assets del juego
   preload() {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
