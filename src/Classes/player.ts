@@ -2,7 +2,7 @@ import startingData from '../magic_numbers/starting_data';
 import Townhall from './Buildings/Townhall';
 import Building from './Buildings/Building';
 import NPC from './NPCs/NPC';
-import Resource from './resource';
+import Resource from './Resources/resource';
 
 export default class Player {
 

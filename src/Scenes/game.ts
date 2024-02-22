@@ -1,4 +1,8 @@
 import * as Phaser from 'phaser'
+import TownHall from "../Classes/Buildings/Townhall";
+import Tree from "../Classes/Resources/tree";
+import Sheep from "../Classes/Resources/sheep";
+import GoldMine from "../Classes/Resources/goldMine";
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.3;
@@ -29,9 +33,20 @@ export default class Game extends Phaser.Scene {
 
     // Cargar imagenes
     this.load.image("Tilemap_Flat", "sprites\/Terrain\/Ground\/Tilemap_Flat.png");
+
+    // Buildings
     this.load.image("Castle_Blue", "sprites\/Factions\/Knights\/Buildings\/Castle\/Castle_Blue.png");
     this.load.image("House_Blue", "sprites\/Factions\/Knights\/Buildings\/House\/House_Blue.png");
     this.load.image("Tower_Blue", "sprites\/Factions\/Knights\/Buildings\/Tower\/Tower_Blue.png");
+
+    // NPCs
+    this.load.spritesheet("Pawn_Blue", "sprites\/Factions\/Knights\/Troops\/Pawn\/Blue\/Pawn_Blue.png", { frameWidth: 192, frameHeight: 192});
+    this.load.spritesheet("Warrior_Blue", "sprites\/Factions\/Knights\/Troops\/Warrior\/Blue\/Warrior_Blue.png", { frameWidth: 192, frameHeight: 192});
+
+    // Resources
+    this.load.spritesheet("Tree", "sprites\/Resources\/Trees\/Tree.png", { frameWidth: 192, frameHeight: 192});
+    this.load.spritesheet("HappySheep_Idle", "sprites\/Resources\/Sheep\/HappySheep_Idle.png", { frameWidth: 128, frameHeight: 128});
+    this.load.spritesheet("GoldMine_Active", "sprites\/Resources\/Gold Mine\/GoldMine_Active.png", { frameWidth: 192, frameHeight: 128});
   }
 
   create() {
@@ -44,9 +59,22 @@ export default class Game extends Phaser.Scene {
     const backgroundLayer = this._map.createLayer('background', backgroundTiles!, 0, 0);
 
     this._buildingsLayer = this._map.createFromObjects('buildings', [
-      { type: "Castle_Blue", key: 'Castle_Blue' },
+      { type: "Castle_Blue", key: 'Castle_Blue'},
       { type: "House_Blue", key: 'House_Blue' },
       { type: "Tower_Blue", key: 'Tower_Blue' }
+    ]);
+
+    
+
+    const npcLayer = this._map.createFromObjects("NPCs", [
+      { type: "Villager", key: 'Pawn_Blue'},
+      { type: "Soldier", key: 'Warrior_Blue'}
+    ]);
+
+    const resourceLayer = this._map.createFromObjects("resources", [
+      { type: "Tree", key: 'Tree', classType: Tree},
+      { type: "Sheep", key: "HappySheep_Idle", classType: Sheep},
+      { type: "GoldMine", key: "GoldMine_Active", classType: GoldMine}
     ]);
 
     // Event listener al hacer scroll
