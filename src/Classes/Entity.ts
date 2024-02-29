@@ -21,7 +21,7 @@ export default abstract class Entity extends Phaser.GameObjects.Sprite {
         this._id = id || "namelessEntity";
         this._visionRange = visionRange;
     }
-
+    
     /**
      * @param damage
      */

@@ -3,6 +3,7 @@ import Townhall from './Buildings/Townhall';
 import Building from './Buildings/Building';
 import NPC from './NPCs/NPC';
 import Resource from './Resources/resource';
+import { Scene } from 'phaser';
 
 export default class Player {
 
@@ -15,6 +16,7 @@ export default class Player {
   private _npcs: NPC[];
   private _resources: Resource[];
   private _selectedGameObjects: NPC[] | Building;
+  private _scene: Phaser.Scene;
 
   /**
    * Creates a new player instance.
@@ -26,8 +28,9 @@ export default class Player {
    * @param {NPC[]} npcs - An array of player0s units (troops, villagers...)
    * @param {Resource[]} resources - Player's resources
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
+   * @param {Scene  } scene - The scene where the player is created.
    */
-  constructor(id: number, name: string, color: number, townhall: Townhall, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
+  constructor(id: number, name: string, color: number, townhall: Townhall, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
     this._id = id;
     this._name = name;
     this._color = color;
@@ -36,6 +39,7 @@ export default class Player {
     this._npcs = npcs || this.defaultStartingUnits();
     this._resources = resources || this.defaultStartingResources();
     this._selectedGameObjects = []; // por defecto no tienes nada seleccionado.
+    this._scene = scene;
     this.Init();
   }
 
@@ -43,7 +47,11 @@ export default class Player {
   * initializes player, finishes setup.
   */ 
   private Init(): void {
+    this.addEventListeners();
+  }
 
+  private addEventListeners(): void {
+    this._scene.events.on()
   }
 
   /**
@@ -96,7 +104,7 @@ public addBuilding(building: Building): void {
  * @returns {void}
  */
 public abandonGame(): void {
-
+  //TODO
 }
 
 
