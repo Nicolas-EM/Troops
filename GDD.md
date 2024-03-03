@@ -41,7 +41,7 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Town Hall     | ![Town hall Sprite](/assets/previews/Buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game.|
 | Village House | ![Village House Sprite](/assets/previews/Buildings/house.png) | Sets the maximum population.|
 | Tower         | ![Tower Sprite](/assets/previews/Buildings/tower.png)         | Can spawn soldiers and archers.|
-| Goblin House  | ![Goblin House Sprite](/assets/previews/Buildings/Goblin_House.png)         | Can spawn goblins.|
+| Goblin Hut  | ![Goblin Hut Sprite](/assets/previews/Buildings/goblin_hut.png)         | Can spawn goblins.|
 
 ### NPCs
 
@@ -91,8 +91,8 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Select entities  | Allows the player to choose one or more entities to perform actions upon.                                                                |
 | Move NPC         | NPCs can move around the map to explore it.                                                                                              |
 | Gather           | Villagers gather resources (gold/wood/food) from their sources (mine/tree/sheep). They continue gathering until the source is depleted.  |
-| Build            | Villagers build houses or towers by spending resources. The building process takes time to complete.                                     |
-| Attack           | Soldiers or archers deal damage to enemy NPCs or buildings within range.                                                                 |
+| Build            | Villagers build their houses, goblin houses or towers by spending resources. The building process takes time to complete.                                     |
+| Attack           | Soldiers, archers and goblins deal damage to enemy NPCs or buildings within range.                                                                 |
 | Spawn            | A building is used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and the others will be queued. |
 | Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.    |
 
@@ -123,7 +123,7 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 ### Keyboard
 - The keys `W` `A` `S` `D` can be used to move the camera around the map.
 - Pressing `Esc` will open a menu to change the settings of the game (enable/disable sound, fullscreen options...), read the help page (game controls or rules) or surrender and exit the current game.
-- Hot keys:
+- Shortcuts:
     - While the Town Hall is selected, pressing `1` adds a villager to the spawning queue as long as the player has enough resources.
     - While a tower is selected, pressing `1` adds a soldier to the spawning queue as long as the player has enough resources.
     - While a tower is selected, pressing `2` adds an archer to the spawning queue as long as the player has enough resources.

@@ -11,3 +11,7 @@ nav {
 nav > div {
     border-bottom: 0.4rem solid #d6b281;
 }
+
+#game {
+    height: 90vh;
+}
