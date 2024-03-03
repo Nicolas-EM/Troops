@@ -38,10 +38,10 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 
 |     Name      |                           Image                               |                        Description                            |
 |:-------------:|:-------------------------------------------------------------:|:-------------------------------------------------------------:|
-| Town Hall     | ![Town hall Sprite](/assets/previews/Buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game.|
-| Village House | ![Village House Sprite](/assets/previews/Buildings/house.png) | Sets the maximum population.|
-| Tower         | ![Tower Sprite](/assets/previews/Buildings/tower.png)         | Can spawn soldiers and archers.|
-| Goblin Hut  | ![Goblin Hut Sprite](/assets/previews/Buildings/goblin_hut.png)         | Can spawn goblins.|
+| Town Hall     | ![Town hall Sprite](/assets/previews/buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game.|
+| Village House | ![Village House Sprite](/assets/previews/buildings/house.png) | Sets the maximum population.|
+| Tower         | ![Tower Sprite](/assets/previews/buildings/tower.png)         | Can spawn soldiers and archers.|
+| Goblin Hut  | ![Goblin Hut Sprite](/assets/previews/buildings/goblin_hut.png)         | Can spawn goblins.|
 
 ### NPCs
 
