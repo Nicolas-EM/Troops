@@ -41,7 +41,7 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Town Hall     | ![Town hall Sprite](/assets/previews/buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game.|
 | Village House | ![Village House Sprite](/assets/previews/buildings/house.png) | Sets the maximum population.|
 | Tower         | ![Tower Sprite](/assets/previews/buildings/tower.png)         | Can spawn soldiers and archers.|
-| Goblin Hut  | ![Goblin Hut Sprite](/assets/previews/buildings/goblin_hut.png)         | Can spawn goblins.|
+| Goblin Hut    | ![Goblin Hut Sprite](/assets/previews/buildings/goblin_hut.png)         | Can spawn goblins.|
 
 ### NPCs
 
@@ -56,9 +56,9 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 
 |     Name      |                    Resource Image                    |                                       Description                                     | Source Image                                                     |
 |:-------------:|:----------------------------------------------------:|:-------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|
-| Gold          | ![Gold Sprite](/assets/previews/resources/gold.png)  | Gathered in gold mines. Used for spawning soldiers and archers, and building towers.  | ![Gold Source Sprite](/assets/previews/resources/gold_source.png) |
-| Wood          | ![Wood Sprite](/assets/previews/resources/wood.png)  | Obtained by chopping down trees. Used for building villager houses and towers, and spawning archers. | ![Wood Source Sprite](/assets/previews/resources/wood_source.png) |
-| Food          | ![Food Sprite](/assets/previews/resources/food.png)  | Obtained from sheeps. Used for spawning villagers and soldiers. | ![Food Source Sprite](/assets/previews/resources/food_source.png) |
+| Gold          | ![Gold Sprite](/assets/previews/resources/gold.png)  | Gathered in gold mines. Used for building goblin huts and spawning goblins.  | ![Gold Source Sprite](/assets/previews/resources/gold_source.png) |
+| Wood          | ![Wood Sprite](/assets/previews/resources/wood.png)  | Obtained by chopping down trees. Used for building villager houses, towers and goblin huts, and spawning archers and goblins. | ![Wood Source Sprite](/assets/previews/resources/wood_source.png) |
+| Food          | ![Food Sprite](/assets/previews/resources/food.png)  | Obtained from sheeps. Used for building towers spawning villagers, soldiers and archers. | ![Food Source Sprite](/assets/previews/resources/food_source.png) |
 
 ## Attributes
 ### Player
@@ -145,12 +145,12 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 | Type         | Gold Cost     | Wood Cost     | Food Cost     |
 |--------------|:-------------:|:-------------:|:-------------:|
 | Villager     | 0             | 0             | FCV           |
-| Soldier      | GCV           | 0             | 3 * FCV       |
-| Archer       | GCV           | 3 * WCV       | 0             |
-| Goblin       | 0             | 2 * WCV       | FCV           |
+| Soldier      | 0             | 0             | 3 * FCV       |
+| Archer       | 0             | 2 * WCV       | 1 * FCV       |
+| Goblin       | 2 * GCV       | 1 * WCV       | 0             |
 | House        | 0             | 3 * WCV       | 0             |
-| Tower        | 3 * GCV       | 7 * WCV       | 0             |
-| Goblin House | 0             | 6 * WCV       | 2 * FCV       |
+| Tower        | 0             | 7 * WCV       | 3 * FCV       |
+| Goblin House | 4 * GCV       | 6 * WCV       | 0             |
 
 **GCV** = Gold cost variable
 
@@ -162,8 +162,8 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 | Type         | Time (s)                |
 |--------------|:-----------------------:|
 | Villager     |         S_TIME          |
-| Soldier      |     1.5 * S_TIME        |
-| Archer       |     1.75 * S_TIME       |
+| Soldier      |     1.75 * S_TIME       |
+| Archer       |     1.5 * S_TIME        |
 | Goblin       |     1.25 * S_TIME       |
 | House        |         B_TIME          |
 | Tower        |       3 * B_TIME        |
