@@ -5,13 +5,13 @@ import Sheep from "../Classes/Resources/sheep";
 import GoldMine from "../Classes/Resources/goldMine";
 
 // MAGIC NUMBER
-const MIN_ZOOM = 0.3;
+const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
-const ZOOM_AMOUNT = 0.1;
+const ZOOM_AMOUNT = 0.05;
 const MIN_POS = -64;
 
 export default class Game extends Phaser.Scene {
-  private mapId: String;
+  private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
 
@@ -25,56 +25,31 @@ export default class Game extends Phaser.Scene {
     this.mapId = data.mapId;
   }
 
-  preload() {
-    this.load.setPath('assets/');
-
-    // Cargar json del mapa
-    this.load.tilemapTiledJSON("map", `maps/${this.mapId}.json`);
-
-    // Cargar imagenes
-    this.load.image("Tilemap_Flat", "sprites\/Terrain\/Ground\/Tilemap_Flat.png");
-
-    // Buildings
-    this.load.image("Castle_Blue", "sprites\/Factions\/Knights\/Buildings\/Castle\/Castle_Blue.png");
-    this.load.image("House_Blue", "sprites\/Factions\/Knights\/Buildings\/House\/House_Blue.png");
-    this.load.image("Tower_Blue", "sprites\/Factions\/Knights\/Buildings\/Tower\/Tower_Blue.png");
-
-    // NPCs
-    this.load.spritesheet("Pawn_Blue", "sprites\/Factions\/Knights\/Troops\/Pawn\/Blue\/Pawn_Blue.png", { frameWidth: 192, frameHeight: 192});
-    this.load.spritesheet("Warrior_Blue", "sprites\/Factions\/Knights\/Troops\/Warrior\/Blue\/Warrior_Blue.png", { frameWidth: 192, frameHeight: 192});
-
-    // Resources
-    this.load.spritesheet("Tree", "sprites\/Resources\/Trees\/Tree.png", { frameWidth: 192, frameHeight: 192});
-    this.load.spritesheet("HappySheep_Idle", "sprites\/Resources\/Sheep\/HappySheep_Idle.png", { frameWidth: 128, frameHeight: 128});
-    this.load.spritesheet("GoldMine_Active", "sprites\/Resources\/Gold Mine\/GoldMine_Active.png", { frameWidth: 192, frameHeight: 128});
-  }
-
   create() {
     // Crear mapa
-    this._map = this.make.tilemap({ key: 'map' });
+    this._map = this.make.tilemap({ key: this.mapId });
 
-    // Añadir referencia a imagen
-    const backgroundTiles = this._map.addTilesetImage("Tilemap_Flat");
-    // Crear capa con imagen
-    const backgroundLayer = this._map.createLayer('background', backgroundTiles!, 0, 0);
+    // Fondo
+    let tileset = this._map.addTilesetImage("Water");
+    this._map.createLayer("Fondo/Water", tileset!);
+    tileset = this._map.addTilesetImage("ground");
+    this._map.createLayer('Fondo/Ground', tileset!);
+    this._map.createLayer('Fondo/Grass', tileset!);
 
-    this._buildingsLayer = this._map.createFromObjects('buildings', [
-      { type: "Castle_Blue", key: 'Castle_Blue'},
-      { type: "House_Blue", key: 'House_Blue' },
-      { type: "Tower_Blue", key: 'Tower_Blue' }
+    // Resources
+    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep'});
+    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree'});
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_mine_inactive'});
+
+    // Buildings
+    this._buildingsLayer = this._map.createFromObjects('Buildings', [
+      { type: "Townhall_Blue", key: 'Townhall_Blue'},
+      { type: "Townhall_Red", key: 'Townhall_Red' }
     ]);
-
-    
 
     const npcLayer = this._map.createFromObjects("NPCs", [
-      { type: "Villager", key: 'Pawn_Blue'},
-      { type: "Soldier", key: 'Warrior_Blue'}
-    ]);
-
-    const resourceLayer = this._map.createFromObjects("resources", [
-      { type: "Tree", key: 'Tree', classType: Tree},
-      { type: "Sheep", key: "HappySheep_Idle", classType: Sheep},
-      { type: "GoldMine", key: "GoldMine_Active", classType: GoldMine}
+      { type: "Villager_blue", key: 'Villager_blue'},
+      { type: "Villager_red", key: 'Villager_red'}
     ]);
 
     // Event listener al hacer scroll
