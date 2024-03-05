@@ -96,15 +96,24 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Spawn            | A building is used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and the others will be queued. |
 | Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.    |
 
-<!-- TODO Añadir las dinámicas -->
 ### Dynamics
-|         Name        |                                                   Descriptions                                                  |
-|:-------------------:|:---------------------------------------------------------------------------------------------------------------:|
-|       Explore       |                 Using units to explore and control the map to give you a strategical advantage.                 |
-| Resource Management | Being mindful on how to spend your wealth is key to create a bigger army, as well as build a strong economy.    |
-|       Military      |   The adequate use of your soldiers and their use in battle is incentive to clash and destroy the enemy base.   |
-|       Strategy      | Being an online game, the need to think ahead in real time creates the need to be tactical throughout the game. |
-
+Some of the most interesting dynamics arising from the mechanics of Troops include:
+- Exploring the map to familiarize oneself with it.
+- Building a quaint town (just for fun).
+- Allocating all troops to maximize resource acquisition.
+- Creating the largest possible army.
+- Establishing non-aggression pacts, whether temporary or permanent, with opponents (friends).
+- Rushing the opponent by attacking as soon as possible, leaving them with no room to develop.
+- Using buildings as a barrier to protect the Town Hall.
+- Always assigning a soldier to accompany villagers for their protection.
+- Facing limited construction options due to restricted available space (on mountain maps).
+- Deploying troops across various fronts for offense/defense (on desert maps).
+- Concentrating all troops on a single front to consolidate forces (on desert maps).
+- Exerting control over bridges to prevent enemy crossings (on river maps).
+- Using only one type of troop.
+- Securing control of the center to monopolize gold gathering (and consequently spawning goblins).
+- Surrounding the enemy by constructing buildings around them.
+- Negotiating with the opponent to limit the use resources (just the initial ones or others, such as forbidding the use of gold).
 
 ### Aesthetics
 The overall aesthetic of the videogame is medieval-themed. Despite the game's aggressive nature, Troops aims to be a friendly and enjoyable experience for players of all kinds.
