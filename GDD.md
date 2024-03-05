@@ -22,6 +22,8 @@ The people have divided and support the neighboring kings. The candidate from th
 
 The fate of Eliora is at stake and only war can decide it...
 
+![Town hall Sprite](/assets/previews/kings/Troops_kings.png)
+
 ## Game Session Overview
 The player enters the website and can choose from three different options:
 1. **PLAY**: Join a lobby and wait until matched with another player. Start a game on a randomly selected map (color selected by order of arrival, 1st blue and 2nd red).
