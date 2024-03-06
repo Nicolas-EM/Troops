@@ -37,12 +37,15 @@ export default abstract class Entity extends Phaser.GameObjects.Sprite {
 
 
     onEntityClicked() {
-        
+
         //DESELECT ALL OTHERS FIRST:
-        this._owner.selectedGameObjects = [];
+      //  this._owner.selectedGameObjects = [];
 
         //SELECT THIS:
-        console.log("Entity : ", this, "has been clicked");
+        console.log("Entity : ", this, "has been clicked. Calling menu:" );
+        let testingEntities = new Array<Phaser.GameObjects.GameObject>();
+        testingEntities.push(this);
+       this.scene.events.emit('entityClicked', this);
         //yes, this does call the getter (get keyword)
 
         // this._owner.selectedGameObjects.push(this);
