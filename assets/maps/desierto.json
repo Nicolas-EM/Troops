@@ -4147,7 +4147,7 @@
                  "id":269,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_blue",
+                 "type":"Villager_Blue",
                  "visible":true,
                  "width":192,
                  "x":1088,
@@ -4159,7 +4159,7 @@
                  "id":270,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_blue",
+                 "type":"Villager_Blue",
                  "visible":true,
                  "width":192,
                  "x":1472,
@@ -4171,7 +4171,7 @@
                  "id":271,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_blue",
+                 "type":"Villager_Blue",
                  "visible":true,
                  "width":192,
                  "x":1152,
@@ -4183,7 +4183,7 @@
                  "id":272,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_red",
+                 "type":"Villager_Red",
                  "visible":true,
                  "width":192,
                  "x":7872,
@@ -4195,7 +4195,7 @@
                  "id":273,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_red",
+                 "type":"Villager_Red",
                  "visible":true,
                  "width":192,
                  "x":7424,
@@ -4207,7 +4207,7 @@
                  "id":274,
                  "name":"",
                  "rotation":0,
-                 "type":"Villager_red",
+                 "type":"Villager_Red",
                  "visible":true,
                  "width":192,
                  "x":7808,
@@ -4457,6 +4457,12 @@
          "imagewidth":320,
          "margin":0,
          "name":"Townhall_blue",
+         "properties":[
+                {
+                 "name":"owner",
+                 "type":"string",
+                 "value":"Blue"
+                }],
          "spacing":0,
          "tilecount":1,
          "tileheight":256,
@@ -4467,7 +4473,7 @@
                         {
                          "name":"color",
                          "type":"string",
-                         "value":"BLUE"
+                         "value":"Blue"
                         }]
                 }],
          "tilewidth":320
@@ -4488,9 +4494,9 @@
                  "id":0,
                  "properties":[
                         {
-                         "name":"color",
+                         "name":"owner",
                          "type":"string",
-                         "value":"RED"
+                         "value":"Red"
                         }]
                 }],
          "tilewidth":320
@@ -4519,6 +4525,331 @@
          "spacing":0,
          "tilecount":36,
          "tileheight":192,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":3,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":4,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":5,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":6,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":7,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":8,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":9,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":10,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":11,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":12,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":13,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":14,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":15,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":16,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":17,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":18,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":19,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":20,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":21,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":22,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":23,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":24,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":25,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":26,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":27,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":28,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":29,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":30,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":31,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":32,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":33,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":34,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }, 
+                {
+                 "id":35,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Blue"
+                        }]
+                }],
          "tilewidth":192
         }, 
         {
@@ -4532,6 +4863,331 @@
          "spacing":0,
          "tilecount":36,
          "tileheight":192,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":3,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":4,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":5,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":6,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":7,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":8,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":9,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":10,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":11,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":12,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":13,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":14,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":15,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":16,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":17,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":18,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":19,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":20,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":21,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":22,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":23,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":24,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":25,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":26,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":27,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":28,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":29,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":30,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":31,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":32,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":33,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":34,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }, 
+                {
+                 "id":35,
+                 "properties":[
+                        {
+                         "name":"owner",
+                         "type":"string",
+                         "value":"Red"
+                        }]
+                }],
          "tilewidth":192
         }],
  "tilewidth":64,
