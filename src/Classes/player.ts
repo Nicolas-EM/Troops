@@ -15,7 +15,7 @@ export default class Player {
   private _buildings: Building[];
   private _npcs: NPC[];
   private _resources: Resource[];
-  private _selectedGameObjects: NPC[] | Building;
+  private _selectedGameObjects: Phaser.GameObjects.GameObject[];
   private _scene: Phaser.Scene;
 
   /**
@@ -51,7 +51,7 @@ export default class Player {
   }
 
   private addEventListeners(): void {
-    this._scene.events.on()
+   // this._scene.events.on()
   }
 
   /**
@@ -166,11 +166,11 @@ public abandonGame(): void {
     this._resources = value;
   }
 
-  get selectedGameObjects(): NPC[] | Building {
+  get selectedGameObjects(): Phaser.GameObjects.GameObject[] {
     return this._selectedGameObjects;
   }
 
-  set selectedGameObjects(value: NPC[] | Building) {
+  set selectedGameObjects(value: Phaser.GameObjects.GameObject[]) {
     this._selectedGameObjects = value;
   }
 }

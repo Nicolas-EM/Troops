@@ -20,8 +20,36 @@ export default abstract class Entity extends Phaser.GameObjects.Sprite {
         this._health = health;
         this._id = id || "namelessEntity";
         this._visionRange = visionRange;
+        this.init();
     }
-    
+
+    protected init() {
+        this.addEventListeners();
+    }
+
+    /**
+     * @summary adds event listeners to the NPC for his generic actions (move, receive hit)
+     */
+    protected addEventListeners() {
+        this.setInteractive();
+        this.on('pointerdown', this.onEntityClicked, this);
+    }
+
+
+    onEntityClicked() {
+        
+        //DESELECT ALL OTHERS FIRST:
+        this._owner.selectedGameObjects = [];
+
+        //SELECT THIS:
+        console.log("Entity : ", this, "has been clicked");
+        //yes, this does call the getter (get keyword)
+
+        // this._owner.selectedGameObjects.push(this);
+        // console.log("Selected game objects for player: ",this._owner.name,"are :", this._owner.selectedGameObjects);
+
+
+    }
     /**
      * @param damage
      */

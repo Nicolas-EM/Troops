@@ -1,5 +1,5 @@
 import Player from '../player';
-import NPC from './NPC';
+import NPC from './npc';
 
 export default class Villager extends NPC {
     public Villager(id: string, owner: Player, X: number, Y: number, health: number, visionRange?: number){

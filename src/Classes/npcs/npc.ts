@@ -17,29 +17,29 @@ export default abstract class NPC extends Entity {
      */
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {
         super(scene, x, y, texture, owner, health, id, visionRange, frame);
-        this.init();
+        //this.init();
     }
 
     /**
      * @summary initialization of NPC entity
      */
-    private init(){
-        this.addEventListeners();
-    }
+    // protected init(){
+    //     this.addEventListeners();
+    // }
 
     /**
      * @summary adds event listeners to the NPC for his generic actions (move, receive hit)
      */
-    private addEventListeners(){
-        //TODO complete
-        this.scene.events.on('moveOrder',() => {});
-        //These dont belong here, rather in subclass
-        //TODO @sanord8
-       // this.scene.events.on('attackOrder',() => {});
-       // this.scene.events.on('gatherOrder',() => {});
-        this.scene.events.on('spawnOrder',() => {});
-        this.scene.events.on('death',() => {});
-    }
+    // protected addEventListeners(){
+    //     //TODO complete
+    //     this.scene.events.on('moveOrder',() => {});
+    //     //These dont belong here, rather in subclass
+    //     //TODO @sanord8
+    //    // this.scene.events.on('attackOrder',() => {});
+    //    // this.scene.events.on('gatherOrder',() => {});
+    //     this.scene.events.on('spawnOrder',() => {});
+    //     this.scene.events.on('death',() => {});
+    // }
 
     /**
      * @summary executes move order on X Y cordinates

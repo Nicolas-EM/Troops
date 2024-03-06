@@ -3,7 +3,7 @@ import TownHall from "../Classes/Buildings/Townhall";
 import Tree from "../Classes/Resources/tree";
 import Sheep from "../Classes/Resources/sheep";
 import GoldMine from "../Classes/Resources/goldMine";
-
+import Villager from "../Classes/npcs/villager";
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
@@ -37,19 +37,19 @@ export default class Game extends Phaser.Scene {
     this._map.createLayer('Fondo/Grass', tileset!);
 
     // Resources
-    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep'});
-    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree'});
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_mine_inactive'});
+    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep', classType: Sheep });
+    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree', classType: Tree });
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_mine_inactive', classType: GoldMine });
 
     // Buildings
     this._buildingsLayer = this._map.createFromObjects('Buildings', [
-      { type: "Townhall_Blue", key: 'Townhall_Blue'},
-      { type: "Townhall_Red", key: 'Townhall_Red' }
+      { type: "Townhall_Blue", key: 'Townhall_Blue', classType: TownHall },
+      { type: "Townhall_Red", key: 'Townhall_Red', classType: TownHall }
     ]);
 
     const npcLayer = this._map.createFromObjects("NPCs", [
-      { type: "Villager_blue", key: 'Villager_blue'},
-      { type: "Villager_red", key: 'Villager_red'}
+      { type: "Villager_blue", key: 'Villager_blue', classType: Villager },
+      { type: "Villager_red", key: 'Villager_red', classType: Villager }
     ]);
 
     // Event listener al hacer scroll
