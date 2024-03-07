@@ -11,5 +11,20 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
         this._totalResources = totalResources;
         this._remainingResrouces = totalResources;
         this._resourceRate = resourceRate;
+        this.init();
+    }
+
+    protected init() {
+        this.addEventListeners();
+    }
+
+    protected addEventListeners() {
+        this.setInteractive();
+        this.on('pointerdown', this.onResourceClicked, this);
+    }
+
+    onResourceClicked() {
+        console.log("Resource : ", this, "has been clicked. Calling menu:");
+       // this.scene.events.emit('resourceClicked', this);
     }
 }

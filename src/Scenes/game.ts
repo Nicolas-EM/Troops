@@ -20,6 +20,7 @@ export default class Game extends Phaser.Scene {
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
+  private menu: Phaser.GameObjects.Container | null = null;
 
   constructor() {
     super({ key: 'game' });
@@ -81,6 +82,9 @@ export default class Game extends Phaser.Scene {
           this.cameras.main.zoom = newZoom;
         }
       }
+      this.events.on('entityClicked', (clickedObject: Phaser.GameObjects.GameObject[]) => {
+        this.createMenu(clickedObject);
+      });
     });
 
     this.input.on('gameout', () => this.pointerInMap = false);
@@ -114,5 +118,27 @@ export default class Game extends Phaser.Scene {
     else if (pointer.y <= MOVEMENT_OFFSET)
       // move up
       this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
+  }
+
+
+
+  //TODO @sanord8 tras la idea de nico deberia hacer una sub escena que este siepre por encima
+  //container approach (maybe nineslice works better)
+  createMenu(objects: Phaser.GameObjects.GameObject[]) {
+    console.log("Creating menu for: ", objects);
+    const menu = this.add.container(0, this.scale.height - this.scale.height / 7);
+    const background = this.add.rectangle(0, 0, this.scale.width * 4 / 5, this.scale.height / 7, 0x000000);
+
+    Array.isArray(objects) && objects.forEach((object, index) => {
+      const text = this.add.text(10, 10 + index * 20, `Selected: ${object.name}`);
+      menu.add(text);
+    });
+    menu.add(background);
+    menu.list.forEach(child => {
+      if (child instanceof Phaser.GameObjects.Text) {
+        child.setOrigin(0, 1);
+      }
+    });
+    this.add.existing(menu);
   }
 }
