@@ -13,7 +13,7 @@ export default class Player {
   private _townhall: Townhall;
   private _buildings: Building[];
   private _npcs: NPC[];
-  private _resources: Resource[];
+  private _resources: object;
   private _selectedGameObjects: NPC[] | Building;
   private _scene: Phaser.Scene;
 
@@ -25,11 +25,11 @@ export default class Player {
    * @param {Townhall} townhall - The townhall owned by the player.
    * @param {Building[]} buildings - An array of buildings owned by the player.
    * @param {NPC[]} npcs - An array of player0s units (troops, villagers...)
-   * @param {Resource[]} resources - Player's resources
+   * @param {object} resources - Player's resources
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
    * @param {Scene  } scene - The scene where the player is created.
    */
-  constructor(id: number, name: string, color: number, townhall: Townhall, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
+  constructor(id: number, name: string, color: number, townhall: Townhall, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: object) {
     this._id = id;
     this._name = name;
     this._color = color;
@@ -50,16 +50,16 @@ export default class Player {
   }
 
   private addEventListeners(): void {
-    this._scene.events.on()
+    // this._scene.events.on()
   }
 
   /**
    *
-   * @returns {Resource[]} Generated starting resources
+   * @returns {object} Generated starting resources
    * @private
    */
-  private defaultStartingResources(): Resource[] {
-    let resources: Resource[] = [];
+  private defaultStartingResources(): object {
+    let resources = {}
     // resources.push(startingData.STARTING_PLAYER_GOLD);
     // return resources;
     return resources;
@@ -157,11 +157,11 @@ public abandonGame(): void {
     this._npcs = value;
   }
 
-  get resources(): Resource[] {
+  get resources(): object {
     return this._resources;
   }
 
-  set resources(value: Resource[]) {
+  set resources(value: object) {
     this._resources = value;
   }
 

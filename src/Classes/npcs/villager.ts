@@ -1,4 +1,4 @@
-import Player from '../player';
+import Player from '../Player';
 import NPC from './NPC';
 
 export default class Villager extends NPC {

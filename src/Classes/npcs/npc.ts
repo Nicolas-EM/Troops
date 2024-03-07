@@ -1,9 +1,11 @@
 import * as Phaser from 'phaser';
 import Player from '../Player.ts'
-import Entity from '../PlayerEntity.ts';
-import pathfinder from '../Pathfinder.ts';
+import PlayerEntity from '../PlayerEntity.ts';
+import Pathfinder from '../Pathfinder.ts';
 import { PathNode } from "@raresail/phaser-pathfinding";
-export default abstract class NPC extends Entity {
+
+
+export default abstract class NPC extends PlayerEntity {
     // protected attributes:
     protected _id: string;
     protected _owner: Player;
@@ -49,7 +51,7 @@ export default abstract class NPC extends Entity {
     move(X: number, Y: number): void{
         let currentPosition = new Phaser.Math.Vector2(this.x, this.y);
         let targetPosition = new Phaser.Math.Vector2(X, Y);
-        let path = pathfinder.getInstance().findPath(currentPosition, targetPosition);
+        let path = Pathfinder.getInstance().findPath(currentPosition, targetPosition);
 
         if(path){
             //TODO

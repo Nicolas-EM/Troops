@@ -1,8 +1,8 @@
 import * as Phaser from "phaser"
-import Entity from "../PlayerEntity";
+import PlayerEntity from "../PlayerEntity";
 import Player from "../Player";
 
-export default abstract class Building extends Entity {
+export default abstract class Building extends PlayerEntity {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {
         super(scene, x, y, texture, owner, health, id, visionRange, frame);
     }

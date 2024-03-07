@@ -1,5 +1,5 @@
 import Building from "./Building";
 
-export default class House extends Building {
+export default class VillagerHouse extends Building {
     
 }

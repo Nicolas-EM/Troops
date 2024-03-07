@@ -1,7 +1,7 @@
 import NPC from "../npcs/NPC";
-import NPCSpawner from "./NPCSpawner";
+import SpawnerBuilding from "./SpawnerBuilding";
 
-export default class Townhall extends NPCSpawner {
+export default class TownHall extends SpawnerBuilding {
     spawn(): NPC {
         throw new Error("Method not implemented.");
     }

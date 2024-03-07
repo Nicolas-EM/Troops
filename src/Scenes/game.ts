@@ -1,5 +1,4 @@
 import * as Phaser from 'phaser'
-import TownHall from "../classes/buildings/TownHall";
 import Tree from "../classes/resources/Tree";
 import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";

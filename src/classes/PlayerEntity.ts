@@ -2,7 +2,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 
-export default abstract class Entity extends Phaser.GameObjects.Sprite {
+export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     // protected attributes:
     protected _id: string;
     protected _owner: Player;

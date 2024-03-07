@@ -1,5 +1,5 @@
 import NPC from './NPC.ts';
-import Player from '../player.ts';
+import Player from '../Player.ts';
 
 export default abstract class AttackUnit extends NPC {
     protected _attackRange: number;
