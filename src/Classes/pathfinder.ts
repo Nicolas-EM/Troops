@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Game from "../Scenes/game";
+import Game from "../scenes/Game";
 import { Pathfinding, Grid, PathNode } from "@raresail/phaser-pathfinding";
 
 export default class Pathfinder {

@@ -1,4 +1,4 @@
-import NPC from "../NPCs/NPC";
+import NPC from "../npcs/NPC";
 import NPCSpawner from "./NPCSpawner";
 
 export default class Townhall extends NPCSpawner {

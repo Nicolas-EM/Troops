@@ -1,8 +1,8 @@
 import startingData from '../magic_numbers/starting_data';
-import Townhall from './Buildings/Townhall';
-import Building from './Buildings/Building';
-import NPC from './NPCs/NPC';
-import Resource from './Resources/resource';
+import Townhall from './buildings/TownHall';
+import Building from './buildings/Building';
+import NPC from './npcs/NPC';
+import Resource from './resources/resource';
 import { Scene } from 'phaser';
 
 export default class Player {

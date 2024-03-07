@@ -1,6 +1,6 @@
-import NPC from "../NPCs/NPC";
-import Player from "../player";
-import NPCSpawner from "./NPCSpawner";
+import NPC from "../npcs/NPC";
+import Player from "../Player";
+import NPCSpawner from "./SpawnerBuilding";
 
 export default class Townhall extends NPCSpawner {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {

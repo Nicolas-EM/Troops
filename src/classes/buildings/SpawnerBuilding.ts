@@ -1,5 +1,5 @@
-import NPC from "../NPCs/NPC";
-import Player from "../player";
+import NPC from "../npcs/NPC";
+import Player from "../Player";
 import Building from "./Building"
 
 export default abstract class NPCSpawner extends Building {

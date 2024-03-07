@@ -1,6 +1,6 @@
 
 import * as Phaser from 'phaser';
-import Player from './player';
+import Player from './Player';
 
 export default abstract class Entity extends Phaser.GameObjects.Sprite {
     // protected attributes:
