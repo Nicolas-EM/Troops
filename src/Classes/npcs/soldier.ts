@@ -1,7 +1,7 @@
 import * as Phaser from "phaser";
-import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
+import NPC from "./NPC";
 
 // TODO: move to magic numbers
 const damage = 10;

@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser'
+import TownHall from "../Classes/Buildings/Townhall";
 import Tree from "../Classes/Resources/Tree";
 import Sheep from "../Classes/Resources/Sheep";
 import GoldMine from "../Classes/Resources/GoldMine";
-import Villager from "../Classes/npcs/Villager";
+import Villager from "../Classes/NPCs/Villager";
 import Player from '../Classes/Player';
 
 // MAGIC NUMBER
@@ -20,7 +21,6 @@ export default class Game extends Phaser.Scene {
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
-  private menu: Phaser.GameObjects.Container | null = null;
 
   constructor() {
     super({ key: 'game' });
@@ -38,15 +38,17 @@ export default class Game extends Phaser.Scene {
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
-    // Añadir referencia a imagen
-    const backgroundTiles = this._map.addTilesetImage("Ground");
-    // Crear capa con imagen
-    const backgroundLayer = this._map.createLayer('background', backgroundTiles!, 0, 0);
+    // Fondo
+    let tileset = this._map.addTilesetImage("Water");
+    this._map.createLayer("Fondo/Water", tileset!);
+    tileset = this._map.addTilesetImage("ground");
+    this._map.createLayer('Fondo/Ground', tileset!);
+    this._map.createLayer('Fondo/Grass', tileset!);
 
     // Resources
-    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep' });
-    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree' });
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_inactive' });
+    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep', classType: Sheep });
+    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree', classType: Tree });
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_inactive', classType: GoldMine });
 
     // Townhalls
     let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo
@@ -82,9 +84,6 @@ export default class Game extends Phaser.Scene {
           this.cameras.main.zoom = newZoom;
         }
       }
-      this.events.on('entityClicked', (clickedObject: Phaser.GameObjects.GameObject[]) => {
-        this.createMenu(clickedObject);
-      });
     });
 
     this.input.on('gameout', () => this.pointerInMap = false);
@@ -118,27 +117,5 @@ export default class Game extends Phaser.Scene {
     else if (pointer.y <= MOVEMENT_OFFSET)
       // move up
       this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
-  }
-
-
-
-  //TODO @sanord8 tras la idea de nico deberia hacer una sub escena que este siepre por encima
-  //container approach (maybe nineslice works better)
-  createMenu(objects: Phaser.GameObjects.GameObject[]) {
-    console.log("Creating menu for: ", objects);
-    const menu = this.add.container(0, this.scale.height - this.scale.height / 7);
-    const background = this.add.rectangle(0, 0, this.scale.width * 4 / 5, this.scale.height / 7, 0x000000);
-
-    Array.isArray(objects) && objects.forEach((object, index) => {
-      const text = this.add.text(10, 10 + index * 20, `Selected: ${object.name}`);
-      menu.add(text);
-    });
-    menu.add(background);
-    menu.list.forEach(child => {
-      if (child instanceof Phaser.GameObjects.Text) {
-        child.setOrigin(0, 1);
-      }
-    });
-    this.add.existing(menu);
   }
 }
