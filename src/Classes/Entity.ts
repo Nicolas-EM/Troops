@@ -4,7 +4,6 @@ import Player from './player';
 
 export default abstract class Entity extends Phaser.GameObjects.Sprite {
     // protected attributes:
-    protected _id: string;
     protected _owner: Player;
     protected _health: number;
     protected _visionRange: number;
@@ -14,11 +13,10 @@ export default abstract class Entity extends Phaser.GameObjects.Sprite {
      * @param owner is the player who created the entity, not optional.
      * @returns Object
      */
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, visionRange: number, frame?: string | number) {
         super(scene, x, y, texture, frame);
         this._owner = owner;
         this._health = health;
-        this._id = id || "namelessEntity";
         this._visionRange = visionRange;
     }
     

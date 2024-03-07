@@ -4107,111 +4107,26 @@
          "name":"Buildings",
          "objects":[
                 {
-                 "gid":291,
                  "height":256,
-                 "id":261,
+                 "id":275,
                  "name":"",
                  "rotation":0,
-                 "type":"Townhall_Blue",
+                 "type":"Townhall_P1",
                  "visible":true,
                  "width":320,
                  "x":1024,
-                 "y":2752
+                 "y":2496
                 }, 
                 {
-                 "gid":292,
                  "height":256,
-                 "id":262,
+                 "id":276,
                  "name":"",
                  "rotation":0,
-                 "type":"Townhall_Red",
+                 "type":"Townhall_P2",
                  "visible":true,
                  "width":320,
                  "x":7744,
-                 "y":2752
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":35,
-         "name":"NPCs",
-         "objects":[
-                {
-                 "gid":305,
-                 "height":192,
-                 "id":269,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Blue",
-                 "visible":true,
-                 "width":192,
-                 "x":1088,
-                 "y":3008
-                }, 
-                {
-                 "gid":305,
-                 "height":192,
-                 "id":270,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Blue",
-                 "visible":true,
-                 "width":192,
-                 "x":1472,
-                 "y":2752
-                }, 
-                {
-                 "gid":305,
-                 "height":192,
-                 "id":271,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Blue",
-                 "visible":true,
-                 "width":192,
-                 "x":1152,
-                 "y":2368
-                }, 
-                {
-                 "gid":341,
-                 "height":192,
-                 "id":272,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Red",
-                 "visible":true,
-                 "width":192,
-                 "x":7872,
-                 "y":2432
-                }, 
-                {
-                 "gid":341,
-                 "height":192,
-                 "id":273,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Red",
-                 "visible":true,
-                 "width":192,
-                 "x":7424,
-                 "y":2752
-                }, 
-                {
-                 "gid":341,
-                 "height":192,
-                 "id":274,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Villager_Red",
-                 "visible":true,
-                 "width":192,
-                 "x":7808,
-                 "y":3072
+                 "y":2496
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4313,7 +4228,7 @@
          "y":0
         }],
  "nextlayerid":36,
- "nextobjectid":275,
+ "nextobjectid":277,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

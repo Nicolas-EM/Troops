@@ -4,7 +4,7 @@ import * as Sprites from "../../assets/sprites";
 
 // maps
 import map_test from "../../assets/maps/test.json";
-import map_desierto from "../../assets/maps/desierto.json";
+import map_desierto from "../../assets/maps/desert.json";
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -24,7 +24,7 @@ export default class Boot extends Phaser.Scene {
   preload() {
     // Maps
     this.load.tilemapTiledJSON("test", map_test);
-    this.load.tilemapTiledJSON("desierto", map_desierto);
+    this.load.tilemapTiledJSON("desert", map_desierto);
 
     // Fondo
     this.load.image('ground', Sprites.Terrain.Ground.ground);
@@ -98,6 +98,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('game', { mapId: "desierto" });
+    this.scene.start('game', { mapId: "desert", p1: "Blue", p2: "Red" });
   }
 }

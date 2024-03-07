@@ -10,8 +10,7 @@ export default class Player {
 
   private _id: number;
   private _name: string;
-  private _color: number;
-  private _townhall: Townhall;
+  private _color: string;
   private _buildings: Building[];
   private _npcs: NPC[];
   private _resources: Resource[];
@@ -23,18 +22,16 @@ export default class Player {
    * @param {number} id - The unique identifier for the player.
    * @param {string} name - The name of the player.
    * @param {number} color - The color associated with the player.
-   * @param {Townhall} townhall - The townhall owned by the player.
    * @param {Building[]} buildings - An array of buildings owned by the player.
    * @param {NPC[]} npcs - An array of player0s units (troops, villagers...)
    * @param {Resource[]} resources - Player's resources
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
    * @param {Scene  } scene - The scene where the player is created.
    */
-  constructor(id: number, name: string, color: number, townhall: Townhall, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
+  constructor(id: number, name: string, color: string, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
     this._id = id;
     this._name = name;
     this._color = color;
-    this._townhall = townhall;
     this._buildings = buildings || [];
     this._npcs = npcs || this.defaultStartingUnits();
     this._resources = resources || this.defaultStartingResources();
@@ -51,7 +48,7 @@ export default class Player {
   }
 
   private addEventListeners(): void {
-    this._scene.events.on()
+    // this._scene.events.on()
   }
 
   /**
@@ -126,20 +123,12 @@ public abandonGame(): void {
     this._name = value;
   }
 
-  get color(): number {
+  get color(): string {
     return this._color;
   }
 
-  set color(value: number) {
+  set color(value: string) {
     this._color = value;
-  }
-
-  get townhall(): Townhall {
-    return this._townhall;
-  }
-
-  set townhall(value: Townhall) {
-    this._townhall = value;
   }
 
   get buildings(): Building[] {
