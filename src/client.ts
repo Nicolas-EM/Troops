@@ -14,6 +14,7 @@ let config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: 1000,
     height: 600,
+    disableContextMenu: true,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY

@@ -88,19 +88,19 @@ export default class Game extends Phaser.Scene {
   //container approach (maybe nineslice works better)
   createMenu(objects: Phaser.GameObjects.GameObject[]) {
     console.log("Creating menu for: ", objects);
-    this.menu?.destroy();//if exists, destroy
-    this.menu = this.add.container(0, this.scale.height - this.scale.height / 7);
+    const menu = this.add.container(0, this.scale.height - this.scale.height / 7);
     const background = this.add.rectangle(0, 0, this.scale.width * 4 / 5, this.scale.height / 7, 0x000000);
 
     Array.isArray(objects) && objects.forEach((object, index) => {
       const text = this.add.text(10, 10 + index * 20, `Selected: ${object.name}`);
-      this.menu?.add(text);
+      menu.add(text);
     });
-    this.menu?.add(background);
-    this.menu?.list.forEach(child => {
+    menu.add(background);
+    menu.list.forEach(child => {
       if (child instanceof Phaser.GameObjects.Text) {
         child.setOrigin(0, 1);
       }
     });
+    this.add.existing(menu);
   }
 }

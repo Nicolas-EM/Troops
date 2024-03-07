@@ -1,7 +1,6 @@
 
 import * as Phaser from 'phaser';
 import Player from './player';
-
 export default abstract class Entity extends Phaser.GameObjects.Sprite {
     // protected attributes:
     protected _id: string;
@@ -35,23 +34,17 @@ export default abstract class Entity extends Phaser.GameObjects.Sprite {
         this.on('pointerdown', this.onEntityClicked, this);
     }
 
-
     onEntityClicked() {
+        // Create a debug circle around the sprite
+        const debugCircle = this.scene.add.image(this.x, this.y, "../../assets/sprites/UI/pointers/selected.png");
+        debugCircle.setOrigin(0.5);
+        debugCircle.setDepth(1);
 
-        //DESELECT ALL OTHERS FIRST:
-      //  this._owner.selectedGameObjects = [];
-
-        //SELECT THIS:
-        console.log("Entity : ", this, "has been clicked. Calling menu:" );
+        // Rest of the code...
+        console.log("Entity: ", this, "has been clicked. Calling menu:");
         let testingEntities = new Array<Phaser.GameObjects.GameObject>();
         testingEntities.push(this);
-       this.scene.events.emit('entityClicked', this);
-        //yes, this does call the getter (get keyword)
-
-        // this._owner.selectedGameObjects.push(this);
-        // console.log("Selected game objects for player: ",this._owner.name,"are :", this._owner.selectedGameObjects);
-
-
+        this.scene.events.emit('entityClicked', this);
     }
     /**
      * @param damage
