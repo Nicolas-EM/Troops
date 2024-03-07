@@ -1,15 +1,22 @@
 import * as Phaser from 'phaser'
-import Tree from "../classes/resources/Tree";
-import Sheep from "../classes/resources/Sheep";
-import GoldMine from "../classes/resources/GoldMine";
+import Tree from "../Classes/Resources/Tree";
+import Sheep from "../Classes/Resources/Sheep";
+import GoldMine from "../Classes/Resources/GoldMine";
+import Villager from "../Classes/npcs/Villager";
+import Player from '../Classes/Player';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
 const ZOOM_AMOUNT = 0.05;
 const MIN_POS = -64;
+const MOVEMENT_OFFSET = 50;
+const STARTING_VILLAGER_NPCs = 3;
 
 export default class Game extends Phaser.Scene {
+  private p1: string;
+  private p2: string;
+  private pointerInMap = true;
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
@@ -22,31 +29,8 @@ export default class Game extends Phaser.Scene {
   // En este caso, pasamos el ID del mapa
   init(data) {
     this.mapId = data.mapId;
-  }
-
-  preload() {
-    this.load.setPath('assets/sprites/');
-
-    // Cargar json del mapa
-    this.load.tilemapTiledJSON("map", `maps/${this.mapId}.json`);
-
-    // Cargar imagenes
-    this.load.image("Ground", "terrain\/ground\/ground.png");
-
-    // Buildings
-    this.load.image("Town_Hall_Blue", "buildings\/town_hall\/blue.png");
-    this.load.image("Villager_House_Blue", "buildings\/villager_house\/blue.png");
-    this.load.image("Tower_Blue", "buildings\/tower\/blue.png");
-    this.load.image("Goblin_Hut_Blue", "buildings\/goblin_hut\/blue.png");
-
-    // NPCs
-    this.load.spritesheet("Villager_Blue", "NPCs\/villager\/blue.png", { frameWidth: 192, frameHeight: 192});
-    this.load.spritesheet("Soldier_Blue", "NPCs\/soldier\/blue.png", { frameWidth: 192, frameHeight: 192});
-
-    // Resources
-    this.load.spritesheet("Tree", "resources\/spawners\/tree\/tree.png", { frameWidth: 192, frameHeight: 192});
-    this.load.spritesheet("Sheep", "resources\/spawners\/sheep\/sheep.png", { frameWidth: 128, frameHeight: 128});
-    this.load.spritesheet("Gold_Mine_Active", "resources\/spawners\/gold_mine\/gold_mine_active.png", { frameWidth: 192, frameHeight: 128});
+    this.p1 = data.p1;
+    this.p2 = data.p2;
   }
 
   create() {
@@ -58,23 +42,29 @@ export default class Game extends Phaser.Scene {
     // Crear capa con imagen
     const backgroundLayer = this._map.createLayer('background', backgroundTiles!, 0, 0);
 
-    this._buildingsLayer = this._map.createFromObjects('buildings', [
-      { type: "Town_Hall_Blue", key: 'Town_Hall_Blue'},
-      { type: "Villager_House_Blue", key: 'Villager_House_Blue' },
-      { type: "Tower_Blue", key: 'Tower_Blue' },
-      { type: "Goblin_Hut_Blue", key: 'Goblin_Hut_Blue' }
-    ]);
+    // Resources
+    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep' });
+    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree' });
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_inactive' });
 
-    const npcLayer = this._map.createFromObjects("NPCs", [
-      { type: "Villager_Blue", key: 'Villager_Blue'},
-      { type: "Soldier_Blue", key: 'Soldier_Blue'}
-    ]);
+    // Townhalls
+    let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo
 
-    const resourceLayer = this._map.createFromObjects("resources", [
-      { type: "Tree", key: 'Tree', classType: Tree},
-      { type: "Sheep", key: "Sheep", classType: Sheep},
-      { type: "Gold_Mine_Active", key: "Gold_Mine_Active", classType: GoldMine}
-    ]);
+    this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
+      if (obj.type === "Townhall_P1") {
+        const p1_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p1}`, x);
+
+        new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p1}`, x);
+        new Villager(this, <number>obj.x + 320, <number>obj.y + 64, `Villager_${this.p1}`, x);
+        new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
+      } else if (obj.type === "Townhall_P2") {
+        const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
+        
+        new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
+        new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
+        new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
+      }
+    });
 
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
@@ -93,12 +83,36 @@ export default class Game extends Phaser.Scene {
       }
     });
 
-    // Event listener al hacer click y mover
-    this.input.on('pointermove', (pointer) => {
-      if (!pointer.isDown) return;
+    this.input.on('gameout', () => this.pointerInMap = false);
+    this.input.on('gameover', () => this.pointerInMap = true);
+  }
 
-      this.cameras.main.scrollX -= (pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom;
-      this.cameras.main.scrollY -= (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom;
-    });
+  update(time: number, delta: number): void {
+    this.cameraPan(delta)
+  }
+
+  cameraPan(delta: number) {
+    let { width, height } = this.sys.game.canvas;
+    const pointer = this.input.activePointer.position;
+
+    if (pointer.x === 0 && pointer.y === 0)
+      return;
+
+    if (!this.pointerInMap)
+      return;
+
+    if (pointer.x >= width - MOVEMENT_OFFSET)
+      // move right
+      this.cameras.main.scrollX += delta / this.cameras.main.zoom;
+    else if (pointer.x <= MOVEMENT_OFFSET)
+      // move left
+      this.cameras.main.scrollX -= delta / this.cameras.main.zoom;
+
+    if (pointer.y >= height - MOVEMENT_OFFSET)
+      // move down
+      this.cameras.main.scrollY += delta / this.cameras.main.zoom;
+    else if (pointer.y <= MOVEMENT_OFFSET)
+      // move up
+      this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
   }
 }

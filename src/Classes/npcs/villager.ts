@@ -1,9 +1,15 @@
 import Player from '../Player';
 import NPC from './NPC';
 
+// TODO: Magic numbers
+const health = 100;
+const visionRange = 5;
+
 export default class Villager extends NPC {
-    public Villager(id: string, owner: Player, X: number, Y: number, health: number, visionRange?: number){
-        // super(id, owner, X, Y, health, visionRange);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, visionRange, frame);
+
+        this.scene.add.existing(this);
     }
 
     /**

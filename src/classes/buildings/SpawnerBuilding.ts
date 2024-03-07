@@ -5,8 +5,8 @@ import Building from "./Building"
 export default abstract class SpawnerBuilding extends Building {
     protected spawnQueue: NPC[];
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, id: string, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, id, visionRange, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, visionRange: number, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, visionRange, frame);
     }
 
     abstract spawn(): NPC;
