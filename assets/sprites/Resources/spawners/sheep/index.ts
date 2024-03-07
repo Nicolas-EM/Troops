@@ -1,0 +1,1 @@
+export { default as inactive } from './sheep.png';

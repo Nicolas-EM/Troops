@@ -15,13 +15,14 @@ The age minimum is set at 12 years old due to the nature of this videogame. RTS 
 
 Regarding the target audience, players have been segmented based on gender, age, region, videogame skills and general interests. People aged between 25-40 years old are considered the primary audience for RTS games, as explained earlier. When choosing a recommended level of skills, there are four posibilities: basic, low, medium and high. Troops does not require extensive experience in videogames and the mechanics are easy to learn. However, people who primarily play smartphone apps such as "Candy Crush" may feel overwhelmed due to the ammount of information and resources the player needs to manage simultaneously. This is why the level has been set to "low". Last but not least, all the marketing resources will be directed towards young people interested in medieval history (given the game's setting), resource management, brain grames and strategy.
 
-## Lore and context //TODO comprobar traducción
+## Lore and context
 The king Aldric Stormborn of Eliora has died. There is no heir and what had been the most prosperous country of the last decades plunges abruptly into a war of secession. Its vast territory, plagued by diverse biomes, has gone from absolute tranquility to the greatest chaos seen in its history.
 
 The people have divided and support the neighboring kings. The candidate from the northern neighbor, Azuremont, is Charles Bluebird. A smart, handsome, and very persuasive man. One should not trust his appearance, as inside he is meticulous in combat and will not miss any opportunity to seize the throne. From the south, the king of Sylveria lurks. Vincent Redwood is a huge, muscular man who will not hesitate to dismember anyone who gets in his way to the crown. The west is represented by Margaret Yellowstone, queen of Solstice. A bold, swift woman with perfect precision that instills fear in those who find themselves in her crosshairs. The east brings with it the rising sun of the kingdom of Novara. Jabari Purpleheart rules the richest country thanks to its naval trade. With wealth capable of buying any man, he will not hesitate to recruit whoever is necessary to carry out his mission.
 
 The fate of Eliora is at stake and only war can decide it...
 
+![Town hall Sprite](/assets/previews/kings/Troops_kings.png)
 
 ## Game Session Overview
 The player enters the website and can choose from three different options:
@@ -39,9 +40,10 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 
 |     Name      |                           Image                               |                        Description                            |
 |:-------------:|:-------------------------------------------------------------:|:-------------------------------------------------------------:|
-| Town Hall     | ![Town hall Sprite](/assets/previews/Buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game. |
-| Village House | ![Village House Sprite](/assets/previews/Buildings/house.png) | Sets the maximum population.                                  |
-| Tower         | ![Tower Sprite](/assets/previews/Buildings/tower.png)         | Can spawn soldiers and archers.                               |
+| Town Hall     | ![Town hall Sprite](/assets/previews/buildings/castle.png)    | Can spawn villagers. If destroyed, the player loses the game.|
+| Village House | ![Village House Sprite](/assets/previews/buildings/house.png) | Sets the maximum population.|
+| Tower         | ![Tower Sprite](/assets/previews/buildings/tower.png)         | Can spawn soldiers and archers.|
+| Goblin Hut    | ![Goblin Hut Sprite](/assets/previews/buildings/goblin_hut.png)         | Can spawn goblins.|
 
 ### NPCs
 
@@ -50,14 +52,15 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Villager      | ![Villager Sprite](/assets/previews/NPCs/villager.png)   | Can gather resources and build a village house or a tower.  |
 | Soldier       | ![Soldier Sprite](/assets/previews/NPCs/soldier.png)     | Can deal melee damage using a sword against enemies.        |
 | Archer        | ![Archer Sprite](/assets/previews/NPCs/archer.png)       | Can deal ranged damage by shooting arrows at enemies.       |
+| Goblin        | ![Goblin Sprite](/assets/previews/NPCs/goblin.png)       | Can deal melee damage using a torch against enemies.        |
 
 ### Resources
 
 |     Name      |                    Resource Image                    |                                       Description                                     | Source Image                                                     |
 |:-------------:|:----------------------------------------------------:|:-------------------------------------------------------------------------------------:|:---------------------------------------------------------------:|
-| Gold          | ![Gold Sprite](/assets/previews/resources/gold.png)  | Gathered in gold mines. Used for spawning soldiers and archers, and building towers.  | ![Gold Source Sprite](/assets/previews/resources/gold_source.png) |
-| Wood          | ![Wood Sprite](/assets/previews/resources/wood.png)  | Obtained by chopping down trees. Used for building villager houses and towers, and spawning archers. | ![Wood Source Sprite](/assets/previews/resources/wood_source.png) |
-| Food          | ![Food Sprite](/assets/previews/resources/food.png)  | Obtained from sheeps. Used for spawning villagers and soldiers. | ![Food Source Sprite](/assets/previews/resources/food_source.png) |
+| Gold          | ![Gold Sprite](/assets/previews/resources/gold.png)  | Gathered in gold mines. Used for building goblin huts and spawning goblins.  | ![Gold Source Sprite](/assets/previews/resources/gold_source.png) |
+| Wood          | ![Wood Sprite](/assets/previews/resources/wood.png)  | Obtained by chopping down trees. Used for building villager houses, towers and goblin huts, and spawning archers and goblins. | ![Wood Source Sprite](/assets/previews/resources/wood_source.png) |
+| Food          | ![Food Sprite](/assets/previews/resources/food.png)  | Obtained from sheeps. Used for building towers spawning villagers, soldiers and archers. | ![Food Source Sprite](/assets/previews/resources/food_source.png) |
 
 ## Attributes
 ### Player
@@ -90,19 +93,29 @@ The ultimate purpose of Troops is to provide an enjoyable gaming experience for 
 | Select entities  | Allows the player to choose one or more entities to perform actions upon.                                                                |
 | Move NPC         | NPCs can move around the map to explore it.                                                                                              |
 | Gather           | Villagers gather resources (gold/wood/food) from their sources (mine/tree/sheep). They continue gathering until the source is depleted.  |
-| Build            | Villagers build houses or towers by spending resources. The building process takes time to complete.                                     |
-| Attack           | Soldiers or archers deal damage to enemy NPCs or buildings within range.                                                                 |
+| Build            | Villagers build their houses, goblin houses or towers by spending resources. The building process takes time to complete.                                     |
+| Attack           | Soldiers, archers and goblins deal damage to enemy NPCs or buildings within range.                                                                 |
 | Spawn            | A building is used to spawn NPCs at full health. Spawning takes time, only 1 NPC can be spawned at a time and the others will be queued. |
-| Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.                                       |
+| Camera movement  | Allows players to navigate the map by moving the in-game camera, enabling exploration and control.    |
 
 ### Dynamics
-|         Name        |                                                   Descriptions                                                  |
-|:-------------------:|:---------------------------------------------------------------------------------------------------------------:|
-|       Explore       |                 Using units to explore and control the map to give you a strategical advantage.                 |
-| Resource Management | Being mindful on how to spend your wealth is key to create a bigger army, as well as build a strong economy.    |
-|       Military      |   The adequate use of your soldiers and their use in battle is incentive to clash and destroy the enemy base.   |
-|       Strategy      | Being an online game, the need to think ahead in real time creates the need to be tactical throughout the game. |
-
+Some of the most interesting dynamics arising from the mechanics of Troops include:
+- Exploring the map to familiarize oneself with it.
+- Building a quaint town (just for fun).
+- Allocating all troops to maximize resource acquisition.
+- Creating the largest possible army.
+- Establishing non-aggression pacts, whether temporary or permanent, with opponents (friends).
+- Rushing the opponent by attacking as soon as possible, leaving them with no room to develop.
+- Using buildings as a barrier to protect the Town Hall.
+- Always assigning a soldier to accompany villagers for their protection.
+- Facing limited construction options due to restricted available space (on mountain maps).
+- Deploying troops across various fronts for offense/defense (on desert maps).
+- Concentrating all troops on a single front to consolidate forces (on desert maps).
+- Exerting control over bridges to prevent enemy crossings (on river maps).
+- Using only one type of troop.
+- Securing control of the center to monopolize gold gathering (and consequently spawning goblins).
+- Surrounding the enemy by constructing buildings around them.
+- Negotiating with the opponent to limit the use resources (just the initial ones or others, such as forbidding the use of gold).
 
 ### Aesthetics
 The overall aesthetic of the videogame is medieval-themed. Despite the game's aggressive nature, Troops aims to be a friendly and enjoyable experience for players of all kinds.
@@ -121,7 +134,7 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 ### Keyboard
 - The keys `W` `A` `S` `D` can be used to move the camera around the map.
 - Pressing `Esc` will open a menu to change the settings of the game (enable/disable sound, fullscreen options...), read the help page (game controls or rules) or surrender and exit the current game.
-- Hot keys:
+- Shortcuts:
     - While the Town Hall is selected, pressing `1` adds a villager to the spawning queue as long as the player has enough resources.
     - While a tower is selected, pressing `1` adds a soldier to the spawning queue as long as the player has enough resources.
     - While a tower is selected, pressing `2` adds an archer to the spawning queue as long as the player has enough resources.
@@ -140,13 +153,15 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 
 ## Tables and data
 ### Spawning/Building Cost
-| Type      | Gold Cost     | Wood Cost     | Food Cost     |
-|-----------|:-------------:|:-------------:|:-------------:|
-| Villager  | 0             | 0             | FCV           |
-| Soldier   | GCV           | 0             | 3 * FCV       |
-| Archer    | GCV           | 3 * WCV       | 0             |
-| House     | 0             | WCV           | 0             |
-| Tower     | 2 * GCV       | 2 * WCV       | 0             |
+| Type         | Gold Cost     | Wood Cost     | Food Cost     |
+|--------------|:-------------:|:-------------:|:-------------:|
+| Villager     | 0             | 0             | FCV           |
+| Soldier      | 0             | 0             | 3 * FCV       |
+| Archer       | 0             | 2 * WCV       | 1 * FCV       |
+| Goblin       | 2 * GCV       | 1 * WCV       | 0             |
+| House        | 0             | 3 * WCV       | 0             |
+| Tower        | 0             | 7 * WCV       | 3 * FCV       |
+| Goblin House | 4 * GCV       | 6 * WCV       | 0             |
 
 **GCV** = Gold cost variable
 
@@ -155,74 +170,93 @@ Additionally, each action performed by NPCs will have corresponding sound effect
 **FCV** = Food cost variable
 
 ### Spawning/Building Time
-| Type      | Time (s)                |
-|-----------|:-----------------------:|
-| Villager  |         S_TIME          |
-| Soldier   |     1.5 * S_TIME        |
-| Archer    |     1.75 * S_TIME       |
-| House     |         B_TIME          |
-| Tower     |       2 * B_TIME        |
+| Type         | Time (s)                |
+|--------------|:-----------------------:|
+| Villager     |         S_TIME          |
+| Soldier      |     1.75 * S_TIME       |
+| Archer       |     1.5 * S_TIME        |
+| Goblin       |     1.25 * S_TIME       |
+| House        |         B_TIME          |
+| Tower        |       3 * B_TIME        |
+| Goblin House |       2 * B_TIME        |
 
 **S_TIME** = Spawning time variable
 
 **B_TIME** = Building time variable
 
 ### Health
-| Type      | Health             |
-|-----------|:------------------:|
-| Villager  |         N_H        |
-| Soldier   |      2.5 * N_H     |
-| Archer    |      1.5 * N_H     |
-| Town Hall |       5 * B_H      |
-| House     |        B_H         |
-| Tower     |       3 * B_H      |
+| Type         | Health             |
+|--------------|:------------------:|
+| Villager     |         N_H        |
+| Soldier      |      2.5 * N_H     |
+| Archer       |      1.5 * N_H     |
+| Goblin       |      1.75 * N_H    |
+| Town Hall    |       5 * B_H      |
+| House        |        B_H         |
+| Tower        |       3 * B_H      |
+| Goblin House |       2 * B_H      |
 
 **N_H** = NPC health variable
 
 **B_H** = Building health variable
 
 ### Vision Range
-| Type      | Vision Range       |
-|-----------|:------------------:|
-| Villager  |         VRV        |
-| Soldier   |         VRV        |
-| Archer    |      1.5 * VRV     |
-| Town Hall |       5 * VRV      |
-| House     |         VRV        |
-| Tower     |       3 * VRV      |
+| Type         | Vision Range       |
+|--------------|:------------------:|
+| Villager     |         VRV        |
+| Soldier      |         VRV        |
+| Archer       |      1.5 * VRV     |
+| Goblin       |         VRV        |
+| Town Hall    |       5 * VRV      |
+| House        |         VRV        |
+| Tower        |       3 * VRV      |
+| Goblin House |         VRV        |
 
 **VRV** = Vision Range Variable
 
 ### Size
-| Type      | Size (width, height)       |
-|-----------|:--------------------------:|
-| Villager  |      SIZE px, SIZE px      |
-| Soldier   |      SIZE px, SIZE px      |
-| Archer    |      SIZE px, SIZE px      |
-| Town Hall |  4 * SIZE px, 2 * SIZE px  |
-| House     |  3 * SIZE px, 3 * SIZE px  |
-| Tower     | 3 * SIZE px, 2.5 * SIZE px |
+| Type         | Size (width, height)       |
+|--------------|:--------------------------:|
+| Villager     |      SIZE px, SIZE px      |
+| Soldier      |      SIZE px, SIZE px      |
+| Archer       |      SIZE px, SIZE px      |
+| Goblin       |      SIZE px, SIZE px      |
+| Town Hall    |  4 * SIZE px, 2 * SIZE px  |
+| House        |  3 * SIZE px, 3 * SIZE px  |
+| Tower        | 3 * SIZE px, 2.5 * SIZE px |
+| Goblin House | 3 * SIZE px, 2.5 * SIZE px |
 
 **SIZE** = Size in pixels variable
 
 ### Movement Speed
-| Type      | Speed (px/s)       |
-|-----------|:------------------:|
-| Villager  |         MSV        |
-| Soldier   |         MSV        |
-| Archer    |         MSV        |
+| Type      | Speed (px/s)      |
+|-----------|:-----------------:|
+| Villager  |        MSV        |
+| Soldier   |        MSV        |
+| Archer    |        MSV        |
+| Goblin    |     1.5 * MSV     |
 
 **MSV** = Movement Speed Variable
 
 ### Attack and Range
 | Type      | Damage             | Range              |
 |-----------|:------------------:|:------------------:|
-| Soldier   |  1.25 * ATK        | 0                  |
-| Archer    |  ATK               | RNG                |
+| Soldier   |  1.5 * ATK         | 0                  |
+| Archer    |  1.25 * ATK        | RNG                |
+| Goblin    |  ATK               | 0                  |
 
 **ATK** = Attack damage variable
 
 **RNG** = Range variable
+
+### Attack Bonus
+| Type      | Bonus Damage       | Against            |
+|-----------|:------------------:|:------------------:|
+| Soldier   |  1.25 * BDG        | Archer             |
+| Archer    |  1.25 * BDG        | Goblin             |
+| Goblin    |  1.25 * BDG        | Soldier            |
+
+**DMG** = Base Damage variable
 
 ### Resource Stats
 | Type      | Production Rate       | Total Resources      |
