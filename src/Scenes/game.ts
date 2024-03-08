@@ -45,6 +45,8 @@ export default class Game extends Phaser.Scene {
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
 
+    
+
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep', classType: Sheep });
     this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree', classType: Tree });

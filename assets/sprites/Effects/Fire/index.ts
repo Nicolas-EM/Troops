@@ -1,0 +1,1 @@
+export { default as fire } from './Fire.png';

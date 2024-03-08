@@ -29,6 +29,11 @@ export default class Boot extends Phaser.Scene {
     // Fondo
     this.load.image('ground', Sprites.Terrain.Ground.ground);
     this.load.image('Water', Sprites.Terrain.Water.water);
+    this.load.spritesheet('Foam', Sprites.Terrain.Water.foam, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('Rocks', Sprites.Terrain.Water.rocks, { frameWidth: 128, frameHeight: 128 });
+
+    // Decoration
+    this.load.spritesheet('decoration', Sprites.Decoration.decoration, { frameWidth: 64, frameHeight: 64 });
 
     // Resources
     // Gold
