@@ -1,1 +1,1 @@
-export { default as inactive } from './tree.png';
+export { default as Tree } from './tree.png';

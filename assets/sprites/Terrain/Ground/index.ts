@@ -1,2 +1,2 @@
-export { default as ground } from './ground.png';
-export { default as shadow } from './shadow.png';
+export { default as Ground } from './ground.png';
+export { default as Shadow } from './shadow.png';

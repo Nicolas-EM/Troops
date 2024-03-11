@@ -1,8 +1,8 @@
 import * as Phaser from 'phaser';
-import Boot from './Scenes/boot';
-import Menu from './Scenes/menu';
-import Lobby from './Scenes/lobby';
-import Game from './Scenes/game';
+import Boot from './scenes/Boot';
+import Menu from './scenes/Menu';
+import Lobby from './scenes/Lobby';
+import Game from './scenes/Game';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -14,6 +14,7 @@ let config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: 1000,
     height: 600,
+    disableContextMenu: true,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
