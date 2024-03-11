@@ -1,1 +1,0 @@
-export { default as Sheep } from './sheep.png';
