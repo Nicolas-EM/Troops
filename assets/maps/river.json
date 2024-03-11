@@ -90,7 +90,7 @@
          "name":"Foam 3",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":142,
          "x":0,
          "y":0
@@ -183,7 +183,7 @@
          "name":"Foam 2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":142,
          "x":0,
          "y":0
@@ -276,7 +276,7 @@
          "name":"Foam 1",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":142,
          "x":0,
          "y":0
