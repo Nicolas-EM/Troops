@@ -3,6 +3,7 @@ import Boot from './scenes/Boot';
 import Menu from './scenes/Menu';
 import Lobby from './scenes/Lobby';
 import Game from './scenes/Game';
+import Hud from './scenes/Hud';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -20,7 +21,7 @@ let config: Phaser.Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Menu, Lobby, Game],
+    scene: [Boot, Menu, Lobby, Game, Hud],
     physics: {
         default: 'arcade',
         arcade: {
