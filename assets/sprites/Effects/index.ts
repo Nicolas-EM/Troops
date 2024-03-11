@@ -1,1 +1,1 @@
-export * as Fire from './Fire';
+export * as Fire from './fire';

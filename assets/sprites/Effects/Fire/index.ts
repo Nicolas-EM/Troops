@@ -1,1 +1,1 @@
-export { default as fire } from './Fire.png';
+export { default as Fire } from './fire.png';

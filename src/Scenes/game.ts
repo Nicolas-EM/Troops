@@ -1,10 +1,10 @@
 import * as Phaser from 'phaser'
-import TownHall from "../Classes/Buildings/Townhall";
-import Tree from "../Classes/Resources/Tree";
-import Sheep from "../Classes/Resources/Sheep";
-import GoldMine from "../Classes/Resources/GoldMine";
-import Villager from "../Classes/NPCs/Villager";
-import Player from '../Classes/Player';
+import TownHall from "../classes/buildings/Townhall";
+import Tree from "../classes/resources/Tree";
+import Sheep from "../classes/resources/Sheep";
+import GoldMine from "../classes/resources/GoldMine";
+import Villager from "../classes/npcs/Villager";
+import Player from '../classes/Player';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
@@ -41,16 +41,16 @@ export default class Game extends Phaser.Scene {
     // Fondo
     let tileset = this._map.addTilesetImage("Water");
     this._map.createLayer("Fondo/Water", tileset!);
-    tileset = this._map.addTilesetImage("ground");
+    tileset = this._map.addTilesetImage("Ground");
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
 
     
 
     // Resources
-    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'sheep', classType: Sheep });
-    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'tree', classType: Tree });
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'gold_inactive', classType: GoldMine });
+    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
+    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
 
     // Townhalls
     let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo

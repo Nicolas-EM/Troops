@@ -1,1 +1,1 @@
-export { default as decoration } from './decoration.png';
+export { default as Decoration } from './decoration.png';

@@ -1109,7 +1109,7 @@
         {
          "columns":16,
          "firstgid":138,
-         "image":"..\/sprites\/Terrain\/Water\/Rocks\/2.png",
+         "image":"..\/sprites\/terrain\/water\/Rocks\/2.png",
          "imageheight":128,
          "imagewidth":1024,
          "margin":0,
@@ -1122,7 +1122,7 @@
         {
          "columns":10,
          "firstgid":170,
-         "image":"..\/sprites\/Terrain\/Ground\/ground.png",
+         "image":"..\/sprites\/terrain\/ground\/ground.png",
          "imageheight":256,
          "imagewidth":640,
          "margin":0,
@@ -1135,7 +1135,7 @@
         {
          "columns":16,
          "firstgid":210,
-         "image":"..\/sprites\/Terrain\/Water\/Rocks\/4.png",
+         "image":"..\/sprites\/terrain\/water\/Rocks\/4.png",
          "imageheight":128,
          "imagewidth":1024,
          "margin":0,

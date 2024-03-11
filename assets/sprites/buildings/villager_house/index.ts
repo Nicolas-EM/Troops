@@ -1,6 +1,6 @@
-export { default as blue } from './blue.png';
-export { default as purple } from './purple.png';
-export { default as red } from './red.png';
-export { default as yellow } from './yellow.png';
-export { default as construction } from './construction.png';
-export { default as destroyed } from './destroyed.png';
+export { default as Blue } from './blue.png';
+export { default as Purple } from './purple.png';
+export { default as Red } from './red.png';
+export { default as Yellow } from './yellow.png';
+export { default as Construction } from './construction.png';
+export { default as Destroyed } from './destroyed.png';

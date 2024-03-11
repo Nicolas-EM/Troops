@@ -1,8 +1,8 @@
 import * as Phaser from 'phaser';
-import Boot from './Scenes/boot';
-import Menu from './Scenes/menu';
-import Lobby from './Scenes/lobby';
-import Game from './Scenes/game';
+import Boot from './Scenes/Boot';
+import Menu from './Scenes/Menu';
+import Lobby from './Scenes/Lobby';
+import Game from './Scenes/Game';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos

@@ -15109,7 +15109,7 @@
                  "height":82,
                  "id":3,
                  "locked":true,
-                 "name":"Ground",
+                 "name":"ground",
                  "opacity":1,
                  "type":"tilelayer",
                  "visible":true,
@@ -18399,7 +18399,7 @@
         {
          "columns":10,
          "firstgid":1,
-         "image":"..\/sprites\/Terrain\/Ground\/ground.png",
+         "image":"..\/sprites\/terrain\/ground\/ground.png",
          "imageheight":256,
          "imagewidth":640,
          "margin":0,
@@ -18412,7 +18412,7 @@
         {
          "columns":1,
          "firstgid":41,
-         "image":"..\/sprites\/Terrain\/Water\/Water.png",
+         "image":"..\/sprites\/terrain\/water\/water.png",
          "imageheight":64,
          "imagewidth":64,
          "margin":0,
@@ -18425,7 +18425,7 @@
         {
          "columns":24,
          "firstgid":42,
-         "image":"..\/sprites\/Terrain\/Water\/foam.png",
+         "image":"..\/sprites\/terrain\/water\/foam.png",
          "imageheight":192,
          "imagewidth":1536,
          "margin":0,
@@ -18451,7 +18451,7 @@
         {
          "columns":1,
          "firstgid":154,
-         "image":"..\/sprites\/Resources\/spawners\/gold_mine\/gold_mine_inactive.png",
+         "image":"..\/sprites\/resources\/spawners\/gold_mine\/gold_mine_inactive.png",
          "imageheight":128,
          "imagewidth":192,
          "margin":0,
@@ -18464,7 +18464,7 @@
         {
          "columns":8,
          "firstgid":155,
-         "image":"..\/sprites\/Resources\/spawners\/sheep\/sheep.png",
+         "image":"..\/sprites\/resources\/spawners\/sheep\/sheep.png",
          "imageheight":128,
          "imagewidth":1024,
          "margin":0,
@@ -18529,7 +18529,7 @@
         {
          "columns":4,
          "firstgid":165,
-         "image":"..\/sprites\/Resources\/spawners\/tree\/tree.png",
+         "image":"..\/sprites\/resources\/spawners\/tree\/tree.png",
          "imageheight":576,
          "imagewidth":768,
          "margin":0,
@@ -19218,7 +19218,7 @@
         {
          "columns":8,
          "firstgid":249,
-         "image":"..\/sprites\/Terrain\/Water\/rocks.png",
+         "image":"..\/sprites\/terrain\/water\/rocks.png",
          "imageheight":512,
          "imagewidth":1024,
          "margin":0,

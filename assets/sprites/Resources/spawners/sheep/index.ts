@@ -1,1 +1,1 @@
-export { default as inactive } from './sheep.png';
+export { default as Sheep } from './sheep.png';
