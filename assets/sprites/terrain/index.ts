@@ -1,2 +1,2 @@
-export * as Ground from './Ground';
-export * as Water from './Water';
+export * as Ground from './ground';
+export * as Water from './water';
