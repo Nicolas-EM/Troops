@@ -35,6 +35,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.scene.run('hud');
+
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
