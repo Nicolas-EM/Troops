@@ -5,7 +5,7 @@ import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";
 import Villager from "../classes/npcs/Villager";
 import Player from '../classes/Player';
-
+import EasyStar from '../easystar';
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
@@ -21,9 +21,10 @@ export default class Game extends Phaser.Scene {
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
-
+  private _pathfinder;
   constructor() {
     super({ key: 'game' });
+    this._pathfinder = new EasyStar.js();
   }
 
   // Para pasar atributos de una escena a otra
@@ -90,6 +91,7 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
+    this._pathfinder.setGrid();
   }
 
   update(time: number, delta: number): void {
