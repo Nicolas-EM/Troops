@@ -14,7 +14,7 @@ let config: Phaser.Types.Core.GameConfig = {
     parent: "game", // ID canvas
     type: Phaser.AUTO,
     width: 1000,
-    height: 600,
+    height: 563,
     disableContextMenu: true,
     scale: {
         mode: Phaser.Scale.FIT,

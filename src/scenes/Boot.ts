@@ -49,7 +49,7 @@ export default class Boot extends Phaser.Scene {
     // Food
     this.load.spritesheet('Sheep', Sprites.Resources.Spawners.Food.Sheep, { frameWidth: 128, frameHeight: 128 });
     this.load.image('Food', Sprites.Resources.Food);
-  
+
     // Buildings
     // Hut
     this.load.image('Hut_Blue', Sprites.Buildings.Hut.Blue);
@@ -151,19 +151,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Disable_3', Sprites.UI.Icons.Disable_3);
     this.load.image('Pressed_3', Sprites.UI.Icons.Pressed_3);
     this.load.image('Icon_3', Sprites.UI.Icons.Icon_3);
-    this.load.image('Archer_Blue_Icon', Sprites.UI.Icons.Archer_Blue_Icon);
-    this.load.image('Archer_Purple_Icon', Sprites.UI.Icons.Archer_Purple_Icon);
-    this.load.image('Archer_Red_Icon', Sprites.UI.Icons.Archer_Red_Icon);
-    this.load.image('Archer_Yellow_Icon', Sprites.UI.Icons.Archer_Yellow_Icon);
-    this.load.image('Goblin_Blue_Icon', Sprites.UI.Icons.Goblin_Blue_Icon);
-    this.load.image('Goblin_Purple_Icon', Sprites.UI.Icons.Goblin_Purple_Icon);
-    this.load.image('Goblin_Red_Icon', Sprites.UI.Icons.Goblin_Red_Icon);
-    this.load.image('Goblin_Yellow_Icon', Sprites.UI.Icons.Goblin_Yellow_Icon);
-    this.load.image('Goblin_Hut_Blue_Icon', Sprites.UI.Icons.Goblin_Hut_Blue_Icon);
-    this.load.image('Goblin_Hut_Purple_Icon', Sprites.UI.Icons.Goblin_Hut_Purple_Icon);
-    this.load.image('Goblin_Hut_Red_Icon', Sprites.UI.Icons.Goblin_Hut_Red_Icon);
-    this.load.image('Goblin_Hut_Yellow_Icon', Sprites.UI.Icons.Goblin_Hut_Yellow_Icon);
-    this.load.image('Gold_Mine_Icon', Sprites.UI.Icons.Gold_Mine_Icon);
     this.load.image('Health', Sprites.UI.Icons.Health);
     this.load.image('Lock_Disable', Sprites.UI.Icons.Lock_Disable);
     this.load.image('Lock_Pressed', Sprites.UI.Icons.Lock_Pressed);
@@ -177,34 +164,12 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Settings_Disable', Sprites.UI.Icons.Settings_Disable);
     this.load.image('Settings_Pressed', Sprites.UI.Icons.Settings_Pressed);
     this.load.image('Settings', Sprites.UI.Icons.Settings);
-    this.load.image('Sheep_Icon', Sprites.UI.Icons.Sheep_Icon);
     this.load.image('Shop_Disable', Sprites.UI.Icons.Shop_Disable);
     this.load.image('Shop_Pressed', Sprites.UI.Icons.Shop_Pressed);
     this.load.image('Shop', Sprites.UI.Icons.Shop);
-    this.load.image('Soldier_Blue_Icon', Sprites.UI.Icons.Soldier_Blue_Icon);
-    this.load.image('Soldier_Purple_Icon', Sprites.UI.Icons.Soldier_Purple_Icon);
-    this.load.image('Soldier_Red_Icon', Sprites.UI.Icons.Soldier_Red_Icon);
-    this.load.image('Soldier_Yellow_Icon', Sprites.UI.Icons.Soldier_Yellow_Icon);
     this.load.image('Sound_Off_Disable', Sprites.UI.Icons.Sound_Off_Disable);
     this.load.image('Sound_Off', Sprites.UI.Icons.Sound_Off);
     this.load.image('Sound_On', Sprites.UI.Icons.Sound_On);
-    this.load.image('Tower_Blue_Icon', Sprites.UI.Icons.Tower_Blue_Icon);
-    this.load.image('Tower_Purple_Icon', Sprites.UI.Icons.Tower_Purple_Icon);
-    this.load.image('Tower_Red_Icon', Sprites.UI.Icons.Tower_Red_Icon);
-    this.load.image('Tower_Yellow_Icon', Sprites.UI.Icons.Tower_Yellow_Icon);
-    this.load.image('Town_Hall_Blue_Icon', Sprites.UI.Icons.Town_Hall_Blue_Icon);
-    this.load.image('Town_Hall_Purple_Icon', Sprites.UI.Icons.Town_Hall_Purple_Icon);
-    this.load.image('Town_Hall_Red_Icon', Sprites.UI.Icons.Town_Hall_Red_Icon);
-    this.load.image('Town_Hall_Yellow_Icon', Sprites.UI.Icons.Town_Hall_Yellow_Icon);
-    this.load.image('Tree_Icon', Sprites.UI.Icons.Tree_Icon);
-    this.load.image('Villager_Blue_Icon', Sprites.UI.Icons.Villager_Blue_Icon);
-    this.load.image('Villager_Purple_Icon', Sprites.UI.Icons.Villager_Purple_Icon);
-    this.load.image('Villager_Red_Icon', Sprites.UI.Icons.Villager_Red_Icon);
-    this.load.image('Villager_Yellow_Icon', Sprites.UI.Icons.Villager_Yellow_Icon);
-    this.load.image('Villager_House_Blue_Icon', Sprites.UI.Icons.Villager_House_Blue_Icon);
-    this.load.image('Villager_House_Purple_Icon', Sprites.UI.Icons.Villager_House_Purple_Icon);
-    this.load.image('Villager_House_Red_Icon', Sprites.UI.Icons.Villager_House_Red_Icon);
-    this.load.image('Villager_House_Yellow_Icon', Sprites.UI.Icons.Villager_House_Yellow_Icon);
     this.load.image('X_Disable', Sprites.UI.Icons.X_Disable);
     this.load.image('X_Pressed', Sprites.UI.Icons.X_Pressed);
     this.load.image('X', Sprites.UI.Icons.X);
@@ -221,42 +186,42 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Sword', Sprites.UI.Pointers.Sword);
 
     // UI - Ribbons
-      this.load.image('Blue_Down_Pressed', Sprites.UI.Ribbons.Blue_Down_Pressed);
-      this.load.image('Blue_Down', Sprites.UI.Ribbons.Blue_Down);
-      this.load.image('Blue_Left_Pressed', Sprites.UI.Ribbons.Blue_Left_Pressed);
-      this.load.image('Blue_Left', Sprites.UI.Ribbons.Blue_Left);
-      this.load.image('Blue_Right_Pressed', Sprites.UI.Ribbons.Blue_Right_Pressed);
-      this.load.image('Blue_Right', Sprites.UI.Ribbons.Blue_Right);
-      this.load.image('Blue_Up_Pressed', Sprites.UI.Ribbons.Blue_Up_Pressed);
-      this.load.image('Blue_Up', Sprites.UI.Ribbons.Blue_Up);
-      this.load.image('Blue', Sprites.UI.Ribbons.Blue);
-      this.load.image('Purple_Down_Pressed', Sprites.UI.Ribbons.Purple_Down_Pressed);
-      this.load.image('Purple_Down', Sprites.UI.Ribbons.Purple_Down);
-      this.load.image('Purple_Left_Pressed', Sprites.UI.Ribbons.Purple_Left_Pressed);
-      this.load.image('Purple_Left', Sprites.UI.Ribbons.Purple_Left);
-      this.load.image('Purple_Right_Pressed', Sprites.UI.Ribbons.Purple_Right_Pressed);
-      this.load.image('Purple_Right', Sprites.UI.Ribbons.Purple_Right);
-      this.load.image('Purple_Up_Pressed', Sprites.UI.Ribbons.Purple_Up_Pressed);
-      this.load.image('Purple_Up', Sprites.UI.Ribbons.Purple_Up);
-      this.load.image('Purple', Sprites.UI.Ribbons.Purple);
-      this.load.image('Red_Down_Pressed', Sprites.UI.Ribbons.Red_Down_Pressed);
-      this.load.image('Red_Down', Sprites.UI.Ribbons.Red_Down);
-      this.load.image('Red_Left_Pressed', Sprites.UI.Ribbons.Red_Left_Pressed);
-      this.load.image('Red_Left', Sprites.UI.Ribbons.Red_Left);
-      this.load.image('Red_Right_Pressed', Sprites.UI.Ribbons.Red_Right_Pressed);
-      this.load.image('Red_Right', Sprites.UI.Ribbons.Red_Right);
-      this.load.image('Red_Up_Pressed', Sprites.UI.Ribbons.Red_Up_Pressed);
-      this.load.image('Red_Up', Sprites.UI.Ribbons.Red_Up);
-      this.load.image('Red', Sprites.UI.Ribbons.Red);
-      this.load.image('Yellow_Down_Pressed', Sprites.UI.Ribbons.Yellow_Down_Pressed);
-      this.load.image('Yellow_Down', Sprites.UI.Ribbons.Yellow_Down);
-      this.load.image('Yellow_Left_Pressed', Sprites.UI.Ribbons.Yellow_Left_Pressed);
-      this.load.image('Yellow_Left', Sprites.UI.Ribbons.Yellow_Left);
-      this.load.image('Yellow_Right_Pressed', Sprites.UI.Ribbons.Yellow_Right_Pressed);
-      this.load.image('Yellow_Right', Sprites.UI.Ribbons.Yellow_Right);
-      this.load.image('Yellow_Up_Pressed', Sprites.UI.Ribbons.Yellow_Up_Pressed);
-      this.load.image('Yellow_Up', Sprites.UI.Ribbons.Yellow_Up);
-      this.load.image('Yellow', Sprites.UI.Ribbons.Yellow);
+    this.load.image('Blue_Down_Pressed', Sprites.UI.Ribbons.Blue_Down_Pressed);
+    this.load.image('Blue_Down', Sprites.UI.Ribbons.Blue_Down);
+    this.load.image('Blue_Left_Pressed', Sprites.UI.Ribbons.Blue_Left_Pressed);
+    this.load.image('Blue_Left', Sprites.UI.Ribbons.Blue_Left);
+    this.load.image('Blue_Right_Pressed', Sprites.UI.Ribbons.Blue_Right_Pressed);
+    this.load.image('Blue_Right', Sprites.UI.Ribbons.Blue_Right);
+    this.load.image('Blue_Up_Pressed', Sprites.UI.Ribbons.Blue_Up_Pressed);
+    this.load.image('Blue_Up', Sprites.UI.Ribbons.Blue_Up);
+    this.load.image('Blue', Sprites.UI.Ribbons.Blue);
+    this.load.image('Purple_Down_Pressed', Sprites.UI.Ribbons.Purple_Down_Pressed);
+    this.load.image('Purple_Down', Sprites.UI.Ribbons.Purple_Down);
+    this.load.image('Purple_Left_Pressed', Sprites.UI.Ribbons.Purple_Left_Pressed);
+    this.load.image('Purple_Left', Sprites.UI.Ribbons.Purple_Left);
+    this.load.image('Purple_Right_Pressed', Sprites.UI.Ribbons.Purple_Right_Pressed);
+    this.load.image('Purple_Right', Sprites.UI.Ribbons.Purple_Right);
+    this.load.image('Purple_Up_Pressed', Sprites.UI.Ribbons.Purple_Up_Pressed);
+    this.load.image('Purple_Up', Sprites.UI.Ribbons.Purple_Up);
+    this.load.image('Purple', Sprites.UI.Ribbons.Purple);
+    this.load.image('Red_Down_Pressed', Sprites.UI.Ribbons.Red_Down_Pressed);
+    this.load.image('Red_Down', Sprites.UI.Ribbons.Red_Down);
+    this.load.image('Red_Left_Pressed', Sprites.UI.Ribbons.Red_Left_Pressed);
+    this.load.image('Red_Left', Sprites.UI.Ribbons.Red_Left);
+    this.load.image('Red_Right_Pressed', Sprites.UI.Ribbons.Red_Right_Pressed);
+    this.load.image('Red_Right', Sprites.UI.Ribbons.Red_Right);
+    this.load.image('Red_Up_Pressed', Sprites.UI.Ribbons.Red_Up_Pressed);
+    this.load.image('Red_Up', Sprites.UI.Ribbons.Red_Up);
+    this.load.image('Red', Sprites.UI.Ribbons.Red);
+    this.load.image('Yellow_Down_Pressed', Sprites.UI.Ribbons.Yellow_Down_Pressed);
+    this.load.image('Yellow_Down', Sprites.UI.Ribbons.Yellow_Down);
+    this.load.image('Yellow_Left_Pressed', Sprites.UI.Ribbons.Yellow_Left_Pressed);
+    this.load.image('Yellow_Left', Sprites.UI.Ribbons.Yellow_Left);
+    this.load.image('Yellow_Right_Pressed', Sprites.UI.Ribbons.Yellow_Right_Pressed);
+    this.load.image('Yellow_Right', Sprites.UI.Ribbons.Yellow_Right);
+    this.load.image('Yellow_Up_Pressed', Sprites.UI.Ribbons.Yellow_Up_Pressed);
+    this.load.image('Yellow_Up', Sprites.UI.Ribbons.Yellow_Up);
+    this.load.image('Yellow', Sprites.UI.Ribbons.Yellow);
   }
 
   /**

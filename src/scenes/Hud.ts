@@ -15,6 +15,11 @@ export default class Hud extends Phaser.Scene {
     }
 
     create() {
+        this.createTopHud();
+        this.createBottomHud();
+    }
+
+    createTopHud() {
         const midX = this.cameras.main.width / 2;
 
         // Wood
@@ -55,11 +60,18 @@ export default class Hud extends Phaser.Scene {
 
         // options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
-        optionsContainer.add(this.add.image(0, 0, 'Yellow'));
+        let settingsButton = this.add.image(0, 0, 'Yellow')
+        optionsContainer.add(settingsButton);
         optionsContainer.add(this.add.image(0, 0, 'Settings'));
 
+        settingsButton.setInteractive().on("pointerup", this.openOptions);
+        const el = document.getElementById("game")!;
+        el.addEventListener("fullscreenchange", this.fullscreenchanged);
+    }
 
-        let botY = this.cameras.main.height - 55;
+    createBottomHud() {
+        const midX = this.cameras.main.width / 2;
+        const botY = this.cameras.main.height - 55;
 
         // Health
         let healthBackground = this.add.image(0, 0, "Carved_Rectangle_Shadow");
@@ -86,9 +98,24 @@ export default class Hud extends Phaser.Scene {
         actionBackground.scale = 0.75;
         let actionContainer = this.add.container(midX + 120, botY + 25);
         actionContainer.add(actionBackground);
+    }
 
-        this.events.on("resource-clicked", (x) => {
-            console.log("heere")
-        })
+    fullscreenchanged(e) {
+        if (document.fullscreenElement) {
+            console.log(`Element: ${document.fullscreenElement.id} entered fullscreen mode.`);
+        } else {
+            console.log("Leaving fullscreen mode.");
+        }
+    }
+
+    openOptions() {
+        console.log("here");
+        if (document.fullscreenElement) {
+            // exitFullscreen is only available on the Document object.
+            document.exitFullscreen();
+        } else {
+            const el = document.getElementById("game")!;
+            el.requestFullscreen();
+        }
     }
 }
