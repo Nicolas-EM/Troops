@@ -21,6 +21,7 @@ export default class Game extends Phaser.Scene {
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
+  cursors: any;
 
   constructor() {
     super({ key: 'game' });
@@ -47,7 +48,7 @@ export default class Game extends Phaser.Scene {
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
 
-    
+
 
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
@@ -66,7 +67,7 @@ export default class Game extends Phaser.Scene {
         new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
       } else if (obj.type === "Townhall_P2") {
         const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
-        
+
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
@@ -92,10 +93,47 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
+
+    this.cursors = this.input.keyboard!.addKeys({
+      'up': Phaser.Input.Keyboard.KeyCodes.W,
+      'down': Phaser.Input.Keyboard.KeyCodes.S,
+      'left': Phaser.Input.Keyboard.KeyCodes.A,
+      'right': Phaser.Input.Keyboard.KeyCodes.D
+    });
   }
 
   update(time: number, delta: number): void {
-    this.cameraPan(delta)
+    this.cameraPan(delta);
+
+    if (this.cursors.up.isDown) {
+      this.cameraMoveUp(delta);
+    }
+    else if (this.cursors.down.isDown) {
+      this.cameraMoveDown(delta);
+    }
+
+    if (this.cursors.left.isDown) {
+      this.cameraMoveLeft(delta);
+    }
+    else if (this.cursors.right.isDown) {
+      this.cameraMoveRight(delta);
+    }
+  }
+
+  cameraMoveUp(delta) {
+    this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
+  }
+
+  cameraMoveDown(delta) {
+    this.cameras.main.scrollY += delta / this.cameras.main.zoom;
+  }
+
+  cameraMoveLeft(delta) {
+    this.cameras.main.scrollX -= delta / this.cameras.main.zoom;
+  }
+
+  cameraMoveRight(delta) {
+    this.cameras.main.scrollX += delta / this.cameras.main.zoom;
   }
 
   cameraPan(delta: number) {
@@ -109,17 +147,13 @@ export default class Game extends Phaser.Scene {
       return;
 
     if (pointer.x >= width - MOVEMENT_OFFSET && pointer.y >= MOVEMENT_OFFSET)
-      // move right
-      this.cameras.main.scrollX += delta / this.cameras.main.zoom;
+      this.cameraMoveRight(delta);
     else if (pointer.x <= MOVEMENT_OFFSET)
-      // move left
-      this.cameras.main.scrollX -= delta / this.cameras.main.zoom;
+      this.cameraMoveLeft(delta);
 
     if (pointer.y >= height - MOVEMENT_OFFSET)
-      // move down
-      this.cameras.main.scrollY += delta / this.cameras.main.zoom;
+      this.cameraMoveDown(delta);
     else if (pointer.y <= MOVEMENT_OFFSET && pointer.x <= width - MOVEMENT_OFFSET * 2)
-      // move up
-      this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
+      this.cameraMoveUp(delta);
   }
 }
