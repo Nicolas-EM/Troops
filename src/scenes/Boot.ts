@@ -1,12 +1,12 @@
 import * as Phaser from 'phaser'
 
-import * as Sprites from "../../assets/sprites";
+import * as Sprites from '../../assets/sprites';
 
 // maps
-import map_test from "../../assets/maps/test.json";
-import map_desert from "../../assets/maps/desert.json";
-import map_mountain from "../../assets/maps/mountain.json";
-import map_river from "../../assets/maps/river.json";
+import map_test from '../../assets/maps/test.json';
+import map_desert from '../../assets/maps/desert.json';
+import map_mountain from '../../assets/maps/mountain.json';
+import map_river from '../../assets/maps/river.json';
 
 
 /**
@@ -26,25 +26,25 @@ export default class Boot extends Phaser.Scene {
   // Carga de los assets del juego
   preload() {
     // Maps
-    this.load.tilemapTiledJSON("test", map_test);
-    this.load.tilemapTiledJSON("desert", map_desert);
-    this.load.tilemapTiledJSON("mountain", map_mountain);
-    this.load.tilemapTiledJSON("river", map_river);
+    this.load.tilemapTiledJSON('test', map_test);
+    this.load.tilemapTiledJSON('desert', map_desert);
+    this.load.tilemapTiledJSON('mountain', map_mountain);
+    this.load.tilemapTiledJSON('river', map_river);
 
     // Fondo
     this.load.image('Ground', Sprites.Terrain.Ground.Ground);
     this.load.image('Water', Sprites.Terrain.Water.Water);
-    this.load.spritesheet('Foam', Sprites.Terrain.Water.Foam, { frameWidth: 64, frameHeight: 64 });
+    // Foam
+    this.load.spritesheet('Foam', Sprites.Terrain.Water.Foam, { frameWidth: 192, frameHeight: 192 });
+    // Rocks
     this.load.spritesheet('Rocks', Sprites.Terrain.Water.Rocks, { frameWidth: 128, frameHeight: 128 });
 
     // Decoration
-    this.load.spritesheet('Decoration', Sprites.Decoration.Decoration, { frameWidth: 64, frameHeight: 64 });
+    this.load.image('Decoration', Sprites.Decoration.Decoration);
 
     // Resources
     // Gold
-    this.load.image('Gold_Inactive', Sprites.Resources.Spawners.Gold.Inactive);
-    this.load.image('Gold_Active', Sprites.Resources.Spawners.Gold.Active);
-    this.load.image('Gold_Destroyed', Sprites.Resources.Spawners.Gold.Destroyed);
+    this.load.spritesheet('GoldMine', Sprites.Resources.Spawners.Gold.GoldMine, { frameWidth: 192, frameHeight: 128 });
     // Wood
     this.load.spritesheet('Tree', Sprites.Resources.Spawners.Wood.Tree, { frameWidth: 192, frameHeight: 192 });
     // Food
@@ -108,6 +108,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('game', { mapId: "mountain", p1: "Blue", p2: "Red" });
+    this.scene.start('game', { mapId: 'desert', p1: 'Blue', p2: 'Red' });
   }
 }
