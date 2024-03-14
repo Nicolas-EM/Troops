@@ -1,9 +1,9 @@
 import * as Phaser from 'phaser'
-import TownHall from "../classes/buildings/Townhall";
-import Tree from "../classes/resources/Tree";
-import Sheep from "../classes/resources/Sheep";
-import GoldMine from "../classes/resources/GoldMine";
-import Villager from "../classes/npcs/Villager";
+import TownHall from '../classes/buildings/Townhall';
+import Tree from '../classes/resources/Tree';
+import Sheep from '../classes/resources/Sheep';
+import GoldMine from '../classes/resources/GoldMine';
+import Villager from '../classes/npcs/Villager';
 import Player from '../classes/Player';
 import { Client } from '../client';
 
@@ -41,30 +41,36 @@ export default class Game extends Phaser.Scene {
     this._map = this.make.tilemap({ key: this.mapId });
 
     // Fondo
-    let tileset = this._map.addTilesetImage("Water");
-    this._map.createLayer("Fondo/Water", tileset!);
-    tileset = this._map.addTilesetImage("Ground");
-    this._map.createLayer('Fondo/Ground', tileset!);
-    this._map.createLayer('Fondo/Grass', tileset!);
-
-
+    let waterTileset = this._map.addTilesetImage('Water');
+    this._map.createLayer('Fondo/Water', waterTileset!);
+    // Foam
+    this._map.createFromObjects('Fondo/Foam', { type: 'Foam', key: 'Foam' });
+    // Rocks
+    this._map.createFromObjects('Fondo/Rocks', [{ type: 'Rock1', key: 'Rocks', frame: 0 }, { type: 'Rock2', key: 'Rocks', frame: 8 }, { type: 'Rock3', key: 'Rocks', frame: 16 }, { type: 'Rock4', key: 'Rocks', frame: 24 }]);
+    let groundTileset = this._map.addTilesetImage('Ground');
+    this._map.createLayer('Fondo/Ground', groundTileset!);
+    this._map.createLayer('Fondo/Grass', groundTileset!);
 
     // Resources
-    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
-    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
+    this._map.createFromObjects('Resources/Food', { type: 'Sheep', key: 'Sheep', classType: Sheep });
+    this._map.createFromObjects('Resources/Wood', { type: 'Tree', key: 'Tree', classType: Tree });
+    this._map.createFromObjects('Resources/Gold', { type: 'GoldMine', key: 'GoldMine', classType: GoldMine });
+
+        // Decoration
+        let decoTileset = this._map.addTilesetImage('Decoration');
+        this._map.createLayer('Decoration', [decoTileset!, groundTileset!]);
 
     // Townhalls
-    let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo
+    let x = new Player(1, 'Player 1', this.p1, this); // TODO: Crear jugador real o algo
 
-    this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
-      if (obj.type === "Townhall_P1") {
+    this._map.getObjectLayer('Buildings')?.objects.forEach(obj => {
+      if (obj.type === 'Townhall_P1') {
         const p1_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p1}`, x);
 
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p1}`, x);
         new Villager(this, <number>obj.x + 320, <number>obj.y + 64, `Villager_${this.p1}`, x);
         new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
-      } else if (obj.type === "Townhall_P2") {
+      } else if (obj.type === 'Townhall_P2') {
         const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
 
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
