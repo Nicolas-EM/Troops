@@ -3,7 +3,8 @@ import Boot from './scenes/Boot';
 import Menu from './scenes/Menu';
 import Lobby from './scenes/Lobby';
 import Game from './scenes/Game';
-import NavMeshPlugin from "phaser-navmesh";
+import { PhaserNavMeshPlugin } from "phaser-navmesh";
+
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -23,8 +24,8 @@ let config: Phaser.Types.Core.GameConfig = {
     plugins: {
         scene: [
           {
-            key: "NavMeshPlugin", 
-            plugin: NavMeshPlugin, // Class that constructs plugins
+            key: "PhaserNavMeshPlugin", 
+            plugin: PhaserNavMeshPlugin, // Class that constructs plugins
             mapping: "navMeshPlugin", // Property mapping to use for the scene, e.g. this.navMeshPlugin
             start: true,
           },
@@ -34,7 +35,7 @@ let config: Phaser.Types.Core.GameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true
         }
     }
 };

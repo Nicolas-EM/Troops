@@ -5,7 +5,7 @@ import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";
 import Villager from "../classes/npcs/Villager";
 import Player from '../classes/Player';
-import NavMeshPlugin from "phaser-navmesh";
+import { PhaserNavMeshPlugin } from "phaser-navmesh";
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
@@ -16,6 +16,7 @@ const MOVEMENT_OFFSET = 50;
 const STARTING_VILLAGER_NPCs = 3;
 
 export default class Game extends Phaser.Scene {
+  private navMeshPlugin: PhaserNavMeshPlugin;
   private p1: string;
   private p2: string;
   private pointerInMap = true;
@@ -42,9 +43,10 @@ export default class Game extends Phaser.Scene {
     // Fondo
     let tileset = this._map.addTilesetImage("Water");
     const waterLayer = this._map.createLayer("Fondo/Water", tileset!);
+    waterLayer?.setCollisionByProperty({ collides: true });
     tileset = this._map.addTilesetImage("Ground");
-    this._map.createLayer('Fondo/Ground', tileset!);
-    this._map.createLayer('Fondo/Grass', tileset!);
+    const groundLayer = this._map.createLayer('Fondo/Ground', tileset!);
+    const grassLayer = this._map.createLayer('Fondo/Grass', tileset!);
 
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
@@ -70,15 +72,26 @@ export default class Game extends Phaser.Scene {
       }
     });
 
+    ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
+    const layers = [waterLayer, groundLayer, grassLayer];
 
-    ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////
-    // Create layers
-    const buildingsLayer = this._map.createLayer("Buildings", tileset!);
-    const goldLayer = this._map.createLayer("Resources/Gold", tileset!);
-    const woodLayer = this._map.createLayer("Resources/Wood", tileset!);
-    const layers = [buildingsLayer, goldLayer, woodLayer, waterLayer];
+    let navMesh = this.navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers);
+    navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
+    navMesh.debugDrawClear(); // Clears the overlay
+    // Visualize the underlying navmesh
+    // navMesh.debugDrawMesh({
+    //   drawCentroid: true,
+    //   drawBounds: false,
+    //   drawNeighbors: true,
+    //   drawPortals: true
+    // });
 
-    NavMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers);
+    this.add.image(1450, 800, "x");
+    this.add.image(1550, 800, "x");
+    const path = navMesh.findPath({ x: 1450, y: 800 }, { x: 1550, y: 800 });
+    console.log(path);
+    // Visualize an individual path
+    navMesh.debugDrawPath(path, 0xffd900);
 
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
@@ -99,7 +112,6 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
-    this._pathfinder.setGrid();
   }
 
   update(time: number, delta: number): void {
