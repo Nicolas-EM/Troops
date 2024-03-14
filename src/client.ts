@@ -1,32 +1,46 @@
-import * as Phaser from 'phaser';
-import Boot from './scenes/Boot';
-import Menu from './scenes/Menu';
-import Lobby from './scenes/Lobby';
-import Game from './scenes/Game';
+import { io, Socket } from 'socket.io-client';
 
-/**
- * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
- * la clase Game de Phaser, encargada de crear e iniciar el juego.
- */
-let config: Phaser.Types.Core.GameConfig = {
-    title: 'Troops',
-    parent: "game", // ID canvas
-    type: Phaser.AUTO,
-    width: 1000,
-    height: 600,
-    disableContextMenu: true,
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+interface Client {
+    socket: Socket;
+    sendTest: () => void;
+    askNewPlayer: () => void;
+    sendClick: (x: number, y: number) => void;
+}
+
+const socket = io();
+export const Client: Client = {
+    socket: socket,
+
+    sendTest: function (): void {
+        console.log("test sent");
+        this.socket.emit('test');
     },
-    pixelArt: true,
-    scene: [Boot, Menu, Lobby, Game],
-    physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false
-        }
+
+    askNewPlayer: function (): void {
+        this.socket.emit('newplayer');
+    },
+
+    sendClick: function (x: number, y: number): void {
+        this.socket.emit('click', { x: x, y: y });
     }
 };
 
-new Phaser.Game(config);
+Client.socket.on('newplayer', function (data: { id: string; x: number; y: number }): void {
+    // Assuming Game is defined elsewhere
+    // Game.addNewPlayer(data.id, data.x, data.y);
+    console.log(`new player ${data.id}`);
+});
+
+// Client.socket.on('allplayers', function (data: { id: string; x: number; y: number }[]): void {
+//     for (let i = 0; i < data.length; i++) {
+//         Game.addNewPlayer(data[i].id, data[i].x, data[i].y);
+//     }
+
+//     Client.socket.on('move', function (data: { id: string; x: number; y: number }): void {
+//         Game.movePlayer(data.id, data.x, data.y);
+//     });
+
+//     Client.socket.on('remove', function (id: string): void {
+//         Game.removePlayer(id);
+//     });
+// });

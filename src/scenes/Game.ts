@@ -5,7 +5,8 @@ import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";
 import Villager from "../classes/npcs/Villager";
 import Player from '../classes/Player';
-import EasyStar from '../easystar';
+import { Client } from '../client';
+
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
@@ -20,11 +21,9 @@ export default class Game extends Phaser.Scene {
   private pointerInMap = true;
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
-  private _buildingsLayer: Phaser.GameObjects.GameObject[];
-  private _pathfinder;
+
   constructor() {
     super({ key: 'game' });
-    this._pathfinder = new EasyStar.js();
   }
 
   // Para pasar atributos de una escena a otra
@@ -36,6 +35,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    Client.askNewPlayer();
+
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
@@ -46,7 +47,7 @@ export default class Game extends Phaser.Scene {
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
 
-    
+
 
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
@@ -65,7 +66,7 @@ export default class Game extends Phaser.Scene {
         new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
       } else if (obj.type === "Townhall_P2") {
         const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
-        
+
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
@@ -91,7 +92,6 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
-    this._pathfinder.setGrid();
   }
 
   update(time: number, delta: number): void {
