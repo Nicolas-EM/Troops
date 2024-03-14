@@ -9,7 +9,10 @@ const MIN_POS = -64;
 const MOVEMENT_OFFSET = 50;
 const STARTING_VILLAGER_NPCs = 3;
 
+import { PhaserNavMeshPlugin } from "phaser-navmesh";
+
 export default class Game extends Phaser.Scene {
+  public navMeshPlugin: PhaserNavMeshPlugin;
   private p1: string;
   private p2: string;
   private pointerInMap = true;

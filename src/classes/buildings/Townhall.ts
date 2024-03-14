@@ -9,7 +9,8 @@ export default class Townhall extends NPCSpawner {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
         super(scene, x, y, texture, owner, health, visionRange, frame);
 
-        this.scene.add.existing(this);
+        // this.scene.add.existing(this);
+        this.scene.physics.add.existing(this);
     }
 
     spawn(): NPC {

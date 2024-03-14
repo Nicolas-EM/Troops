@@ -40,7 +40,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
 
     update(time: number, deltaTime: number) {
         if (!this.body) return;
-        this.body.velocity.set(0);
+        // this.body.velocity.set(0);
 
         if (this._currentTarget) {
             const { x, y } = this._currentTarget;
@@ -52,7 +52,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
             }
             let speed = 400;
             if (this._path.length === 0 && distance < 50) {
-                speed = map(distance, 50, 0, 400, 50);
+                // speed = map(distance, 50, 0, 400, 50);
             }
             if (this._currentTarget) this.moveTowards(this._currentTarget, speed, deltaTime / 1000);
         }
@@ -65,7 +65,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         const targetSpeed = distance / elapsedSeconds;
         const magnitude = Math.min(maxSpeed, targetSpeed);
 
-        this.scene.physics.velocityFromRotation(angle, magnitude, this.body.velocity);
+        // this.scene.physics.velocityFromRotation(angle, magnitude, this.body.velocity);
         this.rotation = angle;
     }
 
@@ -73,5 +73,4 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         if (this.scene) this.scene.events.off("update", this.update, this);
         super.destroy();
     }
-}
 }

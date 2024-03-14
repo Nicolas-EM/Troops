@@ -4,18 +4,16 @@ import ResourceSpawner from './resources/ResourceSpawner';
 import Building from './buildings/Building';
 import NPC from './npcs/NPC';
 
-import TownHall from "../classes/buildings/Townhall";
+import TownHall from "../Classes/buildings/Townhall";
 import Tree from "../classes/resources/Tree";
 import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";
 import Villager from "../classes/npcs/Villager";
-import Player from '../classes/Player';
-
-import { PhaserNavMeshPlugin } from "phaser-navmesh";
+import Player from '../Classes/Player';
+import Game from '../scenes/Game';
 
 export default class Map {
     private _map: Phaser.Tilemaps.Tilemap;
-    private navMeshPlugin: PhaserNavMeshPlugin;
     private resourceSpawners: ResourceSpawner[];
     private buildings: Building[];
     private NPCs: NPC[];
@@ -59,7 +57,7 @@ export default class Map {
         ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
         const layers = [waterLayer, groundLayer, grassLayer];
 
-        let navMesh = this.navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, this.navMeshIsWalkable);
+        let navMesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, this.navMeshIsWalkable);
         navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
         navMesh.debugDrawClear(); // Clears the overlay
         // Visualize the underlying navmesh
