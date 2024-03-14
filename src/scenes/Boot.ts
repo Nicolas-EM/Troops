@@ -102,12 +102,6 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('Villager_Purple', Sprites.NPCs.Villager.Purple, { frameWidth: 192, frameHeight: 192 });
     this.load.spritesheet('Villager_Yellow', Sprites.NPCs.Villager.Yellow, { frameWidth: 192, frameHeight: 192 });
 
-    // Kings
-    this.load.image("King_Blue", Sprites.Kings.blue);
-    this.load.image("King_Red", Sprites.Kings.red);
-    this.load.image("King_Purple", Sprites.Kings.purple);
-    this.load.image("King_Yellow", Sprites.Kings.yellow);
-
     // UI - Banners
     this.load.image('Carved_Big_Shadow', Sprites.UI.Banners.Carved_Big_Shadow);
     this.load.image('Carved_Big', Sprites.UI.Banners.Carved_Big);
@@ -151,7 +145,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Disable_3', Sprites.UI.Icons.Disable_3);
     this.load.image('Pressed_3', Sprites.UI.Icons.Pressed_3);
     this.load.image('Icon_3', Sprites.UI.Icons.Icon_3);
-    this.load.image('Health', Sprites.UI.Icons.Health);
+    this.load.spritesheet('Health', Sprites.UI.Icons.Health, { frameWidth: 509, frameHeight: 163.3 });
     this.load.image('Lock_Disable', Sprites.UI.Icons.Lock_Disable);
     this.load.image('Lock_Pressed', Sprites.UI.Icons.Lock_Pressed);
     this.load.image('Lock', Sprites.UI.Icons.Lock);
@@ -173,6 +167,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('X_Disable', Sprites.UI.Icons.X_Disable);
     this.load.image('X_Pressed', Sprites.UI.Icons.X_Pressed);
     this.load.image('X', Sprites.UI.Icons.X);
+    this.load.spritesheet('Icons', Sprites.UI.Icons.Icons, { frameWidth: 64, frameHeight: 64 });
 
     // UI - Pointers
     this.load.image('Axe', Sprites.UI.Pointers.Axe);
@@ -222,6 +217,12 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Yellow_Up_Pressed', Sprites.UI.Ribbons.Yellow_Up_Pressed);
     this.load.image('Yellow_Up', Sprites.UI.Ribbons.Yellow_Up);
     this.load.image('Yellow', Sprites.UI.Ribbons.Yellow);
+
+    // Kings
+    this.load.image('King_Blue', Sprites.Kings.Blue);
+    this.load.image('King_Purple', Sprites.Kings.Purple);
+    this.load.image('King_Red', Sprites.Kings.Red);
+    this.load.image('King_Yellow', Sprites.Kings.Yellow);
   }
 
   /**

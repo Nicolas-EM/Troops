@@ -29,3 +29,4 @@ export { default as Sound_On } from './sound_on.png';
 export { default as X_Disable } from './x_disable.png';
 export { default as X_Pressed } from './x_pressed.png';
 export { default as X } from './x.png';
+export { default as Icons } from './icons.png';

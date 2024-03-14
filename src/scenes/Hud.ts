@@ -22,47 +22,90 @@ export default class Hud extends Phaser.Scene {
     createTopHud() {
         const midX = this.cameras.main.width / 2;
 
-        // Wood
-        let woodIcon = this.add.image(-20, -20, 'Wood');
-        woodIcon.scale = 0.75;
+        // Team
+        let teamContainer = this.add.container(40, 40);
+        let squareTeam = this.add.image(0, 0, 'Carved_Square');
+        squareTeam.setDisplaySize(45, 45);
+        squareTeam.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let king = this.add.image(0, 0, 'King_Purple');
+        king.setDisplaySize(25, 25);
+        king.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        teamContainer.add(squareTeam);
+        teamContainer.add(king);
 
-        let woodContainer = this.add.container(100, 45);
-        woodContainer.add(this.add.nineslice(0, 0, 'Connection_Up', undefined, 185, 65, 5, 5, 0, 1));
+        // Wood
+        let woodContainer = this.add.container(120, 45);
+        
+        let woodIcon = this.add.image(-20, -15, 'Wood');
+        woodIcon.setDisplaySize(70, 70);
+        woodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
+        let woodBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
+        woodBanner.setDisplaySize(120, 53);
+        woodBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let woodAmount = this.add.text(0, -10, '150', { color: '#000000' });
+        
+        woodContainer.add(woodBanner);
         woodContainer.add(woodIcon);
+        woodContainer.add(woodAmount);
 
         // Food
-        let foodIcon = this.add.image(-25, -12, 'Food');
-        foodIcon.scale = 0.70;
+        let foodContainer = this.add.container(222, 45);
 
-        let foodContainer = this.add.container(215, 45);
-        foodContainer.add(this.add.nineslice(0, 0, 'Connection_Up', undefined, 185, 65, 5, 5, 0, 1));
+        let foodIcon = this.add.image(-20, -8, 'Food');
+        foodIcon.setDisplaySize(60, 60);
+        foodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
+        let foodBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
+        foodBanner.setDisplaySize(120, 53);
+        foodBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let foodAmount = this.add.text(0, -10, '230', { color: '#000000' });
+
+        foodContainer.add(foodBanner);
         foodContainer.add(foodIcon);
+        foodContainer.add(foodAmount);
 
         // Gold
-        let goldIcon = this.add.image(-27, -8, 'Gold');
-        goldIcon.scale = 0.60;
+        let goldContainer = this.add.container(324, 45);
 
-        let goldContainer = this.add.container(330, 45);
-        goldContainer.add(this.add.nineslice(0, 0, 'Connection_Up', undefined, 185, 65, 5, 5, 0, 1));
+        let goldIcon = this.add.image(-25, -8, 'Gold');
+        goldIcon.setDisplaySize(60, 60);
+        goldIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
+        let goldBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
+        goldBanner.setDisplaySize(120, 53);
+        goldBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let goldAmount = this.add.text(0, -10, '100', { color: '#000000' });
+        
+        goldContainer.add(goldBanner);
         goldContainer.add(goldIcon);
+        goldContainer.add(goldAmount);
 
         // Population
-        let soldierIcon = this.add.image(-40, 0, "Soldier_Blue");
-        soldierIcon.scale = 0.35;
-
-        let villagerIcon = this.add.image(-20, 0, "Villager_Blue");
-        villagerIcon.scale = 0.4;
+        let soldierIcon = this.add.image(-35, 0, "Soldier_Purple");
+        soldierIcon.setDisplaySize(60, 60);
+        soldierIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);   
+        let villagerIcon = this.add.image(-20, 2, "Villager_Purple");
+        villagerIcon.setDisplaySize(60, 60);
+        villagerIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);   
+        let population = this.add.text(-5, -10, '42/50', { color: '#000000' });
 
         let populationContainer = this.add.container(midX, 45);
-        populationContainer.add(this.add.nineslice(0, 0, 'Connection_Up', undefined, 240, 70, 5, 5, 1, 1));
+        let populationBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
+        populationBanner.setDisplaySize(170, 66);
+        populationBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        populationContainer.add(populationBanner);
         populationContainer.add(soldierIcon);
         populationContainer.add(villagerIcon);
+        populationContainer.add(population);
 
         // options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
-        let settingsButton = this.add.image(0, 0, 'Yellow')
+        let settingsButton = this.add.image(0, 0, 'Yellow');
+        settingsButton.setDisplaySize(55, 55);
+        settingsButton.texture.setFilter(Phaser.Textures.FilterMode.LINEAR); 
         optionsContainer.add(settingsButton);
-        optionsContainer.add(this.add.image(0, 0, 'Settings'));
+        let settingsIcon = this.add.image(0, 0, 'Settings');
+        settingsIcon.setDisplaySize(55, 55);
+        settingsIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR); 
+        optionsContainer.add(settingsIcon);
 
         settingsButton.setInteractive().on("pointerup", this.openOptions);
         const el = document.getElementById("game")!;
@@ -73,31 +116,52 @@ export default class Hud extends Phaser.Scene {
         const midX = this.cameras.main.width / 2;
         const botY = this.cameras.main.height - 55;
 
-        // Health
-        let healthBackground = this.add.image(0, 0, "Carved_Rectangle_Shadow");
-        healthBackground.scale = 0.75;
+        // Info area
+        let infoContainer = this.add.container(midX - 145, botY + 25);
 
-        let healthContainer = this.add.container(midX - 120, botY + 25);
-        healthContainer.add(healthBackground);
+        let infoBox = this.add.image(0, 0, "Carved_Rectangle_Shadow");
+        infoBox.scale = 0.95;
+        let health = this.add.image(-37, -7, 'Health', 1);
+        health.setDisplaySize(80, 26);
+        health.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        
+        infoContainer.add(infoBox);
+        infoContainer.add(health);
 
-        // Selected Icon
-        let shadowIcon = this.add.image(0, 0, "Carved_Big_Shadow");
-        shadowIcon.scale = 0.5;
-        let leftRibbon = this.add.image(55, -20, "Blue_Left");
+        // Selected Entity
+        let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
+        entityBox.scale = 0.55;
+        let leftRibbon = this.add.image(55, -20, "Purple_Left");
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Blue_Right");
+        let rightRibbon = this.add.image(-55, -20, "Purple_Right");
         rightRibbon.scale = 0.45;
+        let selectedEntity = this.add.image(0, 0, 'Villager_Purple');
 
         let selectedContainer = this.add.container(midX, botY);
         selectedContainer.add(leftRibbon);
         selectedContainer.add(rightRibbon);
-        selectedContainer.add(shadowIcon);
+        selectedContainer.add(entityBox);
+        selectedContainer.add(selectedEntity);
 
         // Action
-        let actionBackground = this.add.image(0, 0, "Carved_Rectangle_Shadow");
-        actionBackground.scale = 0.75;
-        let actionContainer = this.add.container(midX + 120, botY + 25);
-        actionContainer.add(actionBackground);
+        let actionContainer = this.add.container(midX + 145, botY + 25);
+
+        let actionBox = this.add.image(0, 0, "Carved_Rectangle_Shadow");
+        actionBox.scale = 0.95;
+        let action1 = this.add.image(-50, 0, 'Icons', 25);
+        action1.setDisplaySize(35, 35);
+        action1.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let action2 = this.add.image(-5, 0, 'Icons', 21);
+        action2.setDisplaySize(35, 35);
+        action2.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let action3 = this.add.image(40, 0, 'Icons', 17);
+        action3.setDisplaySize(35, 35);
+        action3.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        
+        actionContainer.add(actionBox);
+        actionContainer.add(action1);
+        actionContainer.add(action2);
+        actionContainer.add(action3);
     }
 
     fullscreenchanged(e) {
@@ -118,4 +182,5 @@ export default class Hud extends Phaser.Scene {
             el.requestFullscreen();
         }
     }
+
 }
