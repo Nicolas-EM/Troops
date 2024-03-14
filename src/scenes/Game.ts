@@ -1,11 +1,5 @@
 import * as Phaser from 'phaser'
-import TownHall from "../classes/buildings/Townhall";
-import Tree from "../classes/resources/Tree";
-import Sheep from "../classes/resources/Sheep";
-import GoldMine from "../classes/resources/GoldMine";
-import Villager from "../classes/npcs/Villager";
-import Player from '../classes/Player';
-import { PhaserNavMeshPlugin } from "phaser-navmesh";
+import Map from "../Classes/Map";
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
@@ -16,14 +10,12 @@ const MOVEMENT_OFFSET = 50;
 const STARTING_VILLAGER_NPCs = 3;
 
 export default class Game extends Phaser.Scene {
-  private navMeshPlugin: PhaserNavMeshPlugin;
   private p1: string;
   private p2: string;
   private pointerInMap = true;
   private mapId: string;
-  private _map: Phaser.Tilemaps.Tilemap;
-  private _buildingsLayer: Phaser.GameObjects.GameObject[];
-  private _pathfinder;
+  private _map: Map;
+
   constructor() {
     super({ key: 'game' });
   }
@@ -37,61 +29,7 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    // Crear mapa
-    this._map = this.make.tilemap({ key: this.mapId });
-
-    // Fondo
-    let tileset = this._map.addTilesetImage("Water");
-    const waterLayer = this._map.createLayer("Fondo/Water", tileset!);
-    waterLayer?.setCollisionByProperty({ collides: true });
-    tileset = this._map.addTilesetImage("Ground");
-    const groundLayer = this._map.createLayer('Fondo/Ground', tileset!);
-    const grassLayer = this._map.createLayer('Fondo/Grass', tileset!);
-
-    // Resources
-    this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
-    this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
-
-    // Townhalls
-    let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo
-
-    this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
-      if (obj.type === "Townhall_P1") {
-        const p1_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p1}`, x);
-
-        new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p1}`, x);
-        new Villager(this, <number>obj.x + 320, <number>obj.y + 64, `Villager_${this.p1}`, x);
-        new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
-      } else if (obj.type === "Townhall_P2") {
-        const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
-
-        new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
-        new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
-        new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
-      }
-    });
-
-    ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
-    const layers = [waterLayer, groundLayer, grassLayer];
-
-    let navMesh = this.navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers);
-    navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
-    navMesh.debugDrawClear(); // Clears the overlay
-    // Visualize the underlying navmesh
-    // navMesh.debugDrawMesh({
-    //   drawCentroid: true,
-    //   drawBounds: false,
-    //   drawNeighbors: true,
-    //   drawPortals: true
-    // });
-
-    this.add.image(1450, 800, "x");
-    this.add.image(1550, 800, "x");
-    const path = navMesh.findPath({ x: 1450, y: 800 }, { x: 1550, y: 800 });
-    console.log(path);
-    // Visualize an individual path
-    navMesh.debugDrawPath(path, 0xffd900);
+    this._map = new Map(this, this.mapId, this.p1, this.p2);
 
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
