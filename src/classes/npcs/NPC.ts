@@ -1,9 +1,6 @@
 import * as Phaser from 'phaser';
 import Player from '../Player.ts'
 import PlayerEntity from '../PlayerEntity.ts';
-import Pathfinder from '../Pathfinder.ts';
-import { PathNode } from "@raresail/phaser-pathfinding";
-
 
 export default abstract class NPC extends PlayerEntity {
     // protected attributes:

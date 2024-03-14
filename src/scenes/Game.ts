@@ -5,7 +5,8 @@ import Sheep from "../classes/resources/Sheep";
 import GoldMine from "../classes/resources/GoldMine";
 import Villager from "../classes/npcs/Villager";
 import Player from '../classes/Player';
-import EasyStar from '../easystar';
+import NavMeshPlugin from "phaser-navmesh";
+
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
 const MAX_ZOOM = 1.3;
@@ -24,7 +25,6 @@ export default class Game extends Phaser.Scene {
   private _pathfinder;
   constructor() {
     super({ key: 'game' });
-    this._pathfinder = new EasyStar.js();
   }
 
   // Para pasar atributos de una escena a otra
@@ -41,12 +41,10 @@ export default class Game extends Phaser.Scene {
 
     // Fondo
     let tileset = this._map.addTilesetImage("Water");
-    this._map.createLayer("Fondo/Water", tileset!);
+    const waterLayer = this._map.createLayer("Fondo/Water", tileset!);
     tileset = this._map.addTilesetImage("Ground");
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
-
-    
 
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
@@ -65,12 +63,22 @@ export default class Game extends Phaser.Scene {
         new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
       } else if (obj.type === "Townhall_P2") {
         const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
-        
+
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
       }
     });
+
+
+    ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////
+    // Create layers
+    const buildingsLayer = this._map.createLayer("Buildings", tileset!);
+    const goldLayer = this._map.createLayer("Resources/Gold", tileset!);
+    const woodLayer = this._map.createLayer("Resources/Wood", tileset!);
+    const layers = [buildingsLayer, goldLayer, woodLayer, waterLayer];
+
+    NavMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers);
 
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {

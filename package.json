@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "@raresail/phaser-pathfinding": "^1.1.2",
-        "phaser": "^3.70.0"
+        "phaser": "^3.70.0",
+        "phaser-navmesh": "^2.3.1"
     }
 }

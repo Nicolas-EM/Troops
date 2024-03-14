@@ -3,7 +3,7 @@ import Boot from './scenes/Boot';
 import Menu from './scenes/Menu';
 import Lobby from './scenes/Lobby';
 import Game from './scenes/Game';
-
+import NavMeshPlugin from "phaser-navmesh";
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -20,6 +20,16 @@ let config: Phaser.Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
+    plugins: {
+        scene: [
+          {
+            key: "NavMeshPlugin", 
+            plugin: NavMeshPlugin, // Class that constructs plugins
+            mapping: "navMeshPlugin", // Property mapping to use for the scene, e.g. this.navMeshPlugin
+            start: true,
+          },
+        ],
+      },
     scene: [Boot, Menu, Lobby, Game],
     physics: {
         default: 'arcade',
