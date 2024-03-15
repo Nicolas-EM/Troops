@@ -24,7 +24,11 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
     }
 
     onResourceClicked() {
-        console.log("Resource : ", this, "has been clicked. Calling menu:");
-       // this.scene.events.emit('resourceClicked', this);
+        console.log("Resource : ", this, "has been clicked. Calling menu");
+        const resourceInfo = {
+            type: this.constructor.name,
+            remainingResrouces: this._remainingResrouces
+        };
+        this.scene.events.emit('entityClicked', resourceInfo);
     }
 }

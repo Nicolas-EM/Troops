@@ -36,12 +36,12 @@ export default class Hud extends Phaser.Scene {
         // Wood
         let woodContainer = this.add.container(120, 45);
         
-        let woodIcon = this.add.image(-20, -15, 'Wood');
-        woodIcon.setDisplaySize(70, 70);
-        woodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
         let woodBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
         woodBanner.setDisplaySize(120, 53);
         woodBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let woodIcon = this.add.image(-20, -15, 'Wood');
+        woodIcon.setDisplaySize(70, 70);
+        woodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         let woodAmount = this.add.text(0, -10, '150', { color: '#000000' });
         
         woodContainer.add(woodBanner);
@@ -51,12 +51,12 @@ export default class Hud extends Phaser.Scene {
         // Food
         let foodContainer = this.add.container(222, 45);
 
-        let foodIcon = this.add.image(-20, -8, 'Food');
-        foodIcon.setDisplaySize(60, 60);
-        foodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
         let foodBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
         foodBanner.setDisplaySize(120, 53);
         foodBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let foodIcon = this.add.image(-20, -8, 'Food');
+        foodIcon.setDisplaySize(60, 60);
+        foodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         let foodAmount = this.add.text(0, -10, '230', { color: '#000000' });
 
         foodContainer.add(foodBanner);
@@ -66,12 +66,12 @@ export default class Hud extends Phaser.Scene {
         // Gold
         let goldContainer = this.add.container(324, 45);
 
-        let goldIcon = this.add.image(-25, -8, 'Gold');
-        goldIcon.setDisplaySize(60, 60);
-        goldIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);        
         let goldBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
         goldBanner.setDisplaySize(120, 53);
         goldBanner.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let goldIcon = this.add.image(-25, -8, 'Gold');
+        goldIcon.setDisplaySize(60, 60);
+        goldIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         let goldAmount = this.add.text(0, -10, '100', { color: '#000000' });
         
         goldContainer.add(goldBanner);
@@ -117,31 +117,77 @@ export default class Hud extends Phaser.Scene {
         const botY = this.cameras.main.height - 55;
 
         // Info area
-        let infoContainer = this.add.container(midX - 145, botY + 25);
-
         let infoBox = this.add.image(0, 0, "Carved_Rectangle_Shadow");
         infoBox.scale = 0.95;
-        let health = this.add.image(-37, -7, 'Health', 1);
-        health.setDisplaySize(80, 26);
-        health.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         
+        let infoContainer = this.add.container(midX - 145, botY + 25);
         infoContainer.add(infoBox);
-        infoContainer.add(health);
 
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, "Purple_Left");
-        leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Purple_Right");
-        rightRibbon.scale = 0.45;
-        let selectedEntity = this.add.image(0, 0, 'Villager_Purple');
 
         let selectedContainer = this.add.container(midX, botY);
-        selectedContainer.add(leftRibbon);
-        selectedContainer.add(rightRibbon);
         selectedContainer.add(entityBox);
-        selectedContainer.add(selectedEntity);
+        
+
+        let scene = this;
+        let health, woodIcon, woodAmount, foodIcon, foodAmount, goldIcon, goldAmount, leftRibbon, rightRibbon, selectedEntity;
+
+        this.events.on('entityClicked', function(resourceInfo) {
+            // Clear HUD
+            infoContainer.remove(health);
+            infoContainer.remove(woodIcon);
+            infoContainer.remove(woodAmount);
+            infoContainer.remove(foodIcon);
+            infoContainer.remove(foodAmount);
+            infoContainer.remove(goldIcon);
+            infoContainer.remove(goldAmount);
+            selectedContainer.remove(leftRibbon);
+            selectedContainer.remove(rightRibbon);
+            selectedContainer.remove(selectedEntity);
+            if (resourceInfo.type === 'Tree') {
+                // Info area
+                woodIcon = scene.add.image(-20, -15, 'Wood');
+                woodIcon.setDisplaySize(70, 70);
+                woodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                woodAmount = scene.add.text(0, -10, resourceInfo.remainingResrouces, { color: '#000000' });
+                infoContainer.add(woodIcon);
+                infoContainer.add(woodAmount);
+            } else if (resourceInfo.type === 'Sheep') {
+                // Info area
+                foodIcon = scene.add.image(-20, -15, 'Food');
+                foodIcon.setDisplaySize(70, 70);
+                foodIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                foodAmount = scene.add.text(0, -10, resourceInfo.remainingResrouces, { color: '#000000' });
+                infoContainer.add(foodIcon);
+                infoContainer.add(foodAmount);
+            } else if (resourceInfo.type === 'GoldMine') {
+                // Info area
+                goldIcon = scene.add.image(-20, -15, 'Gold');
+                goldIcon.setDisplaySize(70, 70);
+                goldIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                goldAmount = scene.add.text(0, -10, resourceInfo.remainingResrouces, { color: '#000000' });
+                infoContainer.add(goldIcon);
+                infoContainer.add(goldAmount);
+            } else {
+                // Info area
+                health = scene.add.image(-37, -7, 'Health', 1);
+                health.setDisplaySize(80, 26);
+                health.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                infoContainer.add(health);
+                // Selected Entity
+                leftRibbon = scene.add.image(55, -20, "Purple_Left");
+                leftRibbon.scale = 0.45;
+                rightRibbon = scene.add.image(-55, -20, "Purple_Right");
+                rightRibbon.scale = 0.45;
+                selectedContainer.add(leftRibbon);
+                selectedContainer.add(rightRibbon);
+            }
+
+            selectedEntity = scene.add.image(0, 0, `${resourceInfo.type}`);
+            selectedContainer.add(selectedEntity);
+        });
 
         // Action
         let actionContainer = this.add.container(midX + 145, botY + 25);

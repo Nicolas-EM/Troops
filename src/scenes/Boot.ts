@@ -37,7 +37,7 @@ export default class Boot extends Phaser.Scene {
 
     // Resources
     // Gold
-    this.load.image('Gold_Inactive', Sprites.Resources.Spawners.Gold.Inactive);
+    this.load.image('GoldMine', Sprites.Resources.Spawners.Gold.Inactive);
     this.load.image('Gold_Active', Sprites.Resources.Spawners.Gold.Active);
     this.load.image('Gold_Destroyed', Sprites.Resources.Spawners.Gold.Destroyed);
     this.load.image('Gold', Sprites.Resources.Gold);

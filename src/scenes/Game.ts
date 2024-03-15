@@ -38,6 +38,10 @@ export default class Game extends Phaser.Scene {
   create() {
     this.scene.run('hud');
 
+    this.events.on('entityClicked', function(resourceInfo) {
+      this.scene.get('hud').events.emit('entityClicked', resourceInfo);
+  }, this);
+
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
@@ -53,7 +57,7 @@ export default class Game extends Phaser.Scene {
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
     this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
+    this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'GoldMine', classType: GoldMine });
 
     // Townhalls
     let x = new Player(1, "Player 1", this.p1, this); // TODO: Crear jugador real o algo
