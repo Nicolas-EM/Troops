@@ -1,50 +1,33 @@
 import { io, Socket } from 'socket.io-client';
+import Lobby from "./scenes/Lobby";
+import lobbyData from './Classes/server/LobbyData';
 
-interface Client {
-    socket: Socket;
-    inGame: boolean;
-    sendTest: () => void;
-    askNewPlayer: (color: string) => void;
-    sendClick: (x: number, y: number) => void;
+class Client {
+    static socket: Socket = io();
+
+    constructor(scene: Phaser.Scene) {
+        Client.joinLobby();
+
+        Client.socket.on('updateLobby', (data: {lobby: lobbyData}) => {
+            // Update player list display in the lobby scene
+            if (scene.scene.isActive('lobby')) {
+                (<Lobby>scene).updateLobby(data.lobby);
+            }
+        });
+    }
+
+    sendTest(): void {
+        console.log("test sent");
+        Client.socket.emit('test');
+    }
+
+    static joinLobby(): void {
+        Client.socket.emit('joinLobby');
+    }
+
+    static chooseColor(color: string): void {
+        Client.socket.emit('chooseColor', color);
+    }
 }
 
-const socket = io();
-export const Client: Client = {
-    socket: socket,
-    inGame: false,
-
-    sendTest: function (): void {
-        console.log("test sent");
-        this.socket.emit('test');
-    },
-
-    askNewPlayer: function (color: string): void {
-        this.socket.emit('newplayer', color);
-    },
-
-    sendClick: function (x: number, y: number): void {
-        this.socket.emit('click', { x: x, y: y });
-    },
-};
-
-Client.socket.on('newplayer', function (data: { id: string; x: number; y: number }): void {
-    // Assuming Game is defined elsewhere
-    // Game.addNewPlayer(data.id, data.x, data.y);
-    console.log(`new player ${data.id}`);
-});
-
-Client.socket.on('start-game', () => Client.inGame = true);
-
-// Client.socket.on('allplayers', function (data: { id: string; x: number; y: number }[]): void {
-//     for (let i = 0; i < data.length; i++) {
-//         Game.addNewPlayer(data[i].id, data[i].x, data[i].y);
-//     }
-
-//     Client.socket.on('move', function (data: { id: string; x: number; y: number }): void {
-//         Game.movePlayer(data.id, data.x, data.y);
-//     });
-
-//     Client.socket.on('remove', function (id: string): void {
-//         Game.removePlayer(id);
-//     });
-// });
+export default Client;
