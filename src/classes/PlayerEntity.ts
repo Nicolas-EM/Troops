@@ -10,6 +10,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _path;
     protected _navMesh;
     protected _currentTarget;
+    protected _isSelected: boolean;
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
@@ -20,8 +21,13 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         this._owner = owner;
         this._health = health;
         this._visionRange = visionRange;
+        //testing
+     //   this._navMesh = (<any>this.scene)._map.navmesh;
+        console.log("entity navmesh: ", this._navMesh);
         // Enable arcade physics for moving with velocity
         this.scene.physics.world.enable(this);
+        this.Interactive();
+        this.scene.events.on("rightClick", this.onMapRightClick, this);
     }
 
     /**
@@ -31,9 +37,23 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         this._health -= damage;
     }
 
-    goTo(targetPoint: Phaser.Math.Vector2): void {
+    onEntityClicked(pointer: Phaser.Input.Pointer): void {
+        if (pointer.leftButtonDown()) {
+            console.log("Entity clicked");
+            this._isSelected = true;
+        }
+    }
+
+    Interactive(): this {
+        super.setInteractive();
+        this.on('pointerdown', this.onEntityClicked, this);
+        return this;
+    }
+
+    goTo(targetPoint: Phaser.Math.Vector2, navMesh): void {
         // Find a path to the target
-        this._path = this._navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
+        this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
+        console.log("Path found: ", this._path);
         if (this._path && this._path.length > 0) this._currentTarget = this._path.shift();
         else this._currentTarget = null;
     }
@@ -57,6 +77,14 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
             if (this._currentTarget) this.moveTowards(this._currentTarget, speed, deltaTime / 1000);
         }
     }
+
+    onMapRightClick(pointer, navMesh): void {
+        if (this._isSelected) {
+            console.log("Right click on map, entity selected. going....");
+            this.goTo(pointer,navMesh);
+        }
+    }
+    
 
     moveTowards(targetPosition: Phaser.Math.Vector2, maxSpeed = 200, elapsedSeconds: number) {
         const { x, y } = targetPosition;

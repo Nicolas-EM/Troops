@@ -17,7 +17,7 @@ export default class Map {
     private resourceSpawners: ResourceSpawner[];
     private buildings: Building[];
     private NPCs: NPC[];
-
+    public navmesh;
     constructor(private scene: Phaser.Scene, private mapId: string, private p1: string, private p2: string) {
         // Crear mapa
         this._map = this.scene.make.tilemap({ key: this.mapId });
@@ -57,29 +57,32 @@ export default class Map {
         ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
         const layers = [waterLayer, groundLayer, grassLayer];
 
-        let navMesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, this.navMeshIsWalkable);
-        navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
-        navMesh.debugDrawClear(); // Clears the overlay
+        this.navmesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, this.navMeshIsWalkable);
+      //  navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
+     //   navMesh.debugDrawClear(); // Clears the overlay
         // Visualize the underlying navmesh
 
         // -->  okay wtf ? 
-        navMesh.debugDrawMesh({
-            drawCentroid: true,
-            drawBounds: false,
-            drawNeighbors: true,
-            drawPortals: true
-        });
+        // navMesh.debugDrawMesh({
+        //     drawCentroid: true,
+        //     drawBounds: false,
+        //     drawNeighbors: true,
+        //     drawPortals: true
+        // });
 
         // Prueba de colision con spawner
-        let testSpawner: Sheep = <Sheep>foodSpawners[0];
-        const path = navMesh.findPath({ x: 4050, y: 3500 }, { x: testSpawner.x, y: testSpawner.y });
+        // let testSpawner: Sheep = <Sheep>foodSpawners[0];
+        // const path = navMesh.findPath({ x: 4050, y: 3500 }, { x: testSpawner.x, y: testSpawner.y });
 
-        // Visualize an individual path
-        navMesh.debugDrawPath(path, 0xffd900);
+        // // Visualize an individual path
+        // navMesh.debugDrawPath(path, 0xffd900);
     }
 
     navMeshIsWalkable(tile: Phaser.Tilemaps.Tile): boolean {
-
-        return false;
+        // si la tile tiene colision no se puede andar..?
+        if (tile.properties.collides) {
+            return false;
+        }
+        return true;
     }
 }
