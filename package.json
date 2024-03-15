@@ -5,7 +5,8 @@
     "scripts": {
         "start": "npx parcel index.html",
         "build": "npx parcel build index.html --public-url ./ --dist-dir docs",
-        "serve": "npm run build && nodemon server.js"
+        "watch": "concurrently \"npm start\" \"set NODE_ENV=dev&& nodemon server.js\"",
+        "serve": "concurrently \"npm build\" \"set NODE_ENV=prod&& nodemon server.js\""
     },
     "repository": {
         "type": "git",
@@ -25,6 +26,7 @@
     "homepage": "https://github.com/Nicolas-EM/23-24_DVI#readme",
     "devDependencies": {
         "buffer": "^6.0.3",
+        "concurrently": "^8.2.2",
         "nodemon": "^3.1.0",
         "parcel": "^2.10.3",
         "process": "^0.11.10"

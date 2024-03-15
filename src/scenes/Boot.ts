@@ -108,6 +108,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('game', { mapId: 'desert', p1: 'Blue', p2: 'Red' });
+    this.scene.start('lobby');
   }
 }

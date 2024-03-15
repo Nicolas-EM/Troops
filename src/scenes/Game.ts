@@ -5,7 +5,6 @@ import Sheep from '../classes/resources/Sheep';
 import GoldMine from '../classes/resources/GoldMine';
 import Villager from '../classes/npcs/Villager';
 import Player from '../classes/Player';
-import { Client } from '../client';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
@@ -35,8 +34,6 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    Client.askNewPlayer();
-
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
