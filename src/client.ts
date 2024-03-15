@@ -2,27 +2,29 @@ import { io, Socket } from 'socket.io-client';
 
 interface Client {
     socket: Socket;
+    inGame: boolean;
     sendTest: () => void;
-    askNewPlayer: () => void;
+    askNewPlayer: (color: string) => void;
     sendClick: (x: number, y: number) => void;
 }
 
 const socket = io();
 export const Client: Client = {
     socket: socket,
+    inGame: false,
 
     sendTest: function (): void {
         console.log("test sent");
         this.socket.emit('test');
     },
 
-    askNewPlayer: function (): void {
-        this.socket.emit('newplayer');
+    askNewPlayer: function (color: string): void {
+        this.socket.emit('newplayer', color);
     },
 
     sendClick: function (x: number, y: number): void {
         this.socket.emit('click', { x: x, y: y });
-    }
+    },
 };
 
 Client.socket.on('newplayer', function (data: { id: string; x: number; y: number }): void {
@@ -30,6 +32,8 @@ Client.socket.on('newplayer', function (data: { id: string; x: number; y: number
     // Game.addNewPlayer(data.id, data.x, data.y);
     console.log(`new player ${data.id}`);
 });
+
+Client.socket.on('start-game', () => Client.inGame = true);
 
 // Client.socket.on('allplayers', function (data: { id: string; x: number; y: number }[]): void {
 //     for (let i = 0; i < data.length; i++) {

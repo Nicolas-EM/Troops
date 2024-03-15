@@ -237,6 +237,6 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
     this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
-    this.scene.start('game', { mapId: 'desert', p1: 'Blue', p2: 'Red' });
+    this.scene.start('lobby');
   }
 }
