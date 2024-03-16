@@ -4,17 +4,17 @@ import { IconInfo } from "../../utils";
  export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
     // Attributes
     private _iconInfo: IconInfo;
-    private _resourceIconInfo: IconInfo;
+    private _resourceIcon: string;
     private _totalResources: number;
     private _remainingResources: number;
     private _resourceRate: number;
 
     // Constructor
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, iconInfo: IconInfo, resourceIconInfo: IconInfo, totalResources: number, resourceRate: number, frame?: string | number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, iconInfo: IconInfo, resourceIcon: string, totalResources: number, resourceRate: number, frame?: string | number) {
         super(scene, x, y, texture, frame)
 
         this._iconInfo = iconInfo;
-        this._resourceIconInfo = resourceIconInfo;
+        this._resourceIcon = resourceIcon;
         this._totalResources = totalResources;
         this._remainingResources = totalResources;
         this._resourceRate = resourceRate;
@@ -36,7 +36,7 @@ import { IconInfo } from "../../utils";
             entity: this._iconInfo,
             info: {
                 remainingResources: this._remainingResources,
-                resource: this._resourceIconInfo
+                resource: this._resourceIcon
             },
             actions: []
         };

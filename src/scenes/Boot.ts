@@ -145,7 +145,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Disable_3', Sprites.UI.Icons.Disable_3);
     this.load.image('Pressed_3', Sprites.UI.Icons.Pressed_3);
     this.load.image('Icon_3', Sprites.UI.Icons.Icon_3);
-    this.load.spritesheet('Health', Sprites.UI.Icons.Health, { frameWidth: 509, frameHeight: 163.3 });
+    this.load.spritesheet('Health', Sprites.UI.Icons.Health, { frameWidth: 510, frameHeight: 200 });
     this.load.image('Lock_Disable', Sprites.UI.Icons.Lock_Disable);
     this.load.image('Lock_Pressed', Sprites.UI.Icons.Lock_Pressed);
     this.load.image('Lock', Sprites.UI.Icons.Lock);

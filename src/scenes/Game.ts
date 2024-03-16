@@ -7,10 +7,9 @@ import Villager from "../classes/npcs/Villager";
 import Player from '../classes/Player';
 
 // MAGIC NUMBER
-const MIN_ZOOM = 0.05;
-const MAX_ZOOM = 1.3;
+const MIN_ZOOM = 0.6;
+const MAX_ZOOM = 1;
 const ZOOM_AMOUNT = 0.05;
-const MIN_POS = -64;
 const MOVEMENT_OFFSET = 10;
 const STARTING_VILLAGER_NPCs = 3;
 
@@ -22,6 +21,10 @@ export default class Game extends Phaser.Scene {
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
   cursors: any;
+  maxX: number;
+  minX: number;
+  maxY: number;
+  minY: number;
 
   constructor() {
     super({ key: 'game' });
@@ -53,8 +56,6 @@ export default class Game extends Phaser.Scene {
     this._map.createLayer('Fondo/Ground', tileset!);
     this._map.createLayer('Fondo/Grass', tileset!);
 
-
-
     // Resources
     this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
     this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
@@ -82,23 +83,24 @@ export default class Game extends Phaser.Scene {
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
       if (deltaY > 0) {
-        const newZoom = this.cameras.main.zoom - ZOOM_AMOUNT;
-        if (newZoom > MIN_ZOOM) {
-          this.cameras.main.zoom = newZoom;
-        }
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom - ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
       }
-
       if (deltaY < 0) {
-        const newZoom = this.cameras.main.zoom + ZOOM_AMOUNT;
-        if (newZoom < MAX_ZOOM) {
-          this.cameras.main.zoom = newZoom;
-        }
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom + ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
       }
     });
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
 
+    // Set limits for movement
+    this.maxX = this._map.widthInPixels - this.cameras.main.width;
+    this.minX = 0;
+    this.maxY = this._map.heightInPixels - this.cameras.main.height;
+    this.minY = 0;
+    
+
+    // WASD for camera movement
     this.cursors = this.input.keyboard!.addKeys({
       'up': Phaser.Input.Keyboard.KeyCodes.W,
       'down': Phaser.Input.Keyboard.KeyCodes.S,
@@ -126,19 +128,23 @@ export default class Game extends Phaser.Scene {
   }
 
   cameraMoveUp(delta) {
-    this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
+    const newY = this.cameras.main.scrollY - delta / this.cameras.main.zoom;
+    this.cameras.main.scrollY = Phaser.Math.Clamp(newY, this.minY, this.maxY);
   }
 
   cameraMoveDown(delta) {
-    this.cameras.main.scrollY += delta / this.cameras.main.zoom;
+    const newY = this.cameras.main.scrollY + delta / this.cameras.main.zoom;
+    this.cameras.main.scrollY = Phaser.Math.Clamp(newY, this.minY, this.maxY);
   }
 
   cameraMoveLeft(delta) {
-    this.cameras.main.scrollX -= delta / this.cameras.main.zoom;
+    const newX = this.cameras.main.scrollX - delta / this.cameras.main.zoom;
+    this.cameras.main.scrollX = Phaser.Math.Clamp(newX, this.minX, this.maxX);
   }
 
   cameraMoveRight(delta) {
-    this.cameras.main.scrollX += delta / this.cameras.main.zoom;
+    const newX = this.cameras.main.scrollX + delta / this.cameras.main.zoom;
+    this.cameras.main.scrollX = Phaser.Math.Clamp(newX, this.minX, this.maxX);
   }
 
   cameraPan(delta: number) {
@@ -161,4 +167,5 @@ export default class Game extends Phaser.Scene {
     else if (pointer.y <= MOVEMENT_OFFSET && pointer.x <= width - MOVEMENT_OFFSET * 2)
       this.cameraMoveUp(delta);
   }
+
 }

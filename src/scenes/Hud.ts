@@ -74,8 +74,6 @@ export default class Hud extends Phaser.Scene {
         optionsContainer.add(settingsIcon);
 
         settingsButton.setInteractive().on("pointerup", this.openOptions);
-        const el = document.getElementById("game")!;
-        el.addEventListener("fullscreenchange", this.fullscreenchanged);
 
     }
 
@@ -94,9 +92,9 @@ export default class Hud extends Phaser.Scene {
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, "Red_Left");
+        let leftRibbon = this.add.image(55, -20, "Purple_Left");
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Red_Right");
+        let rightRibbon = this.add.image(-55, -20, "Purple_Right");
         rightRibbon.scale = 0.45;
         this.selectedContainer = this.add.container(0, 0);
         let selectedAreaContainer = this.add.container(midX, botY);
@@ -105,7 +103,6 @@ export default class Hud extends Phaser.Scene {
         selectedAreaContainer.add(entityBox);
         selectedAreaContainer.add(this.selectedContainer);
 
-
         // Action area
         let actionBox = this.add.image(0, 0, "Carved_Rectangle_Shadow");
         actionBox.scale = 0.95;
@@ -113,7 +110,6 @@ export default class Hud extends Phaser.Scene {
         let actionAreaContainer = this.add.container(midX + 145, botY + 25);
         actionAreaContainer.add(actionBox);        
         actionAreaContainer.add(this.actionsContainer);
-
 
         let entityIcon;
 
@@ -133,38 +129,39 @@ export default class Hud extends Phaser.Scene {
             // ----- Info -----
             // ResourceSpawner
             if ("remainingResources" in hudInfo.info) {
-                let resourceIcon = this.add.image(-55, 0, hudInfo.info.resource.name);
-                resourceIcon.setDisplaySize(hudInfo.info.resource.width, hudInfo.info.resource.height);
+                let resourceIcon = this.add.image(-58, 0, hudInfo.info.resource);
+                resourceIcon.setDisplaySize(60, 60);
                 resourceIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-                let resourceAmount = this.add.text(-34, -8, hudInfo.info.remainingResources, { color: '#000000' });
+                let resourceAmount = this.add.text(-36, -8, hudInfo.info.remainingResources, { color: '#000000' });
                 this.infoContainer.add(resourceIcon);
                 this.infoContainer.add(resourceAmount);
             }
             // PlayerEntity
             else {
                 // Health
-                let healthAmount = this.add.text(0, 0, `${hudInfo.info.health}/${hudInfo.info.totalHealth}`, { color: '#000000' });
-                let healthBar = this.add.image(-37, -7, 'Health', this.calculateHealthBar(hudInfo.info.health, hudInfo.info.totalHealth));
-                healthBar.setDisplaySize(80, 26);
+                let healthAmount = this.add.text(-45, -15, `${hudInfo.info.health}/${hudInfo.info.totalHealth}`, { color: '#000000' });
+                healthAmount.setFontSize(13);
+                let healthBar = this.add.image(-30, 8, 'Health', this.calculateHealthBar(hudInfo.info.health, hudInfo.info.totalHealth));
+                healthBar.setDisplaySize(80, 30);
                 healthBar.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
                 this.infoContainer.add(healthAmount);
                 this.infoContainer.add(healthBar);
                 // if AttackUnit, show damage
                 if ("damage" in hudInfo.info) {
                     // Sword
-                    let sword = this.add.image(40, 0, 'Sword');
-                    sword.setDisplaySize(80, 26);
+                    let sword = this.add.image(35, 0, 'Sword');
+                    sword.setDisplaySize(30, 30);
                     sword.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
                     sword.setFlipX(true);
                     this.infoContainer.add(sword);
                     // Damage
-                    let damageAmount = this.add.text(50, 0, hudInfo.info.damage, { color: '#000000' });
+                    let damageAmount = this.add.text(45, -5, hudInfo.info.damage, { color: '#000000' });
                     this.infoContainer.add(damageAmount);
                 }                
             }
             
             // ----- Actions -----
-            let startX = -50;
+            let startX = -45;
             hudInfo.actions.forEach((action, i) => {
                 let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action);
                 actionIcon.setDisplaySize(35, 35);
@@ -200,14 +197,17 @@ export default class Hud extends Phaser.Scene {
 
     // Calculate 
     calculateHealthBar(currentHealth, totalHealth) {
-        return 1; // TODO
-    }
-
-    fullscreenchanged(e) {
-        if (document.fullscreenElement) {
-            console.log(`Element: ${document.fullscreenElement.id} entered fullscreen mode.`);
-        } else {
-            console.log("Leaving fullscreen mode.");
+        const healthRatio = currentHealth / totalHealth;
+        if (healthRatio >= 0.875) { // 100%
+            return 0;
+        } else if (healthRatio >= 0.625) { // 75%
+            return 1;
+        } else if (healthRatio >= 0.375) { // 50%
+            return 2;
+        } else if (healthRatio >= 0.175) { // 25%
+            return 3;
+        } else { // 10%
+            return 4;
         }
     }
 
