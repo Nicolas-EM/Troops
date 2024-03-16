@@ -5,6 +5,7 @@ import Sheep from '../classes/resources/Sheep';
 import GoldMine from '../classes/resources/GoldMine';
 import Villager from '../classes/npcs/Villager';
 import Player from '../classes/Player';
+import { Client } from '../client';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.05;
@@ -20,7 +21,6 @@ export default class Game extends Phaser.Scene {
   private pointerInMap = true;
   private mapId: string;
   private _map: Phaser.Tilemaps.Tilemap;
-  private _buildingsLayer: Phaser.GameObjects.GameObject[];
 
   constructor() {
     super({ key: 'game' });
@@ -35,6 +35,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    Client.askNewPlayer();
+
     // Crear mapa
     this._map = this.make.tilemap({ key: this.mapId });
 
@@ -70,7 +72,7 @@ export default class Game extends Phaser.Scene {
         new Villager(this, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x);
       } else if (obj.type === 'Townhall_P2') {
         const p2_TownHall = new TownHall(this, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
-        
+
         new Villager(this, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x);
         new Villager(this, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x);
