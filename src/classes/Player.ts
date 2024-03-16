@@ -3,6 +3,7 @@ import Townhall from './buildings/Townhall';
 import Building from './buildings/Building';
 import NPC from './npcs/NPC';
 import { Scene } from 'phaser';
+import { Resources } from "../utils";
 
 export default class Player {
 
@@ -12,7 +13,7 @@ export default class Player {
   private _color: string;
   private _buildings: Building[];
   private _npcs: NPC[];
-  private _resources: Resource[];
+  private _resources: Resources;
   private _selectedGameObjects: Phaser.GameObjects.GameObject[];
   private _scene: Phaser.Scene;
 
@@ -23,11 +24,11 @@ export default class Player {
    * @param {number} color - The color associated with the player.
    * @param {Building[]} buildings - An array of buildings owned by the player.
    * @param {NPC[]} npcs - An array of player0s units (troops, villagers...)
-   * @param {object} resources - Player's resources
+   * @param {Resources} resources - Player's resources
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
    * @param {Scene  } scene - The scene where the player is created.
    */
-  constructor(id: number, name: string, color: string, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resource[]) {
+  constructor(id: number, name: string, color: string, scene : Phaser.Scene, buildings?: Building[], npcs?: NPC[], resources?: Resources) {
     this._id = id;
     this._name = name;
     this._color = color;
@@ -55,8 +56,12 @@ export default class Player {
    * @returns {object} Generated starting resources
    * @private
    */
-  private defaultStartingResources(): object {
-    let resources = {}
+  private defaultStartingResources(): Resources {
+    let resources = {
+      wood: 150,
+      food: 230,
+      gold: 100
+    }
     // resources.push(startingData.STARTING_PLAYER_GOLD);
     // return resources;
     return resources;
@@ -150,7 +155,7 @@ public abandonGame(): void {
     return this._resources;
   }
 
-  set resources(value: object) {
+  set resources(value: Resources) {
     this._resources = value;
   }
 
