@@ -64,7 +64,7 @@ export default class Hud extends Phaser.Scene {
 
         // Options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
-        let settingsButton = this.add.image(0, 0, 'Yellow');
+        let settingsButton = this.add.image(0, 0, 'Button_Yellow');
         settingsButton.setDisplaySize(55, 55);
         settingsButton.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         optionsContainer.add(settingsButton);
@@ -73,7 +73,10 @@ export default class Hud extends Phaser.Scene {
         settingsIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         optionsContainer.add(settingsIcon);
 
-        settingsButton.setInteractive().on("pointerup", this.openOptions);
+        settingsButton.setInteractive().on("pointerdown", () => {
+            this.scene.pause('game');
+            this.createOptionsMenu();            
+        });
 
     }
 
@@ -92,9 +95,9 @@ export default class Hud extends Phaser.Scene {
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, "Purple_Left");
+        let leftRibbon = this.add.image(55, -20, "Ribbon_Purple_Left");
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Purple_Right");
+        let rightRibbon = this.add.image(-55, -20, "Ribbon_Purple_Right");
         rightRibbon.scale = 0.45;
         this.selectedContainer = this.add.container(0, 0);
         let selectedAreaContainer = this.add.container(midX, botY);
@@ -178,6 +181,56 @@ export default class Hud extends Phaser.Scene {
 
     }
 
+    createOptionsMenu() {
+        // Darken background
+        let background = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6);
+        background.setOrigin(0);
+
+        const midX = this.cameras.main.width / 2;
+        const midY = this.cameras.main.height / 2;
+
+        // Menu
+        let menu = this.add.nineslice(0, 0, "Vertical", undefined, 385, 400, 75, 75, 75, 75);
+        // Surrender button
+        let surrenderBtnImg = this.add.image(-117, 90, "Button_Red_Slide");
+        surrenderBtnImg.scale = 0.6;
+        surrenderBtnImg.setOrigin(0);
+        let surrenderBtnText = this.add.text(-97, 97, "RENDIRSE");
+        let surrenderBtnContainer = this.add.container(0, 0);
+        surrenderBtnContainer.add(surrenderBtnImg);
+        surrenderBtnContainer.add(surrenderBtnText);
+
+        // Silence button
+        let silenceBtnImg = this.add.image(32, 80, "Button_Yellow");
+        silenceBtnImg.scale = 0.8;        
+        silenceBtnImg.setOrigin(0);
+        let silenceIcon = this.add.image(57, 104, "Sound_On");
+        silenceIcon.setDisplaySize(45, 45);
+        silenceIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let silenceBtnContainer = this.add.container(0, 0);
+        silenceBtnContainer.add(silenceBtnImg);
+        silenceBtnContainer.add(silenceIcon);
+
+        // Fullscreen button
+        let fullscreenBtnImg = this.add.image(80, 80, "Button_Yellow");
+        fullscreenBtnImg.scale = 0.8;
+        fullscreenBtnImg.setOrigin(0);
+        let fullscreenIcon = this.add.image(105, 100, "Selected");
+        fullscreenIcon.setDisplaySize(22, 22);
+        fullscreenIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let fullscreenBtnContainer = this.add.container(0, 0);
+        fullscreenBtnContainer.add(fullscreenBtnImg);
+        fullscreenBtnContainer.add(fullscreenIcon);
+        // Fullscreen function
+        fullscreenBtnImg.setInteractive().on("pointerup", this.changeFullscreen);
+
+        let container = this.add.container(midX, midY);
+        container.add(menu);
+        container.add(surrenderBtnContainer);
+        container.add(silenceBtnContainer);
+        container.add(fullscreenBtnContainer);
+    }
+
     // Add banner of a resource to TopHud
     addResourceBanner(posX, resource, amount) {
         let container = this.add.container(posX, 45);
@@ -211,7 +264,7 @@ export default class Hud extends Phaser.Scene {
         }
     }
 
-    openOptions() {
+    changeFullscreen() {
         console.log("here");
         if (document.fullscreenElement) {
             // exitFullscreen is only available on the Document object.
