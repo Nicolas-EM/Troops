@@ -53,13 +53,12 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
-    this.input.on('pointerdown', (pointer, gameObject) => {
-      //TODO gestionar el pointerinmap
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer, gameObject) => {
       if (pointer.rightButtonDown() && this.pointerInMap) {
-      if (this.pointerInMap) {
-        const pointerPosition = new Phaser.Math.Vector2(pointer.x, pointer.y);
-        this.events.emit('rightClick', pointerPosition,this._map.navmesh);
-      }
+        if (this.pointerInMap) {
+          const pointerPosition = new Phaser.Math.Vector2(pointer.worldX, pointer.worldY);
+          this.events.emit('rightClick', pointerPosition, this._map.navmesh);
+        }
       }
     });
   }

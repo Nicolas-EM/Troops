@@ -1,4 +1,4 @@
-import NPC from "../npcs/NPC";
+import NPC from "../NPCs/NPC";
 import Player from "../Player";
 import NPCSpawner from "./SpawnerBuilding";
 
@@ -8,9 +8,6 @@ const visionRange = 10;
 export default class Townhall extends NPCSpawner {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
         super(scene, x, y, texture, owner, health, visionRange, frame);
-
-        // this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
     }
 
     spawn(): NPC {

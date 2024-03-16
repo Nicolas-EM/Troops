@@ -1,4 +1,4 @@
-import NPC from "../npcs/NPC";
+import NPC from "../NPCs/NPC";
 import Player from "../Player";
 import Building from "./Building"
 

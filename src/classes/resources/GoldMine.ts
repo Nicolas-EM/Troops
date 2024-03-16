@@ -1,4 +1,4 @@
-import ResourceSpawner from "./ResourceSpawner"
+import ResourceSpawner from "./ResourceSpawner";
 
 // TODO: remove magic numbers
 const TOTAL_RESOURCE = 100;

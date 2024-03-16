@@ -1,4 +1,4 @@
-import NPC from "../npcs/NPC";
+import NPC from "../NPCs/NPC";
 import SpawnerBuilding from "./SpawnerBuilding";
 
 export default class GoblinHut extends SpawnerBuilding {

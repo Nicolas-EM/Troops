@@ -8,9 +8,9 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _health: number;
     protected _visionRange: number;
     protected _path;
-    protected _navMesh;
     protected _currentTarget;
     protected _isSelected: boolean;
+
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
@@ -21,11 +21,9 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         this._owner = owner;
         this._health = health;
         this._visionRange = visionRange;
-        //testing
-     //   this._navMesh = (<any>this.scene)._map.navmesh;
-        console.log("entity navmesh: ", this._navMesh);
-        // Enable arcade physics for moving with velocity
-        this.scene.physics.world.enable(this);
+
+        this.scene.add.existing(this);
+        this.scene.physics.add.existing(this);
         this.Interactive();
         this.scene.events.on("rightClick", this.onMapRightClick, this);
     }
@@ -51,6 +49,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     }
 
     goTo(targetPoint: Phaser.Math.Vector2, navMesh): void {
+        console.log(this.x, this.y, targetPoint);
         // Find a path to the target
         this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
         console.log("Path found: ", this._path);
@@ -62,6 +61,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         if (!this.body) return;
         // this.body.velocity.set(0);
 
+        console.log(this._currentTarget);
         if (this._currentTarget) {
             const { x, y } = this._currentTarget;
             const distance = Phaser.Math.Distance.Between(this.x, this.y, x, y);
@@ -81,10 +81,9 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     onMapRightClick(pointer, navMesh): void {
         if (this._isSelected) {
             console.log("Right click on map, entity selected. going....");
-            this.goTo(pointer,navMesh);
+            this.goTo(pointer, navMesh);
         }
     }
-    
 
     moveTowards(targetPosition: Phaser.Math.Vector2, maxSpeed = 200, elapsedSeconds: number) {
         const { x, y } = targetPosition;

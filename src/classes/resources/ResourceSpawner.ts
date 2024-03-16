@@ -12,6 +12,8 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
         this._remainingResrouces = totalResources;
         this._resourceRate = resourceRate;
         this.init();
+
+        // this.scene.physics.add.existing(this);
     }
 
     protected init() {
