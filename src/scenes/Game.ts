@@ -64,7 +64,8 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
-    this.cameraPan(delta)
+    this.cameraPan(delta);
+    this.events.emit('update', time, delta);
   }
 
   cameraPan(delta: number) {
