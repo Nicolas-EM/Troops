@@ -19,9 +19,9 @@ export default class Map {
     private resourceSpawners: ResourceSpawner[];
     private buildings: Building[] = [];
     private NPCs: NPC[] = [];
-    public navmesh: PhaserNavMesh;
+    public navMesh: PhaserNavMesh;
 
-    constructor(private scene: Phaser.Scene, private mapId: string, private p1: string, private p2: string) {
+    constructor(private scene: Game, private mapId: string, private p1: string, private p2: string) {
         // Crear mapa
         this._map = this.scene.make.tilemap({ key: this.mapId });
 
@@ -59,16 +59,18 @@ export default class Map {
             }
         });
 
+        // (<Game>this.scene).setSelectedEntity(this.NPCs[0]);
+
         ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
         const layers = [waterLayer, groundLayer, grassLayer];
 
-        this.navmesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, (tile) => this.navMeshIsWalkable(tile));
-        // this.navmesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
-        // this.navmesh.debugDrawClear(); // Clears the overlay
+        this.navMesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, (tile) => this.navMeshIsWalkable(tile));
+        // this.navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
+        // this.navMesh.debugDrawClear(); // Clears the overlay
         // Visualize the underlying navmesh
 
         // -->  okay wtf ? 
-        // this.navmesh.debugDrawMesh({
+        // this.navMesh.debugDrawMesh({
         //     drawCentroid: true,
         //     drawBounds: false,
         //     drawNeighbors: true,
@@ -77,10 +79,10 @@ export default class Map {
 
         // Prueba de colision con spawner
         // let testSpawner: Sheep = <Sheep>foodSpawners[0];
-        // const path = this.navmesh.findPath({ x: 4050, y: 3500 }, { x: testSpawner.x, y: testSpawner.y });
+        // const path = this.navMesh.findPath({ x: 4050, y: 3500 }, { x: testSpawner.x, y: testSpawner.y });
 
         // // Visualize an individual path
-        // this.navmesh.debugDrawPath(path, 0xffd900);
+        // this.navMesh.debugDrawPath(path, 0xffd900);
     }
 
     tileHasObject(tile: Phaser.Tilemaps.Tile): boolean {

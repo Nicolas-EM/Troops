@@ -9,7 +9,9 @@ const MIN_POS = -64;
 const MOVEMENT_OFFSET = 50;
 const STARTING_VILLAGER_NPCs = 3;
 
-import { PhaserNavMeshPlugin } from "phaser-navmesh";
+import { PhaserNavMeshPlugin } from "phaser-navMesh";
+import PlayerEntity from '../Classes/PlayerEntity';
+import NPC from '../Classes/NPCs/NPC';
 
 export default class Game extends Phaser.Scene {
   public navMeshPlugin: PhaserNavMeshPlugin;
@@ -18,6 +20,7 @@ export default class Game extends Phaser.Scene {
   private pointerInMap = true;
   private mapId: string;
   private _map: Map;
+  private _selectedEntity: PlayerEntity;
 
   constructor() {
     super({ key: 'game' });
@@ -57,7 +60,10 @@ export default class Game extends Phaser.Scene {
       if (pointer.rightButtonDown() && this.pointerInMap) {
         if (this.pointerInMap) {
           const pointerPosition = new Phaser.Math.Vector2(pointer.worldX, pointer.worldY);
-          this.events.emit('rightClick', pointerPosition, this._map.navmesh);
+
+          if (this._selectedEntity instanceof NPC) {
+            this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+          }
         }
       }
     });
@@ -91,5 +97,10 @@ export default class Game extends Phaser.Scene {
     else if (pointer.y <= MOVEMENT_OFFSET)
       // move up
       this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
+  }
+
+  setSelectedEntity(entity: PlayerEntity) {
+    console.log("Game: Entity Selected");
+    this._selectedEntity = entity;
   }
 }

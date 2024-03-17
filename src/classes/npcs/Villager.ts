@@ -1,3 +1,4 @@
+import Game from '../../Scenes/Game';
 import Player from '../Player';
 import NPC from './NPC';
 
@@ -6,7 +7,7 @@ const health = 100;
 const visionRange = 5;
 
 export default class Villager extends NPC {
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
+    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
         super(scene, x, y, texture, owner, health, visionRange, frame);
     }
 
