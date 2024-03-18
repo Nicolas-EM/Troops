@@ -9,6 +9,9 @@ export default class Hud extends Phaser.Scene {
     private selectedContainer: Phaser.GameObjects.Container;
     private infoContainer: Phaser.GameObjects.Container;
     private actionsContainer: Phaser.GameObjects.Container;
+    private optionsContainer: Phaser.GameObjects.Container;
+    private optionsBackground: Phaser.GameObjects.Rectangle;
+    private optionsButton: Phaser.GameObjects.Image;
     
     // Constructor
     constructor() {
@@ -22,6 +25,7 @@ export default class Hud extends Phaser.Scene {
     create() {
         this.createTopHud();
         this.createBottomHud();
+        this.createOptionsMenu();
     }
 
     createTopHud() {
@@ -64,18 +68,23 @@ export default class Hud extends Phaser.Scene {
 
         // Options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
-        let settingsButton = this.add.image(0, 0, 'Button_Yellow');
-        settingsButton.setDisplaySize(55, 55);
-        settingsButton.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        optionsContainer.add(settingsButton);
+        this.optionsButton = this.add.image(0, 0, 'Button_Yellow');
+        this.optionsButton.setDisplaySize(55, 55);
+        this.optionsButton.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        optionsContainer.add(this.optionsButton);
         let settingsIcon = this.add.image(0, 0, 'Settings');
         settingsIcon.setDisplaySize(55, 55);
         settingsIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         optionsContainer.add(settingsIcon);
-
-        settingsButton.setInteractive().on("pointerdown", () => {
-            this.scene.pause('game');
-            this.createOptionsMenu();            
+        this.optionsButton.setInteractive();
+        this.optionsButton.on("pointerdown", () => {
+            this.optionsButton.setTexture("Button_Yellow_Pressed");
+            settingsIcon.setTexture("Settings_Pressed");
+        });
+        this.optionsButton.on("pointerup", () => {
+            this.optionsButton.setTexture("Button_Yellow");
+            settingsIcon.setTexture("Settings");
+            this.openOptionsMenu();
         });
 
     }
@@ -183,8 +192,9 @@ export default class Hud extends Phaser.Scene {
 
     createOptionsMenu() {
         // Darken background
-        let background = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6);
-        background.setOrigin(0);
+        this.optionsBackground = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.6);
+        this.optionsBackground.setOrigin(0);
+        this.optionsBackground.setVisible(false);
 
         const midX = this.cameras.main.width / 2;
         const midY = this.cameras.main.height / 2;
@@ -222,13 +232,44 @@ export default class Hud extends Phaser.Scene {
         fullscreenBtnContainer.add(fullscreenBtnImg);
         fullscreenBtnContainer.add(fullscreenIcon);
         // Fullscreen function
-        fullscreenBtnImg.setInteractive().on("pointerup", this.changeFullscreen);
+        fullscreenBtnImg.setInteractive();
+        fullscreenBtnImg.on("pointerdown", () => {
+            fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
+        });
+        fullscreenBtnImg.on("pointerup",() => {
+            fullscreenBtnImg.setTexture("Button_Yellow");
+            this.changeFullscreen();
+        });
 
-        let container = this.add.container(midX, midY);
-        container.add(menu);
-        container.add(surrenderBtnContainer);
-        container.add(silenceBtnContainer);
-        container.add(fullscreenBtnContainer);
+        // Close button
+        let closeBtnImg = this.add.image(80, -140, "Button_Red");
+        closeBtnImg.scale = 0.8;
+        closeBtnImg.setOrigin(0);
+        let closeIcon = this.add.image(105, -115, "X");
+        closeIcon.setDisplaySize(40, 40);
+        closeIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let closeBtnContainer = this.add.container(0, 0);
+        closeBtnContainer.add(closeBtnImg);
+        closeBtnContainer.add(closeIcon);
+        // Close function
+        closeBtnImg.setInteractive();
+        closeBtnImg.on("pointerdown", () => {
+            closeBtnImg.setTexture("Button_Red_Pressed");
+            closeIcon.setTexture("X_Pressed");
+        });
+        closeBtnImg.on("pointerup", () => {
+            closeBtnImg.setTexture("Button_Red");
+            closeIcon.setTexture("X");
+            this.closeOptionsMenu();            
+        });
+
+        this.optionsContainer = this.add.container(midX, midY);
+        this.optionsContainer.add(menu);
+        this.optionsContainer.add(surrenderBtnContainer);
+        this.optionsContainer.add(silenceBtnContainer);
+        this.optionsContainer.add(fullscreenBtnContainer);
+        this.optionsContainer.add(closeBtnContainer);
+        this.optionsContainer.setVisible(false);
     }
 
     // Add banner of a resource to TopHud
@@ -273,6 +314,18 @@ export default class Hud extends Phaser.Scene {
             const el = document.getElementById("game")!;
             el.requestFullscreen();
         }
+    }
+
+    openOptionsMenu() {
+        this.optionsButton.disableInteractive();
+        this.optionsBackground.setVisible(true);
+        this.optionsContainer.setVisible(true);
+    }
+
+    closeOptionsMenu() {
+        this.optionsButton.setInteractive();
+        this.optionsBackground.setVisible(false);
+        this.optionsContainer.setVisible(false);
     }
 
     // Remove all elements from hud

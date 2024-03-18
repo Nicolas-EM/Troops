@@ -21,10 +21,6 @@ export default class Game extends Phaser.Scene {
   private _map: Phaser.Tilemaps.Tilemap;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
   cursors: any;
-  maxX: number;
-  minX: number;
-  maxY: number;
-  minY: number;
 
   constructor() {
     super({ key: 'game' });
@@ -94,11 +90,7 @@ export default class Game extends Phaser.Scene {
     this.input.on('gameover', () => this.pointerInMap = true);
 
     // Set limits for movement
-    this.maxX = this._map.widthInPixels - this.cameras.main.width;
-    this.minX = 0;
-    this.maxY = this._map.heightInPixels - this.cameras.main.height;
-    this.minY = 0;
-    
+    this.cameras.main.setBounds(0,0,this._map.widthInPixels,this._map.heightInPixels);
 
     // WASD for camera movement
     this.cursors = this.input.keyboard!.addKeys({
@@ -128,23 +120,19 @@ export default class Game extends Phaser.Scene {
   }
 
   cameraMoveUp(delta) {
-    const newY = this.cameras.main.scrollY - delta / this.cameras.main.zoom;
-    this.cameras.main.scrollY = Phaser.Math.Clamp(newY, this.minY, this.maxY);
+    this.cameras.main.scrollY = this.cameras.main.scrollY - delta / this.cameras.main.zoom;
   }
 
   cameraMoveDown(delta) {
-    const newY = this.cameras.main.scrollY + delta / this.cameras.main.zoom;
-    this.cameras.main.scrollY = Phaser.Math.Clamp(newY, this.minY, this.maxY);
+    this.cameras.main.scrollY = this.cameras.main.scrollY + delta / this.cameras.main.zoom;
   }
 
   cameraMoveLeft(delta) {
-    const newX = this.cameras.main.scrollX - delta / this.cameras.main.zoom;
-    this.cameras.main.scrollX = Phaser.Math.Clamp(newX, this.minX, this.maxX);
+    this.cameras.main.scrollX = this.cameras.main.scrollX - delta / this.cameras.main.zoom;
   }
 
   cameraMoveRight(delta) {
-    const newX = this.cameras.main.scrollX + delta / this.cameras.main.zoom;
-    this.cameras.main.scrollX = Phaser.Math.Clamp(newX, this.minX, this.maxX);
+    this.cameras.main.scrollX = this.cameras.main.scrollX + delta / this.cameras.main.zoom;
   }
 
   cameraPan(delta: number) {
