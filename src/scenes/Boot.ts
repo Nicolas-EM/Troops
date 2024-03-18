@@ -132,6 +132,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Button_Red_Slide', Sprites.UI.Buttons.Red_Slides);
     this.load.image('Button_Red', Sprites.UI.Buttons.Red);
     this.load.image('Button_Yellow_Big', Sprites.UI.Buttons.Yellow_Big);
+    this.load.image('Button_Yellow_Pressed', Sprites.UI.Buttons.Yellow_Pressed);
     this.load.image('Button_Yellow_Slides', Sprites.UI.Buttons.Yellow_Slides);
     this.load.image('Button_Yellow', Sprites.UI.Buttons.Yellow);
 
