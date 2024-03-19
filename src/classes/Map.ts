@@ -5,10 +5,10 @@ import Building from './Buildings/Building';
 import NPC from './NPCs/NPC';
 
 import TownHall from "../Classes/Buildings/Townhall";
-import Tree from "../Classes/Resources/Tree";
-import Sheep from "../Classes/Resources/Sheep";
-import GoldMine from "../Classes/Resources/GoldMine";
-import Villager from "../Classes/NPCs/Villager";
+import Tree from "./Resources/Tree";
+import Sheep from "./Resources/Sheep";
+import GoldMine from "./Resources/GoldMine";
+import Villager from "./NPCs/Villager";
 import Player from '../Classes/Player';
 import Game from '../Scenes/Game';
 
@@ -86,13 +86,13 @@ export default class Map {
     }
 
     tileHasObject(tile: Phaser.Tilemaps.Tile): boolean {
-        for(let building of this.buildings) {
-            if(tile.x >= building.x && tile.x + tile.width <= building.x && tile.y >= building.y && tile.y + tile.height <= building.y)
+        for (let building of this.buildings) {
+            if (tile.x >= building.x && tile.x + tile.width <= building.x && tile.y >= building.y && tile.y + tile.height <= building.y)
                 return true;
         }
 
-        for(let npc of this.NPCs) {
-            if(tile.x >= npc.x && tile.x + tile.width <= npc.x && tile.y >= npc.y && tile.y + tile.height <= npc.y)
+        for (let npc of this.NPCs) {
+            if (tile.x >= npc.x && tile.x + tile.width <= npc.x && tile.y >= npc.y && tile.y + tile.height <= npc.y)
                 return true;
         }
 
@@ -101,12 +101,20 @@ export default class Map {
 
     navMeshIsWalkable(tile: Phaser.Tilemaps.Tile): boolean {
         if (tile.properties.collides || this.tileHasObject(tile)) {
-            if(this.tileHasObject(tile)) {
+            if (this.tileHasObject(tile)) {
                 console.log("Tile has object");
                 console.log(tile);
             }
             return false;
         }
         return true;
+    }
+
+    getWidthInPixel(): number {
+        return this._map.widthInPixels;
+    }
+
+    getHeightInPixel(): number {
+        return this._map.heightInPixels;
     }
 }

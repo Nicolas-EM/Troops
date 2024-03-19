@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser';
-import Player from '../Player.ts'
-import PlayerEntity from '../PlayerEntity.ts';
+import Player from '../Player'
+import PlayerEntity from '../PlayerEntity';
 import Game from '../../Scenes/Game';
 import { PhaserNavMesh } from "phaser-navMesh";
+import { IconInfo } from '../../utils';
 
 export default abstract class NPC extends PlayerEntity {
     // protected attributes:
@@ -17,13 +18,15 @@ export default abstract class NPC extends PlayerEntity {
      * @param owner is the player who created the entity, not optional.
      * @returns NPC instance
      */
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, visionRange, frame);
+    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
         
         this.scene.events.on("update", this.update, this);
     }
 
     setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh): void {
+        console.log("setting target");
+
         // Find a path to the target
         this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
         if (this._path && this._path.length > 0) {
@@ -48,6 +51,7 @@ export default abstract class NPC extends PlayerEntity {
 
     update(time: number, deltaTime: number) {
         if (!this.body) return;
+
         // this.body.velocity.set(0);
         if (this._currentTarget) {
             const { x, y } = this._currentTarget;

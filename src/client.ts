@@ -1,10 +1,10 @@
 import * as Phaser from 'phaser';
-import Boot from './scenes/Boot';
-import Menu from './scenes/Menu';
-import Lobby from './scenes/Lobby';
-import Game from './scenes/Game';
+import Boot from './Scenes/Boot';
+import Menu from './Scenes/Menu';
+import Lobby from './Scenes/Lobby';
+import Game from './Scenes/Game';
 import { PhaserNavMeshPlugin } from "phaser-navmesh";
-import Hud from './scenes/Hud';
+import Hud from './Scenes/Hud';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
