@@ -35,6 +35,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.scene.run('hud');
+
     this._map = new Map(this, this.mapId, this.p1, this.p2);
 
     // Event listener al hacer scroll
@@ -84,7 +86,7 @@ export default class Game extends Phaser.Scene {
     if (!this.pointerInMap)
       return;
 
-    if (pointer.x >= width - MOVEMENT_OFFSET)
+    if (pointer.x >= width - MOVEMENT_OFFSET && pointer.y >= MOVEMENT_OFFSET)
       // move right
       this.cameras.main.scrollX += delta / this.cameras.main.zoom;
     else if (pointer.x <= MOVEMENT_OFFSET)
@@ -94,7 +96,7 @@ export default class Game extends Phaser.Scene {
     if (pointer.y >= height - MOVEMENT_OFFSET)
       // move down
       this.cameras.main.scrollY += delta / this.cameras.main.zoom;
-    else if (pointer.y <= MOVEMENT_OFFSET)
+    else if (pointer.y <= MOVEMENT_OFFSET && pointer.x <= width - MOVEMENT_OFFSET * 2)
       // move up
       this.cameras.main.scrollY -= delta / this.cameras.main.zoom;
   }
