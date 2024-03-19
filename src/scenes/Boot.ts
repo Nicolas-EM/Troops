@@ -174,6 +174,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('Axe', Sprites.UI.Pointers.Axe);
     this.load.image('Hammer', Sprites.UI.Pointers.Hammer);
     this.load.image('Pointer', Sprites.UI.Pointers.Pointer);
+    this.load.image('Pointer_Pressed', Sprites.UI.Pointers.Pointer_Pressed);
     this.load.image('Selected_Bottom_Left', Sprites.UI.Pointers.Selected_Bottom_Left);
     this.load.image('Selected_Botton_Right', Sprites.UI.Pointers.Selected_Botton_Right);
     this.load.image('Selected_Top_Left', Sprites.UI.Pointers.Selected_Top_Left);
@@ -231,6 +232,7 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
+    this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
     this.scene.start('game', { mapId: "desert", p1: "Blue", p2: "Red" });
   }
 }
