@@ -3,6 +3,7 @@ import Player from '../Player.ts'
 import PlayerEntity from '../PlayerEntity.ts';
 import Pathfinder from '../Pathfinder.ts';
 import { PathNode } from "@raresail/phaser-pathfinding";
+import { IconInfo } from '../../utils.ts';
 
 
 export default abstract class NPC extends PlayerEntity {
@@ -17,8 +18,8 @@ export default abstract class NPC extends PlayerEntity {
      * @param owner is the player who created the entity, not optional.
      * @returns NPC instance
      */
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, visionRange, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
         //this.init();
     }
 

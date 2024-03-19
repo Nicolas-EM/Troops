@@ -1,5 +1,6 @@
 import NPC from './NPC.ts';
 import Player from '../Player.ts';
+import { IconInfo } from '../../utils.ts';
 
 export default abstract class AttackUnit extends NPC {
     protected _attackRange: number;
@@ -9,11 +10,24 @@ export default abstract class AttackUnit extends NPC {
      * @summary constructor for attacking class (must have offensive abilities)
      * @returns instance of attackUnit
      */
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, visionRange: number, attackRange: number, damage: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, visionRange, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, attackRange: number, damage: number, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
 
         this._attackRange = attackRange;
         this._damage = damage;
+    }
+
+    onClick() {
+        const attackUnitInfo = {
+            entity: this._iconInfo,
+            info: {
+                health: this._health,
+                totalHealth: this._totalHealth,
+                damage: this._damage
+            },
+            actions: []
+        };
+        this.scene.events.emit('entityClicked', attackUnitInfo);
     }
 
     /**

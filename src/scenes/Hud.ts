@@ -6,10 +6,12 @@ export default class Hud extends Phaser.Scene {
     private goldCounter: number;
     private sheepCounter: number;
     private displayedEntity: Phaser.GameObjects.Sprite;
+    // UI
     private selectedContainer: Phaser.GameObjects.Container;
     private infoContainer: Phaser.GameObjects.Container;
     private actionsContainer: Phaser.GameObjects.Container;
     private optionsContainer: Phaser.GameObjects.Container;
+    // Options menu
     private optionsBackground: Phaser.GameObjects.Rectangle;
     private optionsButton: Phaser.GameObjects.Image;
     
@@ -202,10 +204,10 @@ export default class Hud extends Phaser.Scene {
         // Menu
         let menu = this.add.nineslice(0, 0, "Vertical", undefined, 385, 400, 75, 75, 75, 75);
         // Surrender button
-        let surrenderBtnImg = this.add.image(-117, 90, "Button_Red_Slide");
-        surrenderBtnImg.scale = 0.6;
+        let surrenderBtnImg = this.add.image(-125, 85, "Button_Red_Slide");
+        surrenderBtnImg.scale = 0.7;
         surrenderBtnImg.setOrigin(0);
-        let surrenderBtnText = this.add.text(-97, 97, "RENDIRSE");
+        let surrenderBtnText = this.add.text(-102, 95, "SURRENDER");
         let surrenderBtnContainer = this.add.container(0, 0);
         surrenderBtnContainer.add(surrenderBtnImg);
         surrenderBtnContainer.add(surrenderBtnText);
@@ -234,9 +236,11 @@ export default class Hud extends Phaser.Scene {
         // Fullscreen function
         fullscreenBtnImg.setInteractive();
         fullscreenBtnImg.on("pointerdown", () => {
+            fullscreenIcon.setPosition(105, 102);
             fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
         });
         fullscreenBtnImg.on("pointerup",() => {
+            fullscreenIcon.setPosition(105, 100);
             fullscreenBtnImg.setTexture("Button_Yellow");
             this.changeFullscreen();
         });
@@ -320,12 +324,14 @@ export default class Hud extends Phaser.Scene {
         this.optionsButton.disableInteractive();
         this.optionsBackground.setVisible(true);
         this.optionsContainer.setVisible(true);
+        this.scene.get('game').events.emit('menuOpened');
     }
 
     closeOptionsMenu() {
         this.optionsButton.setInteractive();
         this.optionsBackground.setVisible(false);
         this.optionsContainer.setVisible(false);
+        this.scene.get('game').events.emit('menuClosed');
     }
 
     // Remove all elements from hud

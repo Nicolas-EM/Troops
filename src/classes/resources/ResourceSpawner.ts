@@ -1,7 +1,8 @@
 import * as Phaser from "phaser";
 import { IconInfo } from "../../utils";
+import Game from "../../scenes/Game";
 
- export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
+export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
     // Attributes
     private _iconInfo: IconInfo;
     private _resourceIcon: string;
@@ -27,11 +28,14 @@ import { IconInfo } from "../../utils";
 
     protected addEventListeners() {
         this.setInteractive();
-        this.on('pointerdown', this.onResourceClicked, this);
+        this.on('pointerdown', () => {
+            if (this.scene instanceof Game) {
+                (this.scene.handleClick(this))();
+            }
+        })
     }
 
-    onResourceClicked() {
-        console.log("Resource : ", this, "has been clicked. Calling menu");
+    onClick() {
         const resourceInfo = {
             entity: this._iconInfo,
             info: {
