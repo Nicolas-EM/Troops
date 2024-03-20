@@ -1,7 +1,7 @@
 import startingData from '../magic_numbers/starting_data';
-import Townhall from './Buildings/Townhall';
-import Building from './Buildings/Building';
-import NPC from './NPCs/NPC';
+import Townhall from './buildings/Townhall';
+import Building from './buildings/Building';
+import NPC from './npcs/NPC';
 import { Scene } from 'phaser';
 import { Resources } from "../utils";
 

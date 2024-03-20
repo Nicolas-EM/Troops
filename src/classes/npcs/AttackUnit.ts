@@ -1,6 +1,6 @@
 import NPC from './NPC';
 import Player from '../Player';
-import Game from '../../Scenes/Game';
+import Game from '../../scenes/Game';
 import { IconInfo } from '../../utils';
 
 export default abstract class AttackUnit extends NPC {
@@ -41,4 +41,8 @@ export default abstract class AttackUnit extends NPC {
      * @summary attack confirmed, hit sends onHitReceived to target unit
      */
     protected abstract hit(damage: number);
+
+    getHudInfo() {
+        throw new Error("Method not implemented.");
+    }
 }

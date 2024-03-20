@@ -1,4 +1,4 @@
-import Game from '../../Scenes/Game';
+import Game from '../../scenes/Game';
 import Player from '../Player';
 import NPC from './NPC';
 

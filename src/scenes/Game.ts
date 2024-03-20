@@ -1,10 +1,10 @@
 import * as Phaser from 'phaser'
-import Map from "../Classes/Map";
+import Map from "../classes/Map";
 import Hud from './Hud';
 import { PhaserNavMeshPlugin } from "phaser-navMesh";
-import PlayerEntity from '../Classes/PlayerEntity';
-import NPC from '../Classes/NPCs/NPC';
-import ResourceSpawner from '../Classes/Resources/ResourceSpawner';
+import PlayerEntity from '../classes/PlayerEntity';
+import NPC from '../classes/npcs/NPC';
+import ResourceSpawner from '../classes/resources/ResourceSpawner';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.6;

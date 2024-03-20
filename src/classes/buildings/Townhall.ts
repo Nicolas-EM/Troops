@@ -1,5 +1,5 @@
-import Game from "../../Scenes/Game";
-import NPC from "../NPCs/NPC";
+import Game from "../../scenes/Game";
+import NPC from "../npcs/NPC";
 import Player from "../Player";
 import NPCSpawner from "./SpawnerBuilding";
 

@@ -1,6 +1,6 @@
 import ResourceSpawner from "./ResourceSpawner";
 import ResourcesData from "../../magic_numbers/resources_data";
-import Game from "../../Scenes/Game";
+import Game from "../../scenes/Game";
 
 export default class Sheep extends ResourceSpawner {
 

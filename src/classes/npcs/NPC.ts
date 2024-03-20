@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from '../Player'
 import PlayerEntity from '../PlayerEntity';
-import Game from '../../Scenes/Game';
+import Game from '../../scenes/Game';
 import { PhaserNavMesh } from "phaser-navMesh";
 import { IconInfo } from '../../utils';
 

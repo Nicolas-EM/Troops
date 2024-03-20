@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
-import Game from '../Scenes/Game';
+import Game from '../scenes/Game';
 import { IconInfo } from '../utils';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {

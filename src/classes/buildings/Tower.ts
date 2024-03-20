@@ -1,5 +1,5 @@
 import Player from "../Player";
-import NPC from "../NPCs/NPC";
+import NPC from "../npcs/NPC";
 import SpawnerBuilding from "./SpawnerBuilding";
 
 const TOWER_HEALTH = 100;

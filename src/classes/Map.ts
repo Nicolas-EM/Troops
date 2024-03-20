@@ -1,16 +1,16 @@
 import * as Phaser from 'phaser';
 
-import ResourceSpawner from './Resources/ResourceSpawner';
-import Building from './Buildings/Building';
-import NPC from './NPCs/NPC';
+import ResourceSpawner from './resources/ResourceSpawner';
+import Building from './buildings/Building';
+import NPC from './npcs/NPC';
 
-import TownHall from "../Classes/Buildings/Townhall";
-import Tree from "./Resources/Tree";
-import Sheep from "./Resources/Sheep";
-import GoldMine from "./Resources/GoldMine";
-import Villager from "./NPCs/Villager";
-import Player from '../Classes/Player';
-import Game from '../Scenes/Game';
+import TownHall from "../classes/buildings/Townhall";
+import Tree from "./resources/Tree";
+import Sheep from "./resources/Sheep";
+import GoldMine from "./resources/GoldMine";
+import Villager from "./npcs/Villager";
+import Player from '../classes/Player';
+import Game from '../scenes/Game';
 
 import { PhaserNavMesh } from "phaser-navmesh";
 

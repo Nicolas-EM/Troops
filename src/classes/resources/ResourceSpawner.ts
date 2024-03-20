@@ -1,6 +1,6 @@
 import * as Phaser from "phaser";
 import { IconInfo } from "../../utils";
-import Game from "../../Scenes/Game";
+import Game from "../../scenes/Game";
 
 export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
     // Attributes
