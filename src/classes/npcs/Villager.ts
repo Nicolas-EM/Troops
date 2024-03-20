@@ -5,13 +5,12 @@ import NPC from './NPC';
 // TODO: Magic numbers
 const visionRange = 5;
 const VILLAGER_HEALTH = 100;
-const VILLAGER_ICON = "Villager_Blue";
 const VILLAGER_WIDTH = 200;
 const VILLAGER_HEIGHT = 200;
 
 export default class Villager extends NPC {
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: VILLAGER_ICON, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
+        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
     }
 
     getHudInfo() {

@@ -65,12 +65,23 @@ io.on('connection', socket => {
 
     // Handle player readiness
     socket.on('ready', () => {
+        console.log("player ready")
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
-            lobby.players[playerIndex].ready = true;
-            lobby.readyPlayers++;
-            if (lobby.players.length > 1 && lobby.readyPlayers === lobby.players.length) {
-                io.emit('startGame', lobby.players.map(player => ({ name: player.name, color: player.color })));
+            if(lobby.players[playerIndex].ready) {
+                console.log("not ready anymore")
+                // Unready
+                lobby.players[playerIndex].ready = false;
+                lobby.readyPlayers--;
+            } else {
+                lobby.players[playerIndex].ready = true;
+                lobby.readyPlayers++;
+                console.log(`numPlayers: ${lobby.players.length}`);
+                console.log(`readied: ${lobby.readyPlayers}`)
+                if (lobby.players.length > 1 && lobby.readyPlayers === lobby.players.length) {
+                    console.log("starting game")
+                    io.emit('startGame', { lobby: lobby });
+                }
             }
         }
     });

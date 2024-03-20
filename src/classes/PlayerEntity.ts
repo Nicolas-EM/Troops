@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
 import { IconInfo } from '../utils';
+import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     // protected attributes:
@@ -49,6 +50,10 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     destroy() {
         if (this.scene) this.scene.events.off("update", this.update, this);
             super.destroy();
+    }
+
+    belongsToMe(): boolean {
+        return this._owner.getColor() === Client.getMyColor();
     }
 
     abstract getHudInfo();

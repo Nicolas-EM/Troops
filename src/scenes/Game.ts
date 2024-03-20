@@ -5,6 +5,7 @@ import { PhaserNavMeshPlugin } from "phaser-navMesh";
 import PlayerEntity from '../classes/PlayerEntity';
 import NPC from '../classes/npcs/NPC';
 import ResourceSpawner from '../classes/resources/ResourceSpawner';
+import Client from '../client';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.6;
@@ -13,9 +14,8 @@ const ZOOM_AMOUNT = 0.05;
 const MOVEMENT_OFFSET = 10;
 
 export default class Game extends Phaser.Scene {
+  client: Client;
   public navMeshPlugin: PhaserNavMeshPlugin;
-  private p1: string;
-  private p2: string;
   private pointerInMap = true;
   private mapId: string;
   private _map: Map;
@@ -31,12 +31,13 @@ export default class Game extends Phaser.Scene {
   // Para pasar atributos de una escena a otra
   // En este caso, pasamos el ID del mapa
   init(data) {
+    this.client = data.client;
     this.mapId = data.mapId;
-    this.p1 = data.p1;
-    this.p2 = data.p2;
   }
 
   create() {
+    this.client.setScene(this);
+
     // Hud
     this.scene.run('hud');
     this.events.on('menuOpened', () => {
@@ -46,7 +47,7 @@ export default class Game extends Phaser.Scene {
       this.optionsMenuOpened = false;
     });
 
-    this._map = new Map(this, this.mapId, this.p1, this.p2);
+    this._map = new Map(this, this.mapId);
 
     // Event listener al hacer scroll
     this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
@@ -78,7 +79,7 @@ export default class Game extends Phaser.Scene {
       if (pointer.rightButtonDown() && this.pointerInMap && this._selectedEntity) {
         const pointerPosition = new Phaser.Math.Vector2(pointer.worldX, pointer.worldY);
 
-        if (this._selectedEntity instanceof NPC) {
+        if (this._selectedEntity instanceof NPC && this._selectedEntity.belongsToMe()) {
           this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
         }
       }

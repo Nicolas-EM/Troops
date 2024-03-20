@@ -13,6 +13,7 @@ import Player from '../classes/Player';
 import Game from '../scenes/Game';
 
 import { PhaserNavMesh } from "phaser-navmesh";
+import Client from '../client';
 
 export default class Map {
     private _map: Phaser.Tilemaps.Tilemap;
@@ -21,7 +22,7 @@ export default class Map {
     private NPCs: NPC[] = [];
     public navMesh: PhaserNavMesh;
 
-    constructor(private scene: Game, private mapId: string, private p1: string, private p2: string) {
+    constructor(private scene: Game, private mapId: string) {
         // Crear mapa
         this._map = this.scene.make.tilemap({ key: this.mapId });
 
@@ -39,23 +40,30 @@ export default class Map {
         this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
 
         // Townhalls
-        let x = new Player(1, "Player 1", this.p1, this.scene); // TODO: Crear jugador real o algo
+        let p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this.scene);
+        let p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this.scene);
 
         this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
             if (obj.type === "Townhall_P1") {
-                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${this.p1}`, x);
+                if(Client.getMyColor() === p1.getColor()){
+                    this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                }
+                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p1.getColor()}`, p1);
                 this.buildings.push(p1_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${this.p1}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, `Villager_${this.p1}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${p1.getColor()}`, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, `Villager_${p1.getColor()}`, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, `Villager_${p1.getColor()}`, p1));
             } else if (obj.type === "Townhall_P2") {
-                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
+                if(Client.getMyColor() === p2.getColor()){
+                    this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                }
+                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p2.getColor()}`, p2);
                 this.buildings.push(p2_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${p2.getColor()}`, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, `Villager_${p2.getColor()}`, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, `Villager_${p2.getColor()}`, p2));
             }
         });
 

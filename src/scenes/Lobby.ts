@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Client from '../client';
-import lobbyData from '../Classes/server/LobbyData';
+import lobbyData from '../classes/server/LobbyData';
 
 const colors = ['Red', 'Blue', 'Purple', 'Yellow']; // Example colors
 
@@ -44,11 +44,9 @@ export default class Lobby extends Phaser.Scene {
     // this.startButton.on('pointerdown', () => this.startGame());
   }
 
-  updateLobby(lobby: lobbyData) {
-    console.log("Updating lobby");
-    console.log(lobby);
-    this.updatePlayers(lobby.players);
-    this.updateAvailableColors(lobby.availableColors);
+  updateLobby() {
+    this.updatePlayers(Client.lobby.players);
+    this.updateAvailableColors(Client.lobby.availableColors);
   }
 
   updatePlayers(players: { id: string, color: string }[]) {
@@ -82,14 +80,17 @@ export default class Lobby extends Phaser.Scene {
   }
 
   readyUp() {
-    // Send readiness signal to the server
-    // Example: Client.readyUp();
+    // Enable or disable the button accordingly
+    if (this.readyButton.tint == 0x00ff00) {
+      this.readyButton.clearTint(); // Remove any tint
+      Client.readyUp();
+    } else {
+      this.readyButton.setTint(0x00ff00); // Set grey tint
+      Client.readyUp();
+    }
   }
 
-  // startGame() {
-  //     // Send start game signal to the server
-  //     // Example: Client.startGame();
-  // }
-
-  // Other methods as needed
+  startGame(lobby: lobbyData) {
+    this.scene.start('game', { client: this.client, mapId: 'desert' });
+  }
 }
