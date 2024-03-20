@@ -3,6 +3,8 @@ import Boot from './scenes/Boot';
 import Menu from './scenes/Menu';
 import Lobby from './scenes/Lobby';
 import Game from './scenes/Game';
+import { PhaserNavMeshPlugin } from "phaser-navmesh";
+import Hud from './scenes/Hud';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -13,18 +15,28 @@ let config: Phaser.Types.Core.GameConfig = {
     parent: "game", // ID canvas
     type: Phaser.AUTO,
     width: 1000,
-    height: 600,
+    height: 563,
     disableContextMenu: true,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Menu, Lobby, Game],
+    plugins: {
+        scene: [
+          {
+            key: "PhaserNavMeshPlugin", 
+            plugin: PhaserNavMeshPlugin, // Class that constructs plugins
+            mapping: "navMeshPlugin", // Property mapping to use for the scene, e.g. this.navMeshPlugin
+            start: true,
+          },
+        ],
+      },
+    scene: [Boot, Menu, Lobby, Game, Hud],
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true
         }
     }
 };
