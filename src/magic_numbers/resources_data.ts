@@ -15,7 +15,7 @@ export default class ResourcesData {
     public static SHEEP_CAPACITY = 1000;
     public static SHEEP_RATE = 10;
     // Gold
-    public static GOLD_MINE_ICON = "Gold_Mine";
+    public static GOLD_MINE_ICON = "GoldMine";
     public static GOLD_MINE_WIDTH = 85;
     public static GOLD_MINE_HEIGHT = 58;
     public static GOLD_ICON = "Gold";

@@ -36,7 +36,7 @@ export default class Map {
         // Resources
         const foodSpawners = this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
         this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-        this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
+        this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'GoldMine', classType: GoldMine });
 
         // Townhalls
         let x = new Player(1, "Player 1", this.p1, this.scene); // TODO: Crear jugador real o algo
