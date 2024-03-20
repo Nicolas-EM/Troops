@@ -90,7 +90,7 @@ export default class Lobby extends Phaser.Scene {
     }
   }
 
-  startGame(lobby: lobbyData) {
+  startGame() {
     this.scene.start('game', { client: this.client, mapId: 'desert' });
   }
 }

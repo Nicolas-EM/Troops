@@ -97,6 +97,11 @@ io.on('connection', socket => {
             io.emit('playerLeft', player.id);
         }
     });
+
+    // Set NPC Target
+    socket.on('npctarget', (npc, position) => {
+        io.emit('npctarget', npc, position);
+    })
 });
 
 http.listen(port, () => {

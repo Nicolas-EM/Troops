@@ -7,6 +7,7 @@ import Client from '../client';
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     // protected attributes:
     protected _owner: Player;
+    protected _id: string;
     protected _health: number;
     protected _totalHealth: number;
     protected _visionRange: number;
@@ -32,6 +33,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         
         this.setInteractive();
         this.on('pointerdown', this.onEntityClicked, this);
+
+        this.scene.events.on("update", this.update, this);
     }
 
     /**

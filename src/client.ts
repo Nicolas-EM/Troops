@@ -1,6 +1,8 @@
 import { io, Socket } from 'socket.io-client';
 import Lobby from "./scenes/Lobby";
 import lobbyData from './classes/server/LobbyData';
+import NPC from './classes/npcs/NPC';
+import Game from './scenes/Game';
 
 class Client {
     static socket: Socket = io();
@@ -18,8 +20,12 @@ class Client {
         });
 
         Client.socket.on('startGame', (data: {lobby: lobbyData}) => {
-            (<Lobby>(this.scene)).startGame(data.lobby);
+            (<Lobby>(this.scene)).startGame();
         });
+
+        Client.socket.on('npctarget', (npcId: string, position: Phaser.Math.Vector2) => {
+            (<Game>(this.scene)).setNpcTarget(npcId, position);
+        })
     }
 
     setScene(scene: Phaser.Scene) {
@@ -35,6 +41,7 @@ class Client {
         Client.socket.emit('test');
     }
 
+    // Lobby Functions
     static joinLobby(): void {
         Client.socket.emit('joinLobby');
     }
@@ -45,6 +52,11 @@ class Client {
 
     static readyUp(): void {
         Client.socket.emit('ready');
+    }
+
+    // Game Functions
+    static setNpcTarget(npcId: string, position: Phaser.Math.Vector2):void {
+        Client.socket.emit('npctarget', npcId, position);
     }
 }
 

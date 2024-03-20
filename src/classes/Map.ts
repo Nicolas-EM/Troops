@@ -9,7 +9,6 @@ import Tree from "./resources/Tree";
 import Sheep from "./resources/Sheep";
 import GoldMine from "./resources/GoldMine";
 import Villager from "./npcs/Villager";
-import Player from '../classes/Player';
 import Game from '../scenes/Game';
 
 import { PhaserNavMesh } from "phaser-navmesh";
@@ -39,12 +38,10 @@ export default class Map {
         this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
         this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
 
-        // Townhalls
-        let p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this.scene);
-        let p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this.scene);
-
         this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
             if (obj.type === "Townhall_P1") {
+                const p1 = (<Game>(this.scene)).getP1();
+
                 if(Client.getMyColor() === p1.getColor()){
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
                 }
@@ -55,6 +52,8 @@ export default class Map {
                 this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, `Villager_${p1.getColor()}`, p1));
                 this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, `Villager_${p1.getColor()}`, p1));
             } else if (obj.type === "Townhall_P2") {
+                const p2 = (<Game>(this.scene)).getP2();
+
                 if(Client.getMyColor() === p2.getColor()){
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
                 }

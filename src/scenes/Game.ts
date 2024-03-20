@@ -1,11 +1,11 @@
 import * as Phaser from 'phaser'
 import Map from "../classes/Map";
-import Hud from './Hud';
 import { PhaserNavMeshPlugin } from "phaser-navMesh";
 import PlayerEntity from '../classes/PlayerEntity';
 import NPC from '../classes/npcs/NPC';
 import ResourceSpawner from '../classes/resources/ResourceSpawner';
 import Client from '../client';
+import Player from '../classes/Player';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.6;
@@ -14,14 +14,16 @@ const ZOOM_AMOUNT = 0.05;
 const MOVEMENT_OFFSET = 10;
 
 export default class Game extends Phaser.Scene {
-  client: Client;
   public navMeshPlugin: PhaserNavMeshPlugin;
+
+  private p1: Player;
+  private p2: Player;
+  private client: Client;
   private pointerInMap = true;
   private mapId: string;
   private _map: Map;
   private _selectedEntity: PlayerEntity | ResourceSpawner;
-  private _buildingsLayer: Phaser.GameObjects.GameObject[];
-  cursors: any;
+  private cursors: any;
   private optionsMenuOpened = false;
 
   constructor() {
@@ -37,6 +39,10 @@ export default class Game extends Phaser.Scene {
 
   create() {
     this.client.setScene(this);
+
+    // Townhalls
+    this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
+    this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);
 
     // Hud
     this.scene.run('hud');
@@ -80,7 +86,7 @@ export default class Game extends Phaser.Scene {
         const pointerPosition = new Phaser.Math.Vector2(pointer.worldX, pointer.worldY);
 
         if (this._selectedEntity instanceof NPC && this._selectedEntity.belongsToMe()) {
-          this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+          Client.setNpcTarget(this._selectedEntity.getId(), pointerPosition);
         }
       }
     });
@@ -147,11 +153,24 @@ export default class Game extends Phaser.Scene {
     }
   }
 
+  getP1(): Player {
+    return this.p1;
+  }
+
+  getP2(): Player {
+    return this.p2;
+  }
+
   setSelectedEntity(entity: PlayerEntity | ResourceSpawner) {
     if (!this.optionsMenuOpened) {
       console.log("Game: Entity Selected");
       this._selectedEntity = entity;
       this.scene.get('hud').events.emit('entityClicked', this._selectedEntity.getHudInfo());
     }
+  }
+
+  setNpcTarget(npcId: string, position: Phaser.Math.Vector2) {
+    this.p1.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
+    this.p2.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
   }
 }

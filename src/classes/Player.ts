@@ -6,6 +6,15 @@ import { Scene } from 'phaser';
 import { Resources } from "../utils";
 
 export default class Player {
+  private buildings: Building[] = [];
+  private npcs: NPC[] = [];
+  // TODO: Default starting resources
+  private resources: Resources = {
+    wood: 100,
+    food: 100,
+    gold: 100
+  }
+  
   /**
    * Creates a new player instance.
    * @param {string} id - The unique identifier for the player.
@@ -16,11 +25,31 @@ export default class Player {
    * @param {NPC[]} selectedGameObjects - selected entitites (as dragged, clicked, etc...)
    * @param {Scene  } scene - The scene where the player is created.
    */
-  constructor(private id: string, private color: string, private scene: Phaser.Scene, private buildings?: Building[], private npcs?: NPC[], private resources?: Resources) {
-
+  constructor(private id: string, private color: string, private scene: Phaser.Scene) {
+    console.log(`Player color ${color}`);
   }
 
   getColor(): string {
     return this.color;
+  }
+
+  addNPC(npc: NPC) {
+    this.npcs.push(npc);
+  }
+
+  getNPCs(): NPC[] {
+    return this.npcs;
+  }
+
+  getNPCById(id: string): NPC | undefined {
+    return this.npcs.find((npc) => npc.getId() === id);
+  }
+
+  addBuilding(building: Building) {
+    this.buildings.push(building);
+  }
+
+  getBuildings(): Building[] {
+    return this.buildings;
   }
 }
