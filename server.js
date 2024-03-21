@@ -37,18 +37,51 @@ function assignColor(lobby) {
 }
 
 function generateLobbyCode() {
-    return Math.random().toString(36).substring(2, 8).toUpperCase();
+    let code;
+    do {
+        code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    } while (lobbies[code] !== undefined);
+
+    return code;
 }
 
 io.on('connection', socket => {
     console.log('User connected');
 
+    socket.on('quickPlay', () => {
+        console.log('Quick play requested');
+
+        let availableLobby = null;
+
+        // Find a lobby with fewer than maxPlayers
+        for (const lobbyCode in lobbies) {
+            const lobby = lobbies[lobbyCode];
+            if (lobby.players.length < maxPlayers) {
+                availableLobby = lobby;
+                break;
+            }
+        }
+
+        if (availableLobby) {
+            // Join available lobby
+            socket.emit('lobbyCreated', availableLobby.code);
+        } else {
+            // No available lobbies, create a new one
+            const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
+            lobbies[lobbyCode] = defaultLobby;
+            lobbies[lobbyCode].code = lobbyCode;
+            
+            socket.join(lobbyCode);
+            socket.emit('lobbyCreated', lobbyCode);
+        }
+    });
+
     socket.on('createLobby', () => {
         const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
         lobbies[lobbyCode] = defaultLobby;
         lobbies[lobbyCode].code = lobbyCode;
+        
         socket.join(lobbyCode);
-
         socket.emit('lobbyCreated', lobbyCode);
     });
 
@@ -76,6 +109,7 @@ io.on('connection', socket => {
             socket.join(lobbyCode);
 
             // update all player's lobbies
+            socket.emit('updateLobby', { lobby: lobby });
             io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
@@ -97,7 +131,8 @@ io.on('connection', socket => {
     });
 
     // Handle player readiness
-    socket.on('ready', () => {
+    socket.on('ready', (lobbyCode) => {
+        const lobby = lobbies[lobbyCode];
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
             if (lobby.players[playerIndex].ready) {
@@ -108,13 +143,8 @@ io.on('connection', socket => {
             } else {
                 lobby.players[playerIndex].ready = true;
                 lobby.readyPlayers++;
-                console.log(`numPlayers: ${lobby.players.length}`);
-                console.log(`readied: ${lobby.readyPlayers}`)
-                if (lobby.players.length > 1 && lobby.readyPlayers === lobby.players.length) {
-                    console.log("starting game")
-                    io.emit('startGame', { lobby: lobby });
-                }
             }
+            io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
 

@@ -4,7 +4,6 @@ import Client from '../client';
 const colors = ['Red', 'Blue', 'Purple', 'Yellow'];
 
 export default class Lobby extends Phaser.Scene {
-  client: Client;
   lobbyText: Phaser.GameObjects.Text;
   playerListText: Phaser.GameObjects.Text;
   colorButtons: Phaser.GameObjects.Sprite[];
@@ -14,16 +13,9 @@ export default class Lobby extends Phaser.Scene {
     super('lobby');
   }
 
-  init(data) {
-    Client.setScene(this);
-
-    if(data.lobbyCode)
-      Client.joinLobby(data.lobbyCode);
-    else 
-      Client.createLobby();
-  }
-
   create() {
+    Client.setScene(this);
+    
     // Display lobby UI elements (e.g., player list, color selection, ready button)
     this.lobbyText = this.add.text(this.cameras.main.width / 2, 100, 'Lobby', { fontSize: '32px' }).setOrigin(0.5);
 
@@ -51,10 +43,15 @@ export default class Lobby extends Phaser.Scene {
     this.sound.add('TroopsTheme', { loop: true, volume: 0.5}).play();
   }
 
-  updateLobby() {
-    this.lobbyText.setText(`Lobby - ${Client.lobby.code}`);
-    this.updatePlayers(Client.lobby.players);
-    this.updateAvailableColors(Client.lobby.availableColors);
+  update(time: number, delta: number) {
+    if(Client.lobby.code) {
+      this.lobbyText.setText(`Lobby - ${Client.lobby.code}`);
+      this.updatePlayers(Client.lobby.players);
+      this.updateAvailableColors(Client.lobby.availableColors);
+    }
+
+    if(Client.lobby.readyPlayers === Client.lobby.players.length)
+      this.startGame();
   }
 
   updatePlayers(players: { id: string, color: string }[]) {
@@ -82,7 +79,6 @@ export default class Lobby extends Phaser.Scene {
     });
   }
 
-
   selectColor(color) {
     Client.chooseColor(color);
   }
@@ -99,6 +95,6 @@ export default class Lobby extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.start('game', { client: this.client, mapId: 'desert' });
+    this.scene.start('game', { mapId: 'desert' });
   }
 }

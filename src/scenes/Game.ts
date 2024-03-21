@@ -18,7 +18,6 @@ export default class Game extends Phaser.Scene {
 
   private p1: Player;
   private p2: Player;
-  private client: Client;
   private pointerInMap = true;
   private mapId: string;
   private _map: Map;
@@ -33,13 +32,12 @@ export default class Game extends Phaser.Scene {
   // Para pasar atributos de una escena a otra
   // En este caso, pasamos el ID del mapa
   init(data) {
-    this.client = data.client;
     this.mapId = data.mapId;
   }
 
   create() {
-    this.client.setScene(this);
-
+    Client.setScene(this);
+    
     // Townhalls
     this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
     this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);

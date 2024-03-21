@@ -1,7 +1,7 @@
 // Información de un lobby
 export default interface lobbyData {
     code: string;
-    players: {id: string, color: string}[],
+    players: {id: string, color: string, ready: boolean}[],
     availableColors: ('Red' | 'Blue' | 'Purple' | 'Yellow')[],
     readyPlayers: 0
 }

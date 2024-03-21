@@ -3,6 +3,7 @@ import Lobby from "./scenes/Lobby";
 import lobbyData from './utils';
 import NPC from './classes/npcs/NPC';
 import Game from './scenes/Game';
+import Menu from './scenes/Menu';
 
 export default class Client {
     static socket: Socket = io();
@@ -11,24 +12,17 @@ export default class Client {
 
     static init() {
         Client.socket.on('lobbyCreated', (code) => {
-            console.log(`Created lobby ${code}`)
             Client.joinLobby(code);
         });
 
         Client.socket.on('updateLobby', (data: {lobby: lobbyData}) => {
             Client.lobby = data.lobby;
-            // Update player list display in the lobby scene
-            if (Client.scene.scene.isActive('lobby')) {
-                (<Lobby>(Client.scene)).updateLobby();
-            }
-        });
-
-        Client.socket.on('startGame', (data: {lobby: lobbyData}) => {
-            (<Lobby>(Client.scene)).startGame();
         });
 
         Client.socket.on('npctarget', (npcId: string, position: Phaser.Math.Vector2) => {
-            (<Game>(Client.scene)).setNpcTarget(npcId, position);
+            if (Client.scene.scene.isActive('game')) {
+                (<Game>(Client.scene)).setNpcTarget(npcId, position);
+            }
         })
     }
 
@@ -46,13 +40,17 @@ export default class Client {
     }
 
     // Menu functions
+    static quickPlay(): void {
+        Client.socket.emit('quickPlay');
+    }
+
     static createLobby(): void {
         Client.socket.emit('createLobby');
     }
 
     // Lobby Functions
     static joinLobby(code: string): void {
-        console.log(`Joining lobby ${code}`);
+        (<Menu>(Client.scene)).startLobby();
         Client.socket.emit('joinLobby', code);
     }
 
@@ -61,7 +59,7 @@ export default class Client {
     }
 
     static readyUp(): void {
-        Client.socket.emit('ready');
+        Client.socket.emit('ready', Client.lobby.code);
     }
 
     // Game Functions
