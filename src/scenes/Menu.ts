@@ -1,15 +1,28 @@
-import Phaser from 'phaser'
+import * as Phaser from 'phaser';
+import Client from '../client';
 
 export default class Menu extends Phaser.Scene {
+  createLobbyButton: Phaser.GameObjects.Text;
+  joinLobbyButton: Phaser.GameObjects.Text;
+
   constructor() {
     super({ key: 'menu' });
   }
 
-  preload() {
-    this.load.setPath('assets/sprites/');
+  create() {
+    this.createLobbyButton = this.add.text(this.cameras.main.width / 2, 100, 'Create Lobby', { fontSize: '24px' }).setOrigin(0.5).setInteractive();
+    this.createLobbyButton.on('pointerdown', () => this.createLobby());
+
+    this.joinLobbyButton = this.add.text(this.cameras.main.width / 2, 200, 'Join Lobby', { fontSize: '24px' }).setOrigin(0.5).setInteractive();
+    this.joinLobbyButton.on('pointerdown', () => this.joinLobby());
   }
 
-  create() {
-    
+  createLobby() {
+    this.scene.start('lobby');
+    Client.createLobby();
+  }
+
+  joinLobby() {
+    this.scene.start('lobby', globalThis.lobbyCode);
   }
 }
