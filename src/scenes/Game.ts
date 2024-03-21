@@ -90,6 +90,9 @@ export default class Game extends Phaser.Scene {
         }
       }
     });
+
+    // Sound
+    this.sound.removeAll();
   }
 
   update(time: number, delta: number): void {

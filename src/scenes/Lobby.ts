@@ -42,6 +42,9 @@ export default class Lobby extends Phaser.Scene {
     // Example code to handle start game button (if applicable)
     // this.startButton = this.add.text(400, 500, 'Start Game', { fontSize: '24px', fill: '#ffffff' }).setOrigin(0.5).setInteractive();
     // this.startButton.on('pointerdown', () => this.startGame());
+
+    // Sound
+    this.sound.add('TroopsTheme', { loop: true, volume: 0.5}).play();
   }
 
   updateLobby() {

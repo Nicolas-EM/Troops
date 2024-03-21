@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser'
 
 import * as Sprites from '../../assets/sprites';
+import * as Sounds from '../../assets/sound';
 
 // maps
 import map_test from '../../assets/maps/test.json';
@@ -229,6 +230,9 @@ export default class Boot extends Phaser.Scene {
     this.load.image('King_Purple', Sprites.Kings.Purple);
     this.load.image('King_Red', Sprites.Kings.Red);
     this.load.image('King_Yellow', Sprites.Kings.Yellow);
+
+    // Sounds
+    this.load.audio('TroopsTheme', Sounds.Themes.Troops);
   }
 
   /**
