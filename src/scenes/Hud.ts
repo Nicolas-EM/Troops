@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import Client from '../client';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
@@ -39,7 +40,7 @@ export default class Hud extends Phaser.Scene {
         let squareTeam = this.add.image(0, 0, 'Carved_Square');
         squareTeam.setDisplaySize(45, 45);
         squareTeam.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let king = this.add.image(0, 0, 'King_Purple');
+        let king = this.add.image(0, 0, `King_${Client.getMyColor()}`);
         king.setDisplaySize(25, 25);
         king.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         teamContainer.add(squareTeam);
@@ -51,10 +52,10 @@ export default class Hud extends Phaser.Scene {
         this.addResourceBanner(324, "Gold", "100");
 
         // Population
-        let soldierIcon = this.add.image(-35, 0, "Soldier_Purple");
+        let soldierIcon = this.add.image(-35, 0, `Soldier_${Client.getMyColor()}`);
         soldierIcon.setDisplaySize(60, 60);
         soldierIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let villagerIcon = this.add.image(-20, 2, "Villager_Purple");
+        let villagerIcon = this.add.image(-20, 2, `Villager_${Client.getMyColor()}`);
         villagerIcon.setDisplaySize(60, 60);
         villagerIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         let population = this.add.text(-5, -10, '42/50', { color: '#000000' });
@@ -106,9 +107,9 @@ export default class Hud extends Phaser.Scene {
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, "Ribbon_Purple_Left");
+        let leftRibbon = this.add.image(55, -20, `Ribbon_${Client.getMyColor()}_Left`);
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Ribbon_Purple_Right");
+        let rightRibbon = this.add.image(-55, -20, `Ribbon_${Client.getMyColor()}_Right`);
         rightRibbon.scale = 0.45;
         this.selectedContainer = this.add.container(0, 0);
         let selectedAreaContainer = this.add.container(midX, botY);

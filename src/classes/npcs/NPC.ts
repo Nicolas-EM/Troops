@@ -4,10 +4,9 @@ import PlayerEntity from '../PlayerEntity';
 import Game from '../../scenes/Game';
 import { PhaserNavMesh } from "phaser-navMesh";
 import { IconInfo } from '../../utils';
+import Client from '../../client';
 
 export default abstract class NPC extends PlayerEntity {
-    // protected attributes:
-    protected _id: string;
     protected _owner: Player;
     protected _health: number;
     protected _visionRange: number;
@@ -20,8 +19,13 @@ export default abstract class NPC extends PlayerEntity {
      */
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
         super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
-        
-        this.scene.events.on("update", this.update, this);
+
+        this._id = `${owner.getColor()}_NPC_${owner.getNPCs().length}`;
+        owner.addNPC(this);
+    }
+
+    getId(): string {
+        return this._id;
     }
 
     setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh): void {
