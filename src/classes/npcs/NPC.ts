@@ -12,7 +12,8 @@ export default abstract class NPC extends PlayerEntity {
     protected _health: number;
     protected _visionRange: number;
     protected _movementSpeed: number = 1;   // TODO: Cada NPC debería tener su propia velocidad
-
+    protected _status: string;
+    protected _actionClick : string //no tocar, testing.
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
@@ -20,13 +21,12 @@ export default abstract class NPC extends PlayerEntity {
      */
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
         super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
-        
         this.scene.events.on("update", this.update, this);
     }
 
-    setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh): void {
+    setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh, options? : any): void {
         console.log("setting target");
-
+        if(options)this._actionClick = options;
         // Find a path to the target
         this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
         if (this._path && this._path.length > 0) {
@@ -51,7 +51,7 @@ export default abstract class NPC extends PlayerEntity {
 
     update(time: number, deltaTime: number) {
         if (!this.body) return;
-
+        this.calculateCurrentStatus();
         // this.body.velocity.set(0);
         if (this._currentTarget) {
             const { x, y } = this._currentTarget;
@@ -66,5 +66,11 @@ export default abstract class NPC extends PlayerEntity {
             }
             if (this._currentTarget) this.moveToTarget(deltaTime / 1000);
         }
+    }
+
+    protected abstract calculateCurrentStatus(): void;
+
+    protected setStatus(status: string): void {
+        this._status = status;
     }
 }

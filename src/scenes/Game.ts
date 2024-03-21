@@ -4,6 +4,9 @@ import Hud from "./Hud";
 import { PhaserNavMeshPlugin } from "phaser-navMesh";
 import PlayerEntity from "../classes/PlayerEntity";
 import NPC from "../classes/npcs/NPC";
+import Tree from "../classes/resources/Tree";
+import GoldMine from "../classes/resources/GoldMine";
+import Sheep from "../classes/resources/Sheep";
 import ResourceSpawner from "../classes/resources/ResourceSpawner";
 
 // MAGIC NUMBER
@@ -22,6 +25,7 @@ export default class Game extends Phaser.Scene {
   private _selectedEntity: PlayerEntity | ResourceSpawner;
   private _buildingsLayer: Phaser.GameObjects.GameObject[];
   cursors: any;
+  public clickedNonTerrain: any;
   private optionsMenuOpened = false;
 
   constructor() {
@@ -101,7 +105,26 @@ export default class Game extends Phaser.Scene {
           );
 
           if (this._selectedEntity instanceof NPC) {
-            this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+            console.log(this.clickedNonTerrain);
+            if(this.clickedNonTerrain === undefined || this.clickedNonTerrain === null){
+              
+              this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+            }
+            else{
+              if(this.clickedNonTerrain instanceof Tree){
+                this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"Tree");
+              }
+              else if(this.clickedNonTerrain instanceof GoldMine){
+                this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"GoldMine");
+              }
+              else if(this.clickedNonTerrain instanceof Sheep){
+                this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"Sheep");
+              }
+              else{
+                //nothing, error.
+              }
+              this.clickedNonTerrain = null;
+            }
           }
         }
       }
@@ -112,220 +135,223 @@ export default class Game extends Phaser.Scene {
     //all animations should be instanced here:
     this.createVillagerAnimations("Blue");
     this.createVillagerAnimations("Red");
+
     this.createSoldierAnimations("Blue");
     this.createSoldierAnimations("Red");
+
     this.createArcherAnimations("Blue");
     this.createArcherAnimations("Red");
+
     this.createGoblinAnimations("Blue");
     this.createGoblinAnimations("Red");
   }
 
   createVillagerAnimations(color: String): void {
     this.anims.create({
-      key: "villagerIdle",
+      key: `villagerIdle${color}`,
       frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
         frames: [0, 1, 2, 3, 4, 5],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //we need to flip this when walking left
     this.anims.create({
-      key: "villagerWalk",
+      key: `villagerWalk${color}`,
       frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
         frames: [6, 7, 8, 9, 10, 11],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "villagerAxe",
+      key: `villagerAxe${color}`,
       frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
         frames: [18, 19, 20, 21, 22, 23],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "villagerHammer",
+      key: `villagerHammer${color}`,
       frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
         frames: [12, 13, 14, 15, 16, 17],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //maybe this mneeds to be flipped as well..?
-    this.anims.create({
-      key: "villagerCarrying",
-      frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
-        frames: [24, 25, 26, 27, 28, 29],
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
-    //also flip this when walking left
-    this.anims.create({
-      key: "villagerCarryWalk",
-      frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
-        frames: [30, 31, 32, 33, 34, 35],
-      }),
-      frameRate: 8,
-      repeat: -1,
-    });
+    // this.anims.create({
+    //   key: "villagerCarrying",
+    //   frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
+    //     frames: [24, 25, 26, 27, 28, 29],
+    //   }),
+    //   frameRate: 8,
+    //   
+    // });
+    // //also flip this when walking left
+    // this.anims.create({
+    //   key: "villagerCarryWalk",
+    //   frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
+    //     frames: [30, 31, 32, 33, 34, 35],
+    //   }),
+    //   frameRate: 8,
+    //   
+    // });
   }
 
   createSoldierAnimations(color: String): void {
     this.anims.create({
-      key: "soldierIdleRight",
+      key: `soldierIdleRight${color}`,
       frames: this.anims.generateFrameNumbers(`Soldier_${color}`, {
         frames: [0, 1, 2, 3, 4, 5],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
 
     //note, walk left is the same as this but with setFlipX(true)
     this.anims.create({
-      key: "soldierWalkRight",
+      key: `soldierWalkRight${color}`,
       frames: this.anims.generateFrameNumbers(`Soldier_${color}`, {
         frames: [6, 7, 8, 9, 10, 11],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //note, left attack is just this one, but call setFlipX(true) to attack left, then disable for normal behaviour.
     this.anims.create({
-      key: "soldierAttackRight",
+      key: `soldierAttackRight${color}`,
       frames: this.anims.generateFrameNumbers(`Soldier_${color}`, {
         frames: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "soldierAttackDown",
+      key: `soldierAttackDown${color}`,
       frames: this.anims.generateFrameNumbers(`Soldier_${color}`, {
         frames: [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "soldierAttackUp",
+      key: `soldierAttackUp${color}`,
       frames: this.anims.generateFrameNumbers(`Soldier_${color}`, {
         frames: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
   }
 
   createArcherAnimations(color: String): void {
     this.anims.create({
-      key: "archerIdleRight",
+      key: `archerIdleRight${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [0, 1, 2, 3, 4, 5],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed
     this.anims.create({
-      key: "archerWalkRight",
+      key: `archerWalkRight${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [6, 7, 8, 9, 10, 11],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed: down
     this.anims.create({
-      key: "archerShootUp",
+      key: `archerShootUp${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [12, 13, 14, 15, 16, 17, 18, 19],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed
     this.anims.create({
-      key: "archerShootDiagonalUpRight",
+      key: `archerShootDiagonalUpRight${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [20, 21, 22, 23, 24, 25, 26, 27],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed
     this.anims.create({
-      key: "archerShootRight",
+      key: `archerShootRight${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [28, 29, 30, 31, 32, 33, 34, 35],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed
     this.anims.create({
-      key: "archerShootDiagonalDownRight",
+      key: `archerShootDiagonalDownRight${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [36, 37, 38, 39, 40, 41, 42, 43],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     //flip needed
     this.anims.create({
-      key: "archerShootDown",
+      key: `archerShootDown${color}`,
       frames: this.anims.generateFrameNumbers(`Archer_${color}`, {
         frames: [44, 45, 46, 47, 48, 49, 50, 51],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
   }
 
   createGoblinAnimations(color: String): void {
     //flip needed for all
     this.anims.create({
-      key: "goblinIdleRight",
+      key: `goblinIdleRight${color}`,
       frames: this.anims.generateFrameNumbers(`Goblin_${color}`, {
         frames: [0, 1, 2, 3, 4, 5, 6 ],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "goblinWalkRight",
+      key: `goblinWalkRight${color}`,
       frames: this.anims.generateFrameNumbers(`Goblin_${color}`, {
         frames: [7, 8, 9, 10, 11, 12 ],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "goblinAttackRight",
+      key: `goblinAttackRight${color}`,
       frames: this.anims.generateFrameNumbers(`Goblin_${color}`, {
         frames: [13, 14, 15, 16, 17, 18 ],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "goblinAttackDown",
+      key: `goblinAttackDown${color}`,
       frames: this.anims.generateFrameNumbers(`Goblin_${color}`, {
         frames: [19, 20, 21, 22, 23, 24 ],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
     this.anims.create({
-      key: "goblinAttackUp",
+      key: `goblinAttackUp${color}`,
       frames: this.anims.generateFrameNumbers(`Goblin_${color}`, {
         frames: [25, 26, 27, 28, 29, 30 ],
       }),
       frameRate: 8,
-      repeat: -1,
+      
     });
   }
 

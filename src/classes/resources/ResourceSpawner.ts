@@ -28,6 +28,9 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
         if (pointer.leftButtonDown()) {
             (<Game>(this.scene)).setSelectedEntity(this);
         }
+        else if(pointer.rightButtonDown()){
+            (<Game>(this.scene)).clickedNonTerrain = this;
+        }
     }
 
     getHudInfo() {
