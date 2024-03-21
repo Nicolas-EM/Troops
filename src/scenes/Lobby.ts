@@ -14,11 +14,13 @@ export default class Lobby extends Phaser.Scene {
     super('lobby');
   }
 
-  init(lobbyCode) {
+  init(data) {
     Client.setScene(this);
 
-    if(lobbyCode)
-      Client.joinLobby(lobbyCode);
+    if(data.lobbyCode)
+      Client.joinLobby(data.lobbyCode);
+    else 
+      Client.createLobby();
   }
 
   create() {

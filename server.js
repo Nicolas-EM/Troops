@@ -6,6 +6,8 @@ const io = require('socket.io')(http);
 
 const port = 8081;
 
+const maxPlayers = 2;
+
 // Store lobby information
 const defaultLobby = {
     code: "",
@@ -17,7 +19,7 @@ const defaultLobby = {
 const lobbies = {};
 
 const environment = process.env.NODE_ENV || 'dev';
-if(environment === 'dev')
+if (environment === 'dev')
     app.use(express.static('./dist/'));
 else
     app.use(express.static('./docs/'));
@@ -41,30 +43,41 @@ function generateLobbyCode() {
 io.on('connection', socket => {
     console.log('User connected');
 
-    socket.on('createLobby', (lobbyName) => {
+    socket.on('createLobby', () => {
         const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
         lobbies[lobbyCode] = defaultLobby;
         lobbies[lobbyCode].code = lobbyCode;
         socket.join(lobbyCode);
 
-        console.log(`Created lobby ${lobbyCode}`);
-
         socket.emit('lobbyCreated', lobbyCode);
     });
 
     // Handle lobby joining
-    socket.on('joinLobby', lobbyCode => {
-        console.log(`Player joined the lobby ${lobbyCode}`);
+    socket.on('joinLobby', (lobbyCode) => {
         const lobby = lobbies[lobbyCode];
-        const color = assignColor(lobby);
-        console.log(`Player assigned ${color}`);
-        lobby.players.push({
-            id: socket.id,
-            color: color,
-            ready: false
-        });
-        socket.join(lobbyCode);
-        io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
+
+        if (!lobby || lobby.players.length >= maxPlayers) {
+            console.log(`Player failed to join lobby (doesn't exist or full)`);
+            socket.emit(`exit`);    // TODO: Handle case client-side
+        }
+        else {
+            console.log(`Player joined the lobby ${lobbyCode}`);
+
+            const color = assignColor(lobby);
+
+            // Add player data to lobby
+            lobby.players.push({
+                id: socket.id,
+                color: color,
+                ready: false
+            });
+
+            // register player to lobby socket
+            socket.join(lobbyCode);
+
+            // update all player's lobbies
+            io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
+        }
     });
 
     socket.on('chooseColor', (lobbyCode, color) => {
@@ -75,20 +88,19 @@ io.on('connection', socket => {
             lobby.availableColors.push(lobby.players[playerIndex].color);
 
             lobby.players[playerIndex].color = color;
-            
+
             // Remove new color from available colors
             lobby.availableColors = lobby.availableColors.filter(availableColor => availableColor !== color);
-            
+
             io.emit('updateLobby', { lobby: lobby });
         }
     });
 
     // Handle player readiness
     socket.on('ready', () => {
-        console.log("player ready")
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
-            if(lobby.players[playerIndex].ready) {
+            if (lobby.players[playerIndex].ready) {
                 console.log("not ready anymore")
                 // Unready
                 lobby.players[playerIndex].ready = false;
@@ -107,16 +119,37 @@ io.on('connection', socket => {
     });
 
     // Handle player disconnecting from lobby
-    // socket.on('disconnect', () => {
-    //     console.log(`User disconnected`);
-    //     const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
-    //     if (playerIndex !== -1) {
-    //         const player = lobby.players[playerIndex];
-    //         console.log(`Player ${player.color} disconnected`);
-    //         lobby.players.splice(playerIndex, 1);
-    //         io.emit('playerLeft', player.id);
-    //     }
-    // });
+    socket.on('disconnect', () => {
+        // Find lobbies where the player is present
+        for (const lobbyCode in lobbies) {
+            const lobby = lobbies[lobbyCode];
+            const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
+
+            // If player is found in the lobby
+            if (playerIndex !== -1) {
+                // Remove player from the lobby
+                const removedPlayer = lobby.players.splice(playerIndex, 1)[0];
+
+                // Update readyPlayers count if the player was ready
+                if (removedPlayer.ready) {
+                    lobby.readyPlayers--;
+                }
+
+                // Add player's color back to available colors
+                if (removedPlayer.color) {
+                    lobby.availableColors.push(removedPlayer.color);
+                }
+
+                // Update all players in the lobby
+                io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
+
+                // If lobby becomes empty after the player leaves, remove the lobby
+                if (lobby.players.length === 0) {
+                    delete lobbies[lobbyCode];
+                }
+            }
+        }
+    });
 
     // Set NPC Target
     socket.on('npctarget', (npc, position) => {

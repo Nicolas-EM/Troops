@@ -11,8 +11,7 @@ export default class Client {
 
     static init() {
         Client.socket.on('lobbyCreated', (code) => {
-            console.log(`Created lobby`)
-            console.log(code);
+            console.log(`Created lobby ${code}`)
             Client.joinLobby(code);
         });
 
@@ -53,6 +52,7 @@ export default class Client {
 
     // Lobby Functions
     static joinLobby(code: string): void {
+        console.log(`Joining lobby ${code}`);
         Client.socket.emit('joinLobby', code);
     }
 

@@ -19,10 +19,9 @@ export default class Menu extends Phaser.Scene {
 
   createLobby() {
     this.scene.start('lobby');
-    Client.createLobby();
   }
 
   joinLobby() {
-    this.scene.start('lobby', globalThis.lobbyCode);
+    this.scene.start('lobby', {lobbyCode: globalThis.lobbyCode});
   }
 }
