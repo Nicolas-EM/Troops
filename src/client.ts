@@ -1,35 +1,39 @@
 import { io, Socket } from 'socket.io-client';
 import Lobby from "./scenes/Lobby";
-import lobbyData from './classes/server/LobbyData';
+import lobbyData from './utils';
 import NPC from './classes/npcs/NPC';
 import Game from './scenes/Game';
 
-class Client {
+export default class Client {
     static socket: Socket = io();
     static lobby: lobbyData;
+    static scene: Phaser.Scene;
 
-    constructor(private scene: Phaser.Scene) {
-        Client.joinLobby();
+    static init() {
+        Client.socket.on('lobbyCreated', (code) => {
+            console.log(`Created lobby ${code}`)
+            Client.joinLobby(code);
+        });
 
         Client.socket.on('updateLobby', (data: {lobby: lobbyData}) => {
             Client.lobby = data.lobby;
             // Update player list display in the lobby scene
-            if (this.scene.scene.isActive('lobby')) {
-                (<Lobby>(this.scene)).updateLobby();
+            if (Client.scene.scene.isActive('lobby')) {
+                (<Lobby>(Client.scene)).updateLobby();
             }
         });
 
         Client.socket.on('startGame', (data: {lobby: lobbyData}) => {
-            (<Lobby>(this.scene)).startGame();
+            (<Lobby>(Client.scene)).startGame();
         });
 
         Client.socket.on('npctarget', (npcId: string, position: Phaser.Math.Vector2) => {
-            (<Game>(this.scene)).setNpcTarget(npcId, position);
+            (<Game>(Client.scene)).setNpcTarget(npcId, position);
         })
     }
 
-    setScene(scene: Phaser.Scene) {
-        this.scene = scene;
+    static setScene(scene: Phaser.Scene) {
+        Client.scene = scene;
     }
 
     static getMyColor(): string {
@@ -41,13 +45,19 @@ class Client {
         Client.socket.emit('test');
     }
 
+    // Menu functions
+    static createLobby(): void {
+        Client.socket.emit('createLobby');
+    }
+
     // Lobby Functions
-    static joinLobby(): void {
-        Client.socket.emit('joinLobby');
+    static joinLobby(code: string): void {
+        console.log(`Joining lobby ${code}`);
+        Client.socket.emit('joinLobby', code);
     }
 
     static chooseColor(color: string): void {
-        Client.socket.emit('chooseColor', color);
+        Client.socket.emit('chooseColor', Client.lobby.code, color);
     }
 
     static readyUp(): void {
@@ -60,4 +70,4 @@ class Client {
     }
 }
 
-export default Client;
+Client.init();
