@@ -243,4 +243,5 @@ export default class Boot extends Phaser.Scene {
     this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
     this.scene.start('menu');
   }
+
 }

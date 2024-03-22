@@ -6,6 +6,7 @@ import NPC from '../classes/npcs/NPC';
 import ResourceSpawner from '../classes/resources/ResourceSpawner';
 import Client from '../client';
 import Player from '../classes/Player';
+import * as Sprites from "../../assets/sprites";
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.6;
@@ -36,11 +37,19 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    Client.setScene(this);
-    
+    // Cursor
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer_Pressed}), pointer`);
+    });
+    this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+      this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
+    });
+
+    Client.setScene(this);    
     // Townhalls
     this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
     this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);
+    
 
     // Hud
     this.scene.run('hud');

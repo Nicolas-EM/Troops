@@ -80,14 +80,18 @@ export default class Hud extends Phaser.Scene {
         settingsIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         optionsContainer.add(settingsIcon);
         this.optionsButton.setInteractive();
-        this.optionsButton.on("pointerdown", () => {
-            this.optionsButton.setTexture("Button_Yellow_Pressed");
-            settingsIcon.setTexture("Settings_Pressed");
+        this.optionsButton.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                this.optionsButton.setTexture("Button_Yellow_Pressed");
+                settingsIcon.setTexture("Settings_Pressed");
+            }
         });
-        this.optionsButton.on("pointerup", () => {
-            this.optionsButton.setTexture("Button_Yellow");
-            settingsIcon.setTexture("Settings");
-            this.openOptionsMenu();
+        this.optionsButton.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                this.optionsButton.setTexture("Button_Yellow");
+                settingsIcon.setTexture("Settings");
+                this.openOptionsMenu();
+            }
         });
 
     }
@@ -236,14 +240,18 @@ export default class Hud extends Phaser.Scene {
         fullscreenBtnContainer.add(fullscreenIcon);
         // Fullscreen function
         fullscreenBtnImg.setInteractive();
-        fullscreenBtnImg.on("pointerdown", () => {
-            fullscreenIcon.setPosition(105, 102);
-            fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
+        fullscreenBtnImg.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                fullscreenIcon.setPosition(105, 102);
+                fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
+            }
         });
-        fullscreenBtnImg.on("pointerup",() => {
-            fullscreenIcon.setPosition(105, 100);
-            fullscreenBtnImg.setTexture("Button_Yellow");
-            this.changeFullscreen();
+        fullscreenBtnImg.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                fullscreenIcon.setPosition(105, 100);
+                fullscreenBtnImg.setTexture("Button_Yellow");
+                this.changeFullscreen();
+            }
         });
 
         // Close button
@@ -258,14 +266,18 @@ export default class Hud extends Phaser.Scene {
         closeBtnContainer.add(closeIcon);
         // Close function
         closeBtnImg.setInteractive();
-        closeBtnImg.on("pointerdown", () => {
-            closeBtnImg.setTexture("Button_Red_Pressed");
-            closeIcon.setTexture("X_Pressed");
+        closeBtnImg.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                closeBtnImg.setTexture("Button_Red_Pressed");
+                closeIcon.setTexture("X_Pressed");
+            }
         });
-        closeBtnImg.on("pointerup", () => {
-            closeBtnImg.setTexture("Button_Red");
-            closeIcon.setTexture("X");
-            this.closeOptionsMenu();            
+        closeBtnImg.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                closeBtnImg.setTexture("Button_Red");
+                closeIcon.setTexture("X");
+                this.closeOptionsMenu();            
+            }
         });
 
         this.optionsContainer = this.add.container(midX, midY);
