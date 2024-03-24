@@ -6,14 +6,14 @@ import NPC from './NPC';
 import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Villager extends NPC {
-    static readonly COST: Resources = NPCsData.VILLAGER_SPAWNING_COST;
-    static readonly SPAWN_TIME_MS: number = NPCsData.VILLAGER_SPAWNING_TIME;
+    static readonly COST: Resources = NPCsData.Villager.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Villager.SPAWNING_TIME;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
-        let iconInfo = { ...NPCsData.VILLAGER_ICON_INFO };
+        let iconInfo = { ...NPCsData.Villager.ICON_INFO };
         iconInfo.name += owner.getColor();
         console.log(iconInfo.name);
-        super(scene, x, y, iconInfo.name, owner, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_SPAWNING_TIME, NPCsData.VILLAGER_SPAWNING_COST, NPCsData.VILLAGER_VISION_RANGE, NPCsData.VILLAGER_SPEED, iconInfo, frame);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Villager.HEALTH, NPCsData.Villager.HEALTH, NPCsData.Villager.SPAWNING_TIME, NPCsData.Villager.SPAWNING_COST, NPCsData.Villager.VISION_RANGE, NPCsData.Villager.SPEED, iconInfo, frame);
     }
 
     _hudInfo: HudInfo = {

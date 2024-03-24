@@ -8,12 +8,12 @@ import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Goblin extends AttackUnit {
 
-    static readonly COST: Resources = NPCsData.GOBLIN_SPAWNING_COST;
+    static readonly COST: Resources = NPCsData.Goblin.SPAWNING_COST;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
-        let iconInfo = { ...NPCsData.GOBLIN_ICON_INFO };
+        let iconInfo = { ...NPCsData.Goblin.ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, iconInfo.name, owner, NPCsData.GOBLIN_HEALTH, NPCsData.GOBLIN_HEALTH, NPCsData.GOBLIN_SPAWNING_TIME, NPCsData.GOBLIN_SPAWNING_COST, NPCsData.GOBLIN_VISION_RANGE, NPCsData.GOBLIN_SPEED, iconInfo, NPCsData.GOBLIN_ATTACK_RANGE, NPCsData.GOBLIN_DAMAGE, frame);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Goblin.HEALTH, NPCsData.Goblin.HEALTH, NPCsData.Goblin.SPAWNING_TIME, NPCsData.Goblin.SPAWNING_COST, NPCsData.Goblin.VISION_RANGE, NPCsData.Goblin.SPEED, iconInfo, NPCsData.Goblin.ATTACK_RANGE, NPCsData.Goblin.DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {

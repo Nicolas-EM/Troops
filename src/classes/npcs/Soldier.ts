@@ -8,12 +8,12 @@ import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Soldier extends AttackUnit {
 
-    static readonly COST: Resources = NPCsData.SOLDIER_SPAWNING_COST;
+    static readonly COST: Resources = NPCsData.Soldier.SPAWNING_COST;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
-        let iconInfo = { ...NPCsData.SOLDIER_ICON_INFO };
+        let iconInfo = { ...NPCsData.Soldier.ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, iconInfo.name, owner, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_SPAWNING_TIME, NPCsData.SOLDIER_SPAWNING_COST, NPCsData.SOLDIER_VISION_RANGE, NPCsData.SOLDIER_SPEED, iconInfo, NPCsData.SOLDIER_ATTACK_RANGE, NPCsData.SOLDIER_DAMAGE, frame);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Soldier.HEALTH, NPCsData.Soldier.HEALTH, NPCsData.Soldier.SPAWNING_TIME, NPCsData.Soldier.SPAWNING_COST, NPCsData.Soldier.VISION_RANGE, NPCsData.Soldier.SPEED, iconInfo, NPCsData.Soldier.ATTACK_RANGE, NPCsData.Soldier.DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {
