@@ -77,7 +77,6 @@ io.on('connection', socket => {
             lobbies[lobbyCode] = defaultLobby;
             lobbies[lobbyCode].code = lobbyCode;
             
-            socket.join(lobbyCode);
             socket.emit('lobbyCreated', lobbyCode);
         }
     });
@@ -87,7 +86,6 @@ io.on('connection', socket => {
         lobbies[lobbyCode] = defaultLobby;
         lobbies[lobbyCode].code = lobbyCode;
         
-        socket.join(lobbyCode);
         socket.emit('lobbyCreated', lobbyCode);
     });
 
@@ -115,7 +113,6 @@ io.on('connection', socket => {
             socket.join(lobbyCode);
 
             // update all player's lobbies
-            socket.emit('updateLobby', { lobby: lobby });
             io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
@@ -124,6 +121,7 @@ io.on('connection', socket => {
         const lobby = lobbies[lobbyCode];
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
+            // TODO: comprobar que el color elegido está disponible
             // Add original color to available colors
             lobby.availableColors.push(lobby.players[playerIndex].color);
 
@@ -132,7 +130,7 @@ io.on('connection', socket => {
             // Remove new color from available colors
             lobby.availableColors = lobby.availableColors.filter(availableColor => availableColor !== color);
 
-            io.emit('updateLobby', { lobby: lobby });
+            io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
 
@@ -188,8 +186,8 @@ io.on('connection', socket => {
     });
 
     // Set NPC Target
-    socket.on('npctarget', (npc, position) => {
-        io.emit('npctarget', npc, position);
+    socket.on('npctarget', (lobbyCode, npc, position) => {
+        io.to(lobbyCode).emit('npctarget', npc, position);
     })
 });
 
