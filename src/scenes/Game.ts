@@ -168,8 +168,10 @@ export default class Game extends Phaser.Scene {
       key: `villagerAxe${color}`,
       frames: this.anims.generateFrameNumbers(`Villager_${color}`, {
         frames: [18, 19, 20, 21, 22, 23],
+
       }),
       frameRate: 8,
+      repeat: 5,
       
     });
     this.anims.create({

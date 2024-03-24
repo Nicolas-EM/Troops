@@ -30,6 +30,14 @@ export default class Villager extends NPC {
       { name: VILLAGER_ICON, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT },
       frame
     );
+
+    this.body.setSize(96, 96);
+   // this.body.setOffset(96/2, 96/2);
+    //this.input.hitArea.setTo(96, 96);
+   // this.removeInteractive();
+   // this.setInteractive(new Phaser.Geom.Circle(96/2, 96/2, 96/2), Phaser.Geom.Circle.Contains);
+   // console.log(this.input.hitArea);
+    //this.body.setBoundsRectangle(new Phaser.Geom.Rectangle(0, 0, 96, 96));
     this._status = "villagerIdleBlue";
   }
 
@@ -65,9 +73,11 @@ export default class Villager extends NPC {
       //not moving , therefore idle:
       if (this._actionClick !== null || this._actionClick === undefined) {
         if (this._actionClick === "Tree" || this._actionClick === "Sheep") {
+          this.anims.stop();
           this._status = "villagerAxeBlue";
         }
         else if(this._actionClick = "GoldMine"){
+          this.anims.stop();
             this._status= "villagerHammerBlue";
         }
         this._actionClick = null;

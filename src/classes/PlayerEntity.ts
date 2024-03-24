@@ -28,8 +28,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        
         this.setInteractive();
+       // this.body.setSize(this._iconInfo.width, this._iconInfo.height);
         this.on('pointerdown', this.onEntityClicked, this);
     }
 
@@ -41,7 +41,15 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     }
 
     onEntityClicked(pointer: Phaser.Input.Pointer): void {
-        if (pointer.leftButtonDown()) {
+        //TODO no tocar por favor
+        const halfWidth = this.body.width / 2;
+        const halfHeight = this.body.height / 2;
+        const leftBound = this.x - halfWidth;
+        const rightBound = this.x + halfWidth;
+        const topBound = this.y - halfHeight;
+        const bottomBound = this.y + halfHeight;
+
+        if (pointer.leftButtonDown() && pointer.worldX >= leftBound && pointer.worldY >= topBound && pointer.worldX <= rightBound && pointer.worldY <= bottomBound) {
             (<Game>(this.scene)).setSelectedEntity(this);
         }
     }
