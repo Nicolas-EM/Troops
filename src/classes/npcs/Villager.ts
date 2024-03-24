@@ -1,16 +1,13 @@
 import Game from '../../scenes/Game';
 import Player from '../Player';
 import NPC from './NPC';
-
-// TODO: Magic numbers
-const visionRange = 5;
-const VILLAGER_HEALTH = 100;
-const VILLAGER_WIDTH = 200;
-const VILLAGER_HEIGHT = 200;
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Villager extends NPC {
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
+        let iconInfo = NPCsData.VILLAGER_ICON_INFO;
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, texture, owner, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_SPAWNING_TIME, NPCsData.VILLAGER_SPAWNING_COST, NPCsData.VILLAGER_VISION_RANGE, NPCsData.VILLAGER_SPEED, iconInfo, frame);
     }
 
     getHudInfo() {
@@ -44,4 +41,5 @@ export default class Villager extends NPC {
     gather(){
 
     }
+    
 }

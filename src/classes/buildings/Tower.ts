@@ -1,16 +1,14 @@
 import Player from "../Player";
 import NPC from "../npcs/NPC";
 import SpawnerBuilding from "./SpawnerBuilding";
-
-const TOWER_HEALTH = 100;
-const TOWER_ICON = "Tower_Blue";
-const TOWER_WIDTH = 100;
-const TOWER_HEIGHT = 100;
+import BuildingsData from "../../magic_numbers/buildings_data";
 
 export default class TownHall extends SpawnerBuilding {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, TOWER_HEALTH, TOWER_HEALTH, visionRange, { name: TOWER_ICON, width: TOWER_WIDTH, height: TOWER_HEIGHT }, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
+        let iconInfo = BuildingsData.TOWER_ICON_INFO;
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, texture, owner, BuildingsData.TOWER_HEALTH, BuildingsData.TOWER_HEALTH, BuildingsData.TOWER_SPAWNING_TIME, BuildingsData.TOWER_SPAWNING_COST, BuildingsData.TOWER_VISION_RANGE, iconInfo, frame);
     }
 
     spawn(): NPC {
@@ -30,4 +28,5 @@ export default class TownHall extends SpawnerBuilding {
             actions: [0, 8]
         };
     }
+    
 }

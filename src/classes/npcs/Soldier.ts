@@ -3,25 +3,22 @@ import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import NPC from "./NPC";
 import Game from "../../scenes/Game";
-
-// TODO: move to magic numbers
-const damage = 10;
-const attackRange = 5;
-const visionRange = 10;
-const SOLDIER_HEALTH = 100;
-const SOLDIER_ICON = "Soldier_Blue";
-const SOLDIER_WIDTH = 100;
-const SOLDIER_HEIGHT = 100;
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Soldier extends AttackUnit {
+
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, SOLDIER_HEALTH, SOLDIER_HEALTH, visionRange, { name: SOLDIER_ICON, width: SOLDIER_WIDTH, height: SOLDIER_HEIGHT }, attackRange, damage, frame);
+        let iconInfo = NPCsData.SOLDIER_ICON_INFO;
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, texture, owner, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_SPAWNING_TIME, NPCsData.SOLDIER_SPAWNING_COST, NPCsData.SOLDIER_VISION_RANGE, NPCsData.SOLDIER_SPEED, iconInfo, NPCsData.SOLDIER_ATTACK_RANGE, NPCsData.SOLDIER_DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {
         throw new Error("Method not implemented.");
     }
+    
     protected hit(damage: number) {
         throw new Error("Method not implemented.");
     }
+
 }

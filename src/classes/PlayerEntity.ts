@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
-import { IconInfo } from '../utils';
+import { IconInfo, Resources } from '../utils';
 import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
@@ -14,17 +14,21 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _path;
     protected _currentTarget;
     protected _iconInfo: IconInfo;
+    protected _spawningTime: number;
+    protected _spawningCost: Resources;
 
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
      * @returns Object
      */
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, spawningTime: number, spawningCost: Resources, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
         super(scene, x, y, texture, frame);
         this._owner = owner;
         this._health = health;
         this._totalHealth = totalHealth;
+        this._spawningTime = spawningTime;
+        this._spawningCost = spawningCost;
         this._visionRange = visionRange;
         this._iconInfo = iconInfo;
 

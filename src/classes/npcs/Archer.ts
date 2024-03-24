@@ -3,25 +3,22 @@ import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import Game from "../../scenes/Game";
-
-// TODO: move to magic numbers
-const damage = 10;
-const attackRange = 5;
-const visionRange = 10;
-const ARCHER_HEALTH = 100;
-const ARCHER_ICON = "Archer_Blue";
-const ARCHER_WIDTH = 100;
-const ARCHER_HEIGHT = 100;
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Archer extends AttackUnit {
+
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, ARCHER_HEALTH, ARCHER_HEALTH, visionRange, { name: ARCHER_ICON, width: ARCHER_WIDTH, height: ARCHER_HEIGHT }, attackRange, damage, frame);
+        let iconInfo = NPCsData.ARCHER_ICON_INFO;
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, texture, owner, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_SPAWNING_TIME, NPCsData.ARCHER_SPAWNING_COST, NPCsData.ARCHER_VISION_RANGE, NPCsData.ARCHER_SPEED, iconInfo, NPCsData.ARCHER_ATTACK_RANGE, NPCsData.ARCHER_DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {
         throw new Error("Method not implemented.");
     }
+    
     protected hit(damage: number) {
         throw new Error("Method not implemented.");
     }
+
 }

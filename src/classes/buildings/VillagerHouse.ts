@@ -1,17 +1,14 @@
 import Player from "../Player";
 import Building from "./Building";
-
-const VILLAGER_HOUSE_HEALTH = 100;
-const VILLAGER_HOUSE_ICON = "Townhall_Blue";
-const VILLAGER_HOUSE_WIDTH = 100;
-const VILLAGER_HOUSE_HEIGHT = 100;
+import BuildingsData from "../../magic_numbers/buildings_data";
 
 export default class VillagerHouse extends Building {
     
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HOUSE_HEALTH, VILLAGER_HOUSE_HEALTH, visionRange, { name: VILLAGER_HOUSE_ICON, width: VILLAGER_HOUSE_WIDTH, height: VILLAGER_HOUSE_HEIGHT }, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
+        let iconInfo = BuildingsData.VILLAGER_HOUSE_ICON_INFO;
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, texture, owner, BuildingsData.VILLAGER_HOUSE_HEALTH, BuildingsData.VILLAGER_HOUSE_HEALTH, BuildingsData.VILLAGER_HOUSE_SPAWNING_TIME, BuildingsData.VILLAGER_HOUSE_SPAWNING_COST, BuildingsData.VILLAGER_HOUSE_VISION_RANGE, iconInfo, frame);
     }
-
    
     getHudInfo() {
         return {
@@ -23,4 +20,5 @@ export default class VillagerHouse extends Building {
             actions: []
         };
     }
+
 }
