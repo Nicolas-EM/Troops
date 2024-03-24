@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
-import { IconInfo, Resources } from '../utils';
+import { HudInfo, IconInfo, Resources } from '../utils';
 import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
@@ -16,6 +16,10 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _iconInfo: IconInfo;
     protected _spawningTime: number;
     protected _spawningCost: Resources;
+    abstract _hudInfo: HudInfo;
+
+    static readonly COST: Resources;
+    static readonly SPAWN_TIME_MS: number;
 
     /**
      * @constructor
@@ -63,5 +67,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         return this._owner.getColor() === Client.getMyColor();
     }
 
-    abstract getHudInfo();
+    getHudInfo(): HudInfo {
+        return this._hudInfo;
+    };
+    
 }

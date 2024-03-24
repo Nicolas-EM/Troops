@@ -1,12 +1,23 @@
 import NPC from './NPC';
 import Player from '../Player';
 import Game from '../../scenes/Game';
-import { IconInfo, Resources } from '../../utils';
+import { HudInfo, IconInfo, Resources } from '../../utils';
+import Client from '../../client';
 
 export default abstract class AttackUnit extends NPC {
     
     protected _attackRange: number;
     protected _damage: number;
+
+    _hudInfo: HudInfo = {
+        entity: this._iconInfo,
+        info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
+            health: this._health,
+            totalHealth: this._totalHealth,
+        },
+        actions: []
+    };
     
     /**
      * @summary constructor for attacking class (must have offensive abilities)
@@ -42,8 +53,4 @@ export default abstract class AttackUnit extends NPC {
      * @summary attack confirmed, hit sends onHitReceived to target unit
      */
     protected abstract hit(damage: number);
-
-    getHudInfo() {
-        throw new Error("Method not implemented.");
-    }
 }

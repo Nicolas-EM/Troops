@@ -11,5 +11,5 @@ export default abstract class Building extends PlayerEntity {
         this._id = `${owner.getColor()}_Building_${owner.getNPCs().length}`;
         owner.addBuilding(this);
     }
-    
+
 }

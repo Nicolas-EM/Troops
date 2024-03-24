@@ -3,9 +3,12 @@ import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import Game from "../../scenes/Game";
+import { Resources } from "../../utils";
 import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Archer extends AttackUnit {
+
+    static readonly COST: Resources = NPCsData.ARCHER_SPAWNING_COST;
 
     constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
         let iconInfo = NPCsData.ARCHER_ICON_INFO;

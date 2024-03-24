@@ -49,9 +49,9 @@ export default class Map {
                 const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p1.getColor()}`, p1);
                 this.buildings.push(p1_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${p1.getColor()}`, p1));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, `Villager_${p1.getColor()}`, p1));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, `Villager_${p1.getColor()}`, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, p1));
             } else if (obj.type === "Townhall_P2") {
                 const p2 = (<Game>(this.scene)).getP2();
 
@@ -62,9 +62,9 @@ export default class Map {
                 const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p2.getColor()}`, p2);
                 this.buildings.push(p2_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${p2.getColor()}`, p2));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, `Villager_${p2.getColor()}`, p2));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, `Villager_${p2.getColor()}`, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, p2));
             }
         });
 
