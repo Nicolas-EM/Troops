@@ -3,6 +3,7 @@ import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import Game from "../../scenes/Game";
+import { Resources } from "../../utils";
 
 // TODO: move to magic numbers
 const damage = 10;
@@ -14,8 +15,11 @@ const GOBLIN_WIDTH = 100;
 const GOBLIN_HEIGHT = 100;
 
 export default class Goblin extends AttackUnit {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, GOBLIN_HEALTH, GOBLIN_HEALTH, visionRange, { name: GOBLIN_ICON, width: GOBLIN_WIDTH, height: GOBLIN_HEIGHT }, attackRange, damage, frame);
+    // TODO: magic number
+    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
+
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        super(scene, x, y, `Goblin_${owner.getColor()}`, owner, GOBLIN_HEALTH, GOBLIN_HEALTH, visionRange, { name: GOBLIN_ICON, width: GOBLIN_WIDTH, height: GOBLIN_HEIGHT }, attackRange, damage, frame);
     }
 
     protected attack(attackedEntity: NPC) {

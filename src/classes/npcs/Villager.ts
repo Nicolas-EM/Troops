@@ -1,4 +1,6 @@
+import Client from '../../client';
 import Game from '../../scenes/Game';
+import { HudInfo, Resources } from '../../utils';
 import Player from '../Player';
 import NPC from './NPC';
 
@@ -9,19 +11,22 @@ const VILLAGER_WIDTH = 200;
 const VILLAGER_HEIGHT = 200;
 
 export default class Villager extends NPC {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
-    }
+    _hudInfo: HudInfo = {
+        entity: this._iconInfo,
+        info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
+            health: this._health,
+            totalHealth: this._totalHealth,
+        },
+        actions: [{run: () => {}, actionFrame: `House_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Tower_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Hut_${this._owner.getColor()}`}] // TODO: set build functions
+    };
 
-    getHudInfo() {
-        return {
-            entity: this._iconInfo,
-            info: {
-                health: this._health,
-                totalHealth: this._totalHealth,
-            },
-            actions: [16, 20, 24] // TODO
-        };
+    // TODO: magic number
+    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
+    static readonly SPAWN_TIME_MS: number = 10000;
+    
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        super(scene, x, y, `Villager_${owner.getColor()}`, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
     }
 
     /**

@@ -1,9 +1,7 @@
-import startingData from '../magic_numbers/starting_data';
-import Townhall from './buildings/Townhall';
 import Building from './buildings/Building';
 import NPC from './npcs/NPC';
-import { Scene } from 'phaser';
 import { Resources } from "../utils";
+import VillagerHouse from './buildings/VillagerHouse';
 
 export default class Player {
   private buildings: Building[] = [];
@@ -13,7 +11,9 @@ export default class Player {
     wood: 100,
     food: 100,
     gold: 100
-  }
+  };
+  // TODO: magic number - starting population
+  private maxPopulation: number = 10;
   
   /**
    * Creates a new player instance.
@@ -47,9 +47,41 @@ export default class Player {
 
   addBuilding(building: Building) {
     this.buildings.push(building);
+    if(typeof building === typeof VillagerHouse) {
+      this.maxPopulation += 5;
+    }
   }
 
   getBuildings(): Building[] {
     return this.buildings;
+  }
+
+  getGold(): number {
+    return this.resources.gold;
+  }
+
+  getWood(): number {
+    return this.resources.wood;
+  }
+
+  getFood(): number {
+    return this.resources.food;
+  }
+
+  hasResource(resources: Resources): boolean {
+    if(this.resources.gold >= resources.gold && this.resources.wood >= resources.wood && this.resources.food >= resources.food)
+      return true;
+    
+    return false;
+  }
+
+  pay(resources: Resources) {
+    this.resources.gold -= resources.gold;
+    this.resources.wood -= resources.wood;
+    this.resources.food -= resources.food;
+  }
+
+  getMaxPopulation(): number {
+    return this.maxPopulation;
   }
 }
