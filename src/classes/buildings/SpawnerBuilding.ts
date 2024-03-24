@@ -11,8 +11,6 @@ import Building from "./Building"
 export default abstract class SpawnerBuilding extends Building {
     protected spawnQueue: (typeof Archer | typeof Goblin | typeof Soldier | typeof Villager)[] = [];
     protected spawnTimer: Phaser.Time.TimerEvent | null = null;
-    // TODO: magic number
-    protected spawnInterval: number = 10000; // 10 seconds in milliseconds
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
         super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
@@ -24,7 +22,7 @@ export default abstract class SpawnerBuilding extends Building {
             console.log("NPC queued");
             this.spawnQueue.push(npcType);
             if (!this.spawnTimer)
-                this.startSpawnTimer();
+                this.startSpawnTimer(npcType.SPAWN_TIME_MS);
         }
     }
     
@@ -43,9 +41,9 @@ export default abstract class SpawnerBuilding extends Building {
         }
     }
 
-    startSpawnTimer(): void {
+    startSpawnTimer(delay: number): void {
         this.spawnTimer = this.scene.time.addEvent({
-            delay: this.spawnInterval,
+            delay,
             callback: this.spawn,
             callbackScope: this,
             loop: true

@@ -23,6 +23,7 @@ export default class Villager extends NPC {
 
     // TODO: magic number
     static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
+    static readonly SPAWN_TIME_MS: number = 10000;
     
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
         super(scene, x, y, `Villager_${owner.getColor()}`, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);

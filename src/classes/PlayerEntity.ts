@@ -17,6 +17,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     abstract _hudInfo: HudInfo;
 
     static readonly COST: Resources = { wood: Infinity, food: Infinity, gold: Infinity };
+    static readonly SPAWN_TIME_MS: number = Infinity;
 
     /**
      * @constructor
