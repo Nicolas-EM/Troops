@@ -8,15 +8,26 @@ const port = 8081;
 
 const maxPlayers = 2;
 
+interface Lobby {
+    code: string,
+    players: {
+        id: any,
+        ready: boolean,
+        color: ('Red' | 'Blue' | 'Purple' | 'Yellow')
+    }[],
+    availableColors: ('Red' | 'Blue' | 'Purple' | 'Yellow')[],
+    readyPlayers: number
+}
+
 // Store lobby information
-const defaultLobby = {
+const defaultLobby: Lobby = {
     code: "",
     players: [],
     availableColors: ['Red', 'Blue', 'Purple', 'Yellow'],
     readyPlayers: 0
 };
 
-const lobbies = {};
+const lobbies: { [code: string]: Lobby } = {};
 
 const environment = process.env.NODE_ENV || 'dev';
 if (environment === 'dev')
@@ -24,7 +35,7 @@ if (environment === 'dev')
 else
     app.use(express.static('./docs/'));
 
-function assignColor(lobby) {
+function assignColor(lobby: Lobby) {
     const availableColors = lobby.availableColors.filter(color => !lobby.players.some(player => player.color === color));
     if (availableColors.length === 0) {
         // Handle case when no available colors are left
@@ -36,8 +47,8 @@ function assignColor(lobby) {
     return selectedColor;
 }
 
-function generateLobbyCode() {
-    let code;
+function generateLobbyCode(): string {
+    let code: string;
     do {
         code = Math.random().toString(36).substring(2, 8).toUpperCase();
     } while (lobbies[code] !== undefined);
@@ -51,7 +62,7 @@ io.on('connection', socket => {
     socket.on('quickPlay', () => {
         console.log('Quick play requested');
 
-        let availableLobby = null;
+        let availableLobby: Lobby = null;
 
         // Find a lobby with fewer than maxPlayers
         for (const lobbyCode in lobbies) {
@@ -86,7 +97,7 @@ io.on('connection', socket => {
     });
 
     // Handle lobby joining
-    socket.on('joinLobby', (lobbyCode) => {
+    socket.on('joinLobby', (lobbyCode: string) => {
         const lobby = lobbies[lobbyCode];
 
         if (!lobby || lobby.players.length >= maxPlayers) {
@@ -114,7 +125,7 @@ io.on('connection', socket => {
         }
     });
 
-    socket.on('chooseColor', (lobbyCode, color) => {
+    socket.on('chooseColor', (lobbyCode: string, color: ('Red' | 'Blue' | 'Purple' | 'Yellow')) => {
         const lobby = lobbies[lobbyCode];
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
