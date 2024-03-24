@@ -36,13 +36,8 @@ else
     app.use(express.static('./docs/'));
 
 function assignColor(lobby: Lobby) {
-    const availableColors = lobby.availableColors.filter(color => !lobby.players.some(player => player.color === color));
-    if (availableColors.length === 0) {
-        // Handle case when no available colors are left
-        return null;
-    }
-    const randomIndex = Math.floor(Math.random() * availableColors.length);
-    const selectedColor = availableColors[randomIndex];
+    const randomIndex = Math.floor(Math.random() * lobby.availableColors.length);
+    const selectedColor = lobby.availableColors[randomIndex];
     lobby.availableColors.splice(randomIndex, 1); // Remove the selected color
     return selectedColor;
 }
@@ -62,7 +57,7 @@ io.on('connection', socket => {
     socket.on('quickPlay', () => {
         console.log('Quick play requested');
 
-        let availableLobby: Lobby = null;
+        let availableLobby: Lobby | undefined = undefined;
 
         // Find a lobby with fewer than maxPlayers
         for (const lobbyCode in lobbies) {
