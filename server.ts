@@ -8,15 +8,30 @@ const port = 8081;
 
 const maxPlayers = 2;
 
-// Store lobby information
-const defaultLobby = {
-    code: "",
-    players: [],
-    availableColors: ['Red', 'Blue', 'Purple', 'Yellow'],
-    readyPlayers: 0
-};
+interface Lobby {
+    code: string,
+    isPrivate: boolean,
+    players: {
+        id: any,
+        ready: boolean,
+        color: ('Red' | 'Blue' | 'Purple' | 'Yellow')
+    }[],
+    availableColors: ('Red' | 'Blue' | 'Purple' | 'Yellow')[],
+    readyPlayers: number
+}
 
-const lobbies = {};
+// Default lobby
+function createDefaultLobby(): Lobby {
+    return {
+        code: "",
+        isPrivate: false,
+        players: [],
+        availableColors: ['Red', 'Blue', 'Purple', 'Yellow'],
+        readyPlayers: 0
+    };    
+}
+
+const lobbies: { [code: string]: Lobby } = {};
 
 const environment = process.env.NODE_ENV || 'dev';
 if (environment === 'dev')
@@ -24,20 +39,15 @@ if (environment === 'dev')
 else
     app.use(express.static('./docs/'));
 
-function assignColor(lobby) {
-    const availableColors = lobby.availableColors.filter(color => !lobby.players.some(player => player.color === color));
-    if (availableColors.length === 0) {
-        // Handle case when no available colors are left
-        return null;
-    }
-    const randomIndex = Math.floor(Math.random() * availableColors.length);
-    const selectedColor = availableColors[randomIndex];
+function assignColor(lobby: Lobby) {
+    const randomIndex = Math.floor(Math.random() * lobby.availableColors.length);
+    const selectedColor = lobby.availableColors[randomIndex];
     lobby.availableColors.splice(randomIndex, 1); // Remove the selected color
     return selectedColor;
 }
 
-function generateLobbyCode() {
-    let code;
+function generateLobbyCode(): string {
+    let code: string;
     do {
         code = Math.random().toString(36).substring(2, 8).toUpperCase();
     } while (lobbies[code] !== undefined);
@@ -51,12 +61,12 @@ io.on('connection', socket => {
     socket.on('quickPlay', () => {
         console.log('Quick play requested');
 
-        let availableLobby = null;
+        let availableLobby: Lobby | undefined = undefined;
 
         // Find a lobby with fewer than maxPlayers
         for (const lobbyCode in lobbies) {
             const lobby = lobbies[lobbyCode];
-            if (lobby.players.length < maxPlayers) {
+            if (lobby.players.length < maxPlayers && !lobby.isPrivate) {
                 availableLobby = lobby;
                 break;
             }
@@ -68,25 +78,25 @@ io.on('connection', socket => {
         } else {
             // No available lobbies, create a new one
             const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
-            lobbies[lobbyCode] = defaultLobby;
+            lobbies[lobbyCode] = createDefaultLobby();
             lobbies[lobbyCode].code = lobbyCode;
             
-            socket.join(lobbyCode);
             socket.emit('lobbyCreated', lobbyCode);
         }
     });
 
     socket.on('createLobby', () => {
         const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
-        lobbies[lobbyCode] = defaultLobby;
+        lobbies[lobbyCode] = createDefaultLobby();
         lobbies[lobbyCode].code = lobbyCode;
+        // Make lobby private
+        lobbies[lobbyCode].isPrivate = true;
         
-        socket.join(lobbyCode);
         socket.emit('lobbyCreated', lobbyCode);
     });
 
     // Handle lobby joining
-    socket.on('joinLobby', (lobbyCode) => {
+    socket.on('joinLobby', (lobbyCode: string) => {
         const lobby = lobbies[lobbyCode];
 
         if (!lobby || lobby.players.length >= maxPlayers) {
@@ -109,15 +119,15 @@ io.on('connection', socket => {
             socket.join(lobbyCode);
 
             // update all player's lobbies
-            socket.emit('updateLobby', { lobby: lobby });
             io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
 
-    socket.on('chooseColor', (lobbyCode, color) => {
+    socket.on('chooseColor', (lobbyCode: string, color: ('Red' | 'Blue' | 'Purple' | 'Yellow')) => {
         const lobby = lobbies[lobbyCode];
         const playerIndex = lobby.players.findIndex(player => player.id === socket.id);
         if (playerIndex !== -1) {
+            // TODO: comprobar que el color elegido está disponible
             // Add original color to available colors
             lobby.availableColors.push(lobby.players[playerIndex].color);
 
@@ -126,7 +136,7 @@ io.on('connection', socket => {
             // Remove new color from available colors
             lobby.availableColors = lobby.availableColors.filter(availableColor => availableColor !== color);
 
-            io.emit('updateLobby', { lobby: lobby });
+            io.to(lobbyCode).emit('updateLobby', { lobby: lobby });
         }
     });
 
@@ -182,8 +192,8 @@ io.on('connection', socket => {
     });
 
     // Set NPC Target
-    socket.on('npctarget', (npc, position) => {
-        io.emit('npctarget', npc, position);
+    socket.on('npctarget', (lobbyCode, npc, position) => {
+        io.to(lobbyCode).emit('npctarget', npc, position);
     })
 });
 

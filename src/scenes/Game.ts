@@ -9,7 +9,7 @@ import Player from '../classes/Player';
 import * as Sprites from "../../assets/sprites";
 
 // MAGIC NUMBER
-const MIN_ZOOM = 0.6;
+const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 1;
 const ZOOM_AMOUNT = 0.05;
 const MOVEMENT_OFFSET = 10;
