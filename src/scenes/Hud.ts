@@ -189,7 +189,7 @@ export default class Hud extends Phaser.Scene {
                 actionIcon.setInteractive();
                 actionIcon.on("pointerdown", () => {
                     console.log(`Nueva acción pulsada: ${action}`);
-                    // TODO
+                    action.run();
                 });
                 this.actionsContainer.add(actionIcon);
             });

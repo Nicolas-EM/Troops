@@ -1,8 +1,5 @@
-import startingData from '../magic_numbers/starting_data';
-import Townhall from './buildings/Townhall';
 import Building from './buildings/Building';
 import NPC from './npcs/NPC';
-import { Scene } from 'phaser';
 import { Resources } from "../utils";
 
 export default class Player {
@@ -13,7 +10,7 @@ export default class Player {
     wood: 100,
     food: 100,
     gold: 100
-  }
+  };
   
   /**
    * Creates a new player instance.

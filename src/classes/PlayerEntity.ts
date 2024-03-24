@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
-import { IconInfo } from '../utils';
+import { HudInfo, IconInfo } from '../utils';
 import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
@@ -14,6 +14,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _path;
     protected _currentTarget;
     protected _iconInfo: IconInfo;
+    abstract _hudInfo: HudInfo;
 
     /**
      * @constructor
@@ -59,5 +60,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         return this._owner.getColor() === Client.getMyColor();
     }
 
-    abstract getHudInfo();
+    getHudInfo(): HudInfo {
+        return this._hudInfo;
+    };
 }

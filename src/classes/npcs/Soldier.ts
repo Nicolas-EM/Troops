@@ -14,8 +14,8 @@ const SOLDIER_WIDTH = 100;
 const SOLDIER_HEIGHT = 100;
 
 export default class Soldier extends AttackUnit {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, SOLDIER_HEALTH, SOLDIER_HEALTH, visionRange, { name: SOLDIER_ICON, width: SOLDIER_WIDTH, height: SOLDIER_HEIGHT }, attackRange, damage, frame);
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        super(scene, x, y, `Soldier_${owner.getColor()}`, owner, SOLDIER_HEALTH, SOLDIER_HEALTH, visionRange, { name: SOLDIER_ICON, width: SOLDIER_WIDTH, height: SOLDIER_HEIGHT }, attackRange, damage, frame);
     }
 
     protected attack(attackedEntity: NPC) {

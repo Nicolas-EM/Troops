@@ -1,4 +1,5 @@
 import Game from '../../scenes/Game';
+import { HudInfo } from '../../utils';
 import Player from '../Player';
 import NPC from './NPC';
 
@@ -9,19 +10,17 @@ const VILLAGER_WIDTH = 200;
 const VILLAGER_HEIGHT = 200;
 
 export default class Villager extends NPC {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
-    }
-
-    getHudInfo() {
-        return {
-            entity: this._iconInfo,
-            info: {
-                health: this._health,
-                totalHealth: this._totalHealth,
-            },
-            actions: [16, 20, 24] // TODO
-        };
+    _hudInfo: HudInfo = {
+        entity: this._iconInfo,
+        info: {
+            health: this._health,
+            totalHealth: this._totalHealth,
+        },
+        actions: [{run: () => {}, id: 16}, {run: () => {}, id: 20}, {run: () => {}, id: 24}] // TODO
+    };
+    
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        super(scene, x, y, `Villager_${owner.getColor()}`, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
     }
 
     /**
