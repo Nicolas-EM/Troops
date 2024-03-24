@@ -25,10 +25,12 @@ export default abstract class NPC extends PlayerEntity {
     }
 
     setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh, options? : any): void {
-       // console.log("setting target");
+        // console.log("setting target");
         if(options)this._actionClick = options;
         // Find a path to the target
-        this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), targetPoint);
+        const offset = 35;
+        const newTargetPoint = new Phaser.Math.Vector2(targetPoint.x - offset, targetPoint.y - offset);
+        this._path = navMesh.findPath(new Phaser.Math.Vector2(this.x, this.y), newTargetPoint);
         if (this._path && this._path.length > 0) {
             this._currentTarget = this._path.shift();
         }

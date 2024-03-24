@@ -28,7 +28,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        this.setInteractive();
+        this.setInteractive({ pixelPerfect: true });
        // this.body.setSize(this._iconInfo.width, this._iconInfo.height);
         this.on('pointerdown', this.onEntityClicked, this);
     }
@@ -42,8 +42,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
 
     onEntityClicked(pointer: Phaser.Input.Pointer): void {
         //TODO no tocar por favor
-        const halfWidth = this.body.width / 2;
-        const halfHeight = this.body.height / 2;
+        const halfWidth = (this.body as any).width / 2;
+        const halfHeight = (this.body as any).height / 2;
         const leftBound = this.x - halfWidth;
         const rightBound = this.x + halfWidth;
         const topBound = this.y - halfHeight;

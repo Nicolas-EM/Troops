@@ -62,11 +62,11 @@ export default class Map {
         // (<Game>this.scene).setSelectedEntity(this.NPCs[0]);
 
         ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
-        const layers = [waterLayer, groundLayer, grassLayer];
+        const layers = [waterLayer];
 
         this.navMesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, (tile) => this.navMeshIsWalkable(tile));
         // this.navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
-        // this.navMesh.debugDrawClear(); // Clears the overlay
+        // this.navMesh.debugDrawClear(); //  Clears the overlay
         // Visualize the underlying navmesh
 
         // -->  okay wtf ? 

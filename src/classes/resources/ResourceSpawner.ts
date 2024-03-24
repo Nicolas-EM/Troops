@@ -19,16 +19,21 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
         this._totalResources = totalResources;
         this._remainingResources = totalResources;
         this._resourceRate = resourceRate;
-        
-        this.setInteractive();
+
+        this.scene.add.existing(this);
+        this.scene.physics.add.existing(this);
+
+        this.setInteractive({ pixelPerfect: true });//TODO this.input.makePixelPerfect();
         this.on('pointerdown', this.onClick);
+        
     }
 
     onClick(pointer: Phaser.Input.Pointer): void {
-        if (pointer.leftButtonDown()) {
+
+       if (pointer.leftButtonDown()) {
+            console.log(this.body);
             (<Game>(this.scene)).setSelectedEntity(this);
-        }
-        else if(pointer.rightButtonDown()){
+        } else if (pointer.rightButtonDown()) {
             (<Game>(this.scene)).clickedNonTerrain = this;
         }
     }

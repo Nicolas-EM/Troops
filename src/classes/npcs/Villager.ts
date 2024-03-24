@@ -31,13 +31,7 @@ export default class Villager extends NPC {
       frame
     );
 
-    this.body.setSize(96, 96);
-   // this.body.setOffset(96/2, 96/2);
-    //this.input.hitArea.setTo(96, 96);
-   // this.removeInteractive();
-   // this.setInteractive(new Phaser.Geom.Circle(96/2, 96/2, 96/2), Phaser.Geom.Circle.Contains);
-   // console.log(this.input.hitArea);
-    //this.body.setBoundsRectangle(new Phaser.Geom.Rectangle(0, 0, 96, 96));
+    (this.body as any).setSize(64, 64);
     this._status = "villagerIdleBlue";
   }
 
