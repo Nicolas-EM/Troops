@@ -10,6 +10,7 @@ const maxPlayers = 2;
 
 interface Lobby {
     code: string,
+    isPrivate: boolean,
     players: {
         id: any,
         ready: boolean,
@@ -19,13 +20,16 @@ interface Lobby {
     readyPlayers: number
 }
 
-// Store lobby information
-const defaultLobby: Lobby = {
-    code: "",
-    players: [],
-    availableColors: ['Red', 'Blue', 'Purple', 'Yellow'],
-    readyPlayers: 0
-};
+// Default lobby
+function createDefaultLobby(): Lobby {
+    return {
+        code: "",
+        isPrivate: false,
+        players: [],
+        availableColors: ['Red', 'Blue', 'Purple', 'Yellow'],
+        readyPlayers: 0
+    };    
+}
 
 const lobbies: { [code: string]: Lobby } = {};
 
@@ -62,7 +66,7 @@ io.on('connection', socket => {
         // Find a lobby with fewer than maxPlayers
         for (const lobbyCode in lobbies) {
             const lobby = lobbies[lobbyCode];
-            if (lobby.players.length < maxPlayers) {
+            if (lobby.players.length < maxPlayers && !lobby.isPrivate) {
                 availableLobby = lobby;
                 break;
             }
@@ -74,7 +78,7 @@ io.on('connection', socket => {
         } else {
             // No available lobbies, create a new one
             const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
-            lobbies[lobbyCode] = defaultLobby;
+            lobbies[lobbyCode] = createDefaultLobby();
             lobbies[lobbyCode].code = lobbyCode;
             
             socket.emit('lobbyCreated', lobbyCode);
@@ -83,8 +87,10 @@ io.on('connection', socket => {
 
     socket.on('createLobby', () => {
         const lobbyCode = generateLobbyCode(); // Function to generate a unique lobby code
-        lobbies[lobbyCode] = defaultLobby;
+        lobbies[lobbyCode] = createDefaultLobby();
         lobbies[lobbyCode].code = lobbyCode;
+        // Make lobby private
+        lobbies[lobbyCode].isPrivate = true;
         
         socket.emit('lobbyCreated', lobbyCode);
     });
