@@ -9,10 +9,11 @@ export default class Villager extends NPC {
     static readonly COST: Resources = NPCsData.VILLAGER_SPAWNING_COST;
     static readonly SPAWN_TIME_MS: number = NPCsData.VILLAGER_SPAWNING_TIME;
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        let iconInfo = NPCsData.VILLAGER_ICON_INFO;
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...NPCsData.VILLAGER_ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, texture, owner, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_SPAWNING_TIME, NPCsData.VILLAGER_SPAWNING_COST, NPCsData.VILLAGER_VISION_RANGE, NPCsData.VILLAGER_SPEED, iconInfo, frame);
+        console.log(iconInfo.name);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_HEALTH, NPCsData.VILLAGER_SPAWNING_TIME, NPCsData.VILLAGER_SPAWNING_COST, NPCsData.VILLAGER_VISION_RANGE, NPCsData.VILLAGER_SPEED, iconInfo, frame);
     }
 
     _hudInfo: HudInfo = {

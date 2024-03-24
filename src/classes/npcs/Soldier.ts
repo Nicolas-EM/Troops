@@ -10,10 +10,10 @@ export default class Soldier extends AttackUnit {
 
     static readonly COST: Resources = NPCsData.SOLDIER_SPAWNING_COST;
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        let iconInfo = NPCsData.SOLDIER_ICON_INFO;
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...NPCsData.SOLDIER_ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, texture, owner, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_SPAWNING_TIME, NPCsData.SOLDIER_SPAWNING_COST, NPCsData.SOLDIER_VISION_RANGE, NPCsData.SOLDIER_SPEED, iconInfo, NPCsData.SOLDIER_ATTACK_RANGE, NPCsData.SOLDIER_DAMAGE, frame);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_HEALTH, NPCsData.SOLDIER_SPAWNING_TIME, NPCsData.SOLDIER_SPAWNING_COST, NPCsData.SOLDIER_VISION_RANGE, NPCsData.SOLDIER_SPEED, iconInfo, NPCsData.SOLDIER_ATTACK_RANGE, NPCsData.SOLDIER_DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {

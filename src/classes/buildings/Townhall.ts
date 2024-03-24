@@ -11,10 +11,11 @@ export default class Townhall extends NPCSpawner {
     
     static readonly COST: Resources = null;
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        let iconInfo = BuildingsData.TOWNHALL_ICON_INFO;
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...BuildingsData.TOWNHALL_ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, texture, owner, BuildingsData.TOWNHALL_HEALTH, BuildingsData.TOWNHALL_HEALTH, null, null, BuildingsData.TOWNHALL_VISION_RANGE, iconInfo, frame);
+        console.log(iconInfo.name);
+        super(scene, x, y, iconInfo.name, owner, BuildingsData.TOWNHALL_HEALTH, BuildingsData.TOWNHALL_HEALTH, null, null, BuildingsData.TOWNHALL_VISION_RANGE, iconInfo, frame);
     }
 
     _hudInfo: HudInfo = {

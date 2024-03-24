@@ -10,10 +10,10 @@ export default class Archer extends AttackUnit {
 
     static readonly COST: Resources = NPCsData.ARCHER_SPAWNING_COST;
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        let iconInfo = NPCsData.ARCHER_ICON_INFO;
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...NPCsData.ARCHER_ICON_INFO };
         iconInfo.name += owner.getColor();
-        super(scene, x, y, texture, owner, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_SPAWNING_TIME, NPCsData.ARCHER_SPAWNING_COST, NPCsData.ARCHER_VISION_RANGE, NPCsData.ARCHER_SPEED, iconInfo, NPCsData.ARCHER_ATTACK_RANGE, NPCsData.ARCHER_DAMAGE, frame);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_HEALTH, NPCsData.ARCHER_SPAWNING_TIME, NPCsData.ARCHER_SPAWNING_COST, NPCsData.ARCHER_VISION_RANGE, NPCsData.ARCHER_SPEED, iconInfo, NPCsData.ARCHER_ATTACK_RANGE, NPCsData.ARCHER_DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {

@@ -56,4 +56,5 @@ export default abstract class SpawnerBuilding extends Building {
             this.spawnTimer = null;
         }
     }
+    
 };

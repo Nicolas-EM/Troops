@@ -42,11 +42,11 @@ export default class Map {
             if (obj.type === "Townhall_P1") {
                 const p1 = (<Game>(this.scene)).getP1();
 
-                if(Client.getMyColor() === p1.getColor()){
+                if (Client.getMyColor() === p1.getColor()){
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
                     this.scene.cameras.main.zoom = 0.7;
                 }
-                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p1.getColor()}`, p1);
+                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, p1);
                 this.buildings.push(p1_TownHall);
 
                 this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p1));
@@ -59,7 +59,7 @@ export default class Map {
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
                     this.scene.cameras.main.zoom = 0.7;
                 }
-                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p2.getColor()}`, p2);
+                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, p2);
                 this.buildings.push(p2_TownHall);
 
                 this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p2));

@@ -4,8 +4,8 @@ import Game from "../../scenes/Game";
 
 export default class Sheep extends ResourceSpawner {
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number) {
-        super(scene, x, y, texture, ResourcesData.SHEEP_ICON_INFO, ResourcesData.FOOD_ICON, ResourcesData.SHEEP_CAPACITY, ResourcesData.SHEEP_RATE, frame);
+    constructor(scene: Game, x: number, y: number, frame?: string | number) {
+        super(scene, x, y, ResourcesData.SHEEP_ICON_INFO.name, ResourcesData.SHEEP_ICON_INFO, ResourcesData.FOOD_ICON, ResourcesData.SHEEP_CAPACITY, ResourcesData.SHEEP_RATE, frame);
     }
     
 }
