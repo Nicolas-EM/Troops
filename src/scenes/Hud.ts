@@ -1,7 +1,6 @@
 import * as Phaser from 'phaser';
 import { HudInfo } from '../utils';
 import Player from '../classes/Player';
-import PlayerData from '../magic_numbers/player_data';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
@@ -64,7 +63,7 @@ export default class Hud extends Phaser.Scene {
         let villagerIcon = this.add.image(-20, 2, `Villager_${this.player.getColor()}`);
         villagerIcon.setDisplaySize(60, 60);
         villagerIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        this.populationCounter = this.add.text(-5, -10, `0/${PlayerData.MAX_POPULATION}`, { color: '#000000' });
+        this.populationCounter = this.add.text(-5, -10, `0/${this.player.getMaxPopulation()}`, { color: '#000000' });
 
         let populationContainer = this.add.container(midX, 45);
         let populationBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
@@ -369,6 +368,6 @@ export default class Hud extends Phaser.Scene {
         this.foodCounter.setText(`${this.player.getFood()}`);
         this.goldCounter.setText(`${this.player.getGold()}`);
 
-        this.populationCounter.setText(`${this.player.getNPCs().length}/${PlayerData.MAX_POPULATION}`);
+        this.populationCounter.setText(`${this.player.getNPCs().length}/${this.player.getMaxPopulation()}`);
     }
 }

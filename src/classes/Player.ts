@@ -1,6 +1,7 @@
 import Building from './buildings/Building';
 import NPC from './npcs/NPC';
 import { Resources } from "../utils";
+import VillagerHouse from './buildings/VillagerHouse';
 
 export default class Player {
   private buildings: Building[] = [];
@@ -11,6 +12,8 @@ export default class Player {
     food: 100,
     gold: 100
   };
+  // TODO: magic number - starting population
+  private maxPopulation: number = 10;
   
   /**
    * Creates a new player instance.
@@ -44,6 +47,9 @@ export default class Player {
 
   addBuilding(building: Building) {
     this.buildings.push(building);
+    if(typeof building === typeof VillagerHouse) {
+      this.maxPopulation += 5;
+    }
   }
 
   getBuildings(): Building[] {
@@ -73,5 +79,9 @@ export default class Player {
     this.resources.gold -= resources.gold;
     this.resources.wood -= resources.wood;
     this.resources.food -= resources.food;
+  }
+
+  getMaxPopulation(): number {
+    return this.maxPopulation;
   }
 }

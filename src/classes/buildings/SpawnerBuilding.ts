@@ -1,4 +1,3 @@
-import PlayerData from "../../magic_numbers/player_data";
 import Game from "../../scenes/Game";
 import { IconInfo } from "../../utils";
 import Archer from "../npcs/Archer";
@@ -20,7 +19,7 @@ export default abstract class SpawnerBuilding extends Building {
     }
 
     queueNPC(npcType: typeof Archer | typeof Goblin | typeof Soldier | typeof Villager): void {
-        if(this._owner.hasResource(npcType.COST) && this._owner.getNPCs.length < PlayerData.MAX_POPULATION) {
+        if(this._owner.hasResource(npcType.COST)) {
             this._owner.pay(npcType.COST);
             console.log("NPC queued");
             this.spawnQueue.push(npcType);
@@ -34,7 +33,7 @@ export default abstract class SpawnerBuilding extends Building {
     }
 
     spawn(): void {
-        if (this.spawnQueue.length > 0) {
+        if (this.spawnQueue.length > 0 && this._owner.getNPCs().length < this._owner.getMaxPopulation()) {
             const npcType = this.spawnQueue.shift();
             new npcType(<Game>(this.scene), this.x + this.width, this.y, this._owner)
         }
