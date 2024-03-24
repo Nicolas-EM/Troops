@@ -44,14 +44,14 @@ export default class Lobby extends Phaser.Scene {
   }
 
   update(time: number, delta: number) {
-    if(Client.lobby.code) {
+    if (Client.lobby?.code) {
       this.lobbyText.setText(`Lobby - ${Client.lobby.code}`);
       this.updatePlayers(Client.lobby.players);
       this.updateAvailableColors(Client.lobby.availableColors);
-    }
 
-    if(Client.lobby.readyPlayers === Client.lobby.players.length)
-      this.startGame();
+      if (Client.lobby.readyPlayers === Client.lobby.players.length && Client.lobby.players.length > 1)
+        this.startGame();
+    }
   }
 
   updatePlayers(players: { id: string, color: string }[]) {

@@ -64,7 +64,7 @@ export default class Client {
 
     // Game Functions
     static setNpcTarget(npcId: string, position: Phaser.Math.Vector2):void {
-        Client.socket.emit('npctarget', npcId, position);
+        Client.socket.emit('npctarget', Client.lobby.code, npcId, position);
     }
 }
 

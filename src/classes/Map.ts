@@ -44,6 +44,7 @@ export default class Map {
 
                 if(Client.getMyColor() === p1.getColor()){
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                    this.scene.cameras.main.zoom = 0.7;
                 }
                 const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p1.getColor()}`, p1);
                 this.buildings.push(p1_TownHall);
@@ -56,6 +57,7 @@ export default class Map {
 
                 if(Client.getMyColor() === p2.getColor()){
                     this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                    this.scene.cameras.main.zoom = 0.7;
                 }
                 const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${p2.getColor()}`, p2);
                 this.buildings.push(p2_TownHall);
