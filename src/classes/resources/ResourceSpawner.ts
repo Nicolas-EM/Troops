@@ -1,5 +1,5 @@
 import * as Phaser from "phaser";
-import { IconInfo } from "../../utils";
+import { HudInfo, IconInfo } from "../../utils";
 import Game from "../../scenes/Game";
 
 export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
@@ -30,7 +30,7 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
         }
     }
 
-    getHudInfo() {
+    getHudInfo(): HudInfo {
         return {
             entity: this._iconInfo,
             info: {

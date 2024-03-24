@@ -173,7 +173,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('X_Disable', Sprites.UI.Icons.X_Disable);
     this.load.image('X_Pressed', Sprites.UI.Icons.X_Pressed);
     this.load.image('X', Sprites.UI.Icons.X);
-    this.load.spritesheet('Icons', Sprites.UI.Icons.Icons, { frameWidth: 64, frameHeight: 64 });
+    this.load.multiatlas('Icons');
 
     // UI - Pointers
     this.load.image('Axe', Sprites.UI.Pointers.Axe);

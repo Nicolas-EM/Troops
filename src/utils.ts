@@ -17,10 +17,15 @@ export interface IconInfo {
 export interface HudInfo {
     entity: IconInfo,
     info: {
+        isMine: boolean,
         health: number,
         totalHealth: number,
+        damage?: number
+    } | {
+        remainingResources: number,
+        resource: string,
     },
-    actions: {run: () => void, id: number}[]
+    actions: {run: () => void, actionFrame: string}[]
 }
 
 // Array de recursos de un jugador

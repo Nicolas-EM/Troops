@@ -1,3 +1,4 @@
+import Client from "../../client";
 import { HudInfo } from "../../utils";
 import Player from "../Player";
 import Building from "./Building";
@@ -11,6 +12,7 @@ export default class VillagerHouse extends Building {
     _hudInfo: HudInfo = {
         entity: this._iconInfo,
         info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
             health: this._health,
             totalHealth: this._totalHealth
         },

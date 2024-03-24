@@ -1,3 +1,4 @@
+import Client from "../../client";
 import { HudInfo } from "../../utils";
 import Player from "../Player";
 import Archer from "../npcs/Archer";
@@ -13,10 +14,11 @@ export default class TownHall extends SpawnerBuilding {
     _hudInfo: HudInfo = {
         entity: this._iconInfo,
         info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
             health: this._health,
             totalHealth: this._totalHealth
         },
-        actions: [{run: () => this.queueNPC(Soldier), id: 0}, {run: () => this.queueNPC(Archer), id: 8}]
+        actions: [{run: () => this.queueNPC(Soldier), actionFrame: `Soldier_${this._owner.getColor()}`}, {run: () => this.queueNPC(Archer), actionFrame: `Archer_${this._owner.getColor()}`}]
     }
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {

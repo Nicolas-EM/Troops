@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import Client from '../client';
+import { HudInfo } from '../utils';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
@@ -132,7 +133,7 @@ export default class Hud extends Phaser.Scene {
 
         let entityIcon;
 
-        this.events.on('entityClicked', (hudInfo) => {
+        this.events.on('entityClicked', (hudInfo: HudInfo) => {
             
             // -----------------------------------------------
             // TODO - Move to Game onclick
@@ -151,7 +152,7 @@ export default class Hud extends Phaser.Scene {
                 let resourceIcon = this.add.image(-58, 0, hudInfo.info.resource);
                 resourceIcon.setDisplaySize(60, 60);
                 resourceIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-                let resourceAmount = this.add.text(-36, -8, hudInfo.info.remainingResources, { color: '#000000' });
+                let resourceAmount = this.add.text(-36, -8, `${hudInfo.info.remainingResources}`, { color: '#000000' });
                 this.infoContainer.add(resourceIcon);
                 this.infoContainer.add(resourceAmount);
             }
@@ -174,25 +175,27 @@ export default class Hud extends Phaser.Scene {
                     sword.setFlipX(true);
                     this.infoContainer.add(sword);
                     // Damage
-                    let damageAmount = this.add.text(45, -5, hudInfo.info.damage, { color: '#000000' });
+                    let damageAmount = this.add.text(45, -5, `${hudInfo.info.damage}`, { color: '#000000' });
                     this.infoContainer.add(damageAmount);
                 }                
             }
             
             // ----- Actions -----
-            let startX = -45;
-            hudInfo.actions.forEach((action, i) => {
-                let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action);
-                actionIcon.setDisplaySize(35, 35);
-                actionIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-                // Funcionalidad acción
-                actionIcon.setInteractive();
-                actionIcon.on("pointerdown", () => {
-                    console.log(`Nueva acción pulsada: ${action}`);
-                    action.run();
+            if("isMine" in hudInfo.info && hudInfo.info.isMine) {
+                let startX = -45;
+                hudInfo.actions.forEach((action, i) => {
+                    let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action.actionFrame);
+                    actionIcon.setDisplaySize(35, 35);
+                    actionIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                    // Funcionalidad acción
+                    actionIcon.setInteractive();
+                    actionIcon.on("pointerdown", () => {
+                        console.log(`Nueva acción pulsada: ${action.run}`);
+                        action.run();
+                    });
+                    this.actionsContainer.add(actionIcon);
                 });
-                this.actionsContainer.add(actionIcon);
-            });
+            }
         });
 
     }

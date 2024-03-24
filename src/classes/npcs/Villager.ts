@@ -1,3 +1,4 @@
+import Client from '../../client';
 import Game from '../../scenes/Game';
 import { HudInfo } from '../../utils';
 import Player from '../Player';
@@ -13,10 +14,11 @@ export default class Villager extends NPC {
     _hudInfo: HudInfo = {
         entity: this._iconInfo,
         info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
             health: this._health,
             totalHealth: this._totalHealth,
         },
-        actions: [{run: () => {}, id: 16}, {run: () => {}, id: 20}, {run: () => {}, id: 24}] // TODO
+        actions: [{run: () => {}, actionFrame: `House_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Tower_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Hut_${this._owner.getColor()}`}] // TODO: set build functions
     };
     
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {

@@ -2,6 +2,7 @@ import NPC from './NPC';
 import Player from '../Player';
 import Game from '../../scenes/Game';
 import { HudInfo, IconInfo } from '../../utils';
+import Client from '../../client';
 
 export default abstract class AttackUnit extends NPC {
     protected _attackRange: number;
@@ -10,6 +11,7 @@ export default abstract class AttackUnit extends NPC {
     _hudInfo: HudInfo = {
         entity: this._iconInfo,
         info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
             health: this._health,
             totalHealth: this._totalHealth,
         },

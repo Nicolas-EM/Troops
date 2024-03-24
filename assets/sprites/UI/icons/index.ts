@@ -30,3 +30,4 @@ export { default as X_Disable } from './x_disable.png';
 export { default as X_Pressed } from './x_pressed.png';
 export { default as X } from './x.png';
 export { default as Icons } from './icons.png';
+export { default as IconsMultiatlas } from './icons.json';
