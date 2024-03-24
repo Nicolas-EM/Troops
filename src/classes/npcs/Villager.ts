@@ -75,14 +75,23 @@ export default class Villager extends NPC {
         if (this._actionClick === "Tree" || this._actionClick === "Sheep") {
           this.anims.stop();
           this._status = "villagerAxeBlue";
+          // this.scene.events.emit("gatherOrder", this._currentTarget);
         }
-        else if(this._actionClick = "GoldMine"){
+        else if(this._actionClick === "GoldMine"){
           this.anims.stop();
             this._status= "villagerHammerBlue";
+        }
+        else if(this._actionClick === "none"){
+          this._status = "villagerIdleBlue";
+          this._actionClick = null;
         }
         this._actionClick = null;
       }
       else{
+        if(this._actionClick === "none")
+        {
+          this._actionClick = null;
+        }
       this._status = "villagerIdleBlue";
       }
     } else {

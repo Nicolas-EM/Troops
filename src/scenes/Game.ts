@@ -105,25 +105,28 @@ export default class Game extends Phaser.Scene {
           );
 
           if (this._selectedEntity instanceof NPC) {
-            console.log(this.clickedNonTerrain);
             if(this.clickedNonTerrain === undefined || this.clickedNonTerrain === null){
               
-              this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+              this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"none");
             }
             else{
               if(this.clickedNonTerrain instanceof Tree){
                 this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"Tree");
+                this.clickedNonTerrain = null;
               }
               else if(this.clickedNonTerrain instanceof GoldMine){
                 this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"GoldMine");
+                this.clickedNonTerrain = null;
               }
               else if(this.clickedNonTerrain instanceof Sheep){
                 this._selectedEntity.setTarget(pointerPosition, this._map.navMesh,"Sheep");
+                this.clickedNonTerrain = null;
+                //si, esta duplicado, estoy testing
               }
               else{
                 //nothing, error.
               }
-              this.clickedNonTerrain = null;
+              
             }
           }
         }
@@ -180,6 +183,7 @@ export default class Game extends Phaser.Scene {
         frames: [12, 13, 14, 15, 16, 17],
       }),
       frameRate: 8,
+      repeat: 5,
       
     });
     //maybe this mneeds to be flipped as well..?

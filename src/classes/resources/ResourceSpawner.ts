@@ -32,7 +32,7 @@ export default class ResourceSpawner extends Phaser.GameObjects.Sprite {
             (<Game>(this.scene)).clickedNonTerrain = this;
         }
     }
-
+    
     getHudInfo() {
         return {
             entity: this._iconInfo,
