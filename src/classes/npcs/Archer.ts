@@ -3,6 +3,7 @@ import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import Game from "../../scenes/Game";
+import { Resources } from "../../utils";
 
 // TODO: move to magic numbers
 const damage = 10;
@@ -14,6 +15,9 @@ const ARCHER_WIDTH = 100;
 const ARCHER_HEIGHT = 100;
 
 export default class Archer extends AttackUnit {
+    // TODO: magic number
+    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
+    
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
         super(scene, x, y, `Archer_${owner.getColor()}`, owner, ARCHER_HEALTH, ARCHER_HEALTH, visionRange, { name: ARCHER_ICON, width: ARCHER_WIDTH, height: ARCHER_HEIGHT }, attackRange, damage, frame);
     }

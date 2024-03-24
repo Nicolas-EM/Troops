@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
-import { HudInfo, IconInfo } from '../utils';
+import { HudInfo, IconInfo, Resources } from '../utils';
 import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
@@ -15,6 +15,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _currentTarget;
     protected _iconInfo: IconInfo;
     abstract _hudInfo: HudInfo;
+
+    static readonly COST: Resources = { wood: Infinity, food: Infinity, gold: Infinity };
 
     /**
      * @constructor

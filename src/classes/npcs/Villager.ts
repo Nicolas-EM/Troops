@@ -1,6 +1,6 @@
 import Client from '../../client';
 import Game from '../../scenes/Game';
-import { HudInfo } from '../../utils';
+import { HudInfo, Resources } from '../../utils';
 import Player from '../Player';
 import NPC from './NPC';
 
@@ -20,6 +20,9 @@ export default class Villager extends NPC {
         },
         actions: [{run: () => {}, actionFrame: `House_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Tower_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Hut_${this._owner.getColor()}`}] // TODO: set build functions
     };
+
+    // TODO: magic number
+    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
     
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
         super(scene, x, y, `Villager_${owner.getColor()}`, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: `Villager_${owner.getColor()}`, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);

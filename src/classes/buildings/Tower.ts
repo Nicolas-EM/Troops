@@ -1,5 +1,5 @@
 import Client from "../../client";
-import { HudInfo } from "../../utils";
+import { HudInfo, Resources } from "../../utils";
 import Player from "../Player";
 import Archer from "../npcs/Archer";
 import Soldier from "../npcs/Soldier";
@@ -20,6 +20,9 @@ export default class TownHall extends SpawnerBuilding {
         },
         actions: [{run: () => this.queueNPC(Soldier), actionFrame: `Soldier_${this._owner.getColor()}`}, {run: () => this.queueNPC(Archer), actionFrame: `Archer_${this._owner.getColor()}`}]
     }
+
+    // TODO: magic number
+    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {
         super(scene, x, y, texture, owner, TOWER_HEALTH, TOWER_HEALTH, visionRange, { name: TOWER_ICON, width: TOWER_WIDTH, height: TOWER_HEIGHT }, frame);

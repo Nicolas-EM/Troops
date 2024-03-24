@@ -1,12 +1,15 @@
 import * as Phaser from 'phaser';
-import Client from '../client';
 import { HudInfo } from '../utils';
+import Player from '../classes/Player';
+import PlayerData from '../magic_numbers/player_data';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
-    private woodCounter: number;
-    private goldCounter: number;
-    private sheepCounter: number;
+    private woodCounter: Phaser.GameObjects.Text;
+    private goldCounter: Phaser.GameObjects.Text;
+    private foodCounter: Phaser.GameObjects.Text;
+    private populationCounter: Phaser.GameObjects.Text;
+
     private displayedEntity: Phaser.GameObjects.Sprite;
     // UI
     private selectedContainer: Phaser.GameObjects.Container;
@@ -16,14 +19,17 @@ export default class Hud extends Phaser.Scene {
     // Options menu
     private optionsBackground: Phaser.GameObjects.Rectangle;
     private optionsButton: Phaser.GameObjects.Image;
+
+    // Player
+    private player: Player;
     
     // Constructor
     constructor() {
         super({ key: 'hud' });
     }
 
-    preload() {
-        this.load.setPath('assets/sprites/');
+    init(data) {
+        this.player = data.player;
     }
 
     create() {
@@ -33,7 +39,6 @@ export default class Hud extends Phaser.Scene {
     }
 
     createTopHud() {
-
         const midX = this.cameras.main.width / 2;
 
         // Team
@@ -41,25 +46,25 @@ export default class Hud extends Phaser.Scene {
         let squareTeam = this.add.image(0, 0, 'Carved_Square');
         squareTeam.setDisplaySize(45, 45);
         squareTeam.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let king = this.add.image(0, 0, `King_${Client.getMyColor()}`);
+        let king = this.add.image(0, 0, `King_${this.player.getColor()}`);
         king.setDisplaySize(25, 25);
         king.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         teamContainer.add(squareTeam);
         teamContainer.add(king);
 
         // Resources
-        this.addResourceBanner(120, "Wood", "150");
-        this.addResourceBanner(222, "Food", "230");      
-        this.addResourceBanner(324, "Gold", "100");
+        this.woodCounter = this.addResourceBanner(120, "Wood", this.player.getWood());
+        this.foodCounter = this.addResourceBanner(222, "Food", this.player.getFood());      
+        this.goldCounter = this.addResourceBanner(324, "Gold", this.player.getGold());
 
         // Population
-        let soldierIcon = this.add.image(-35, 0, `Soldier_${Client.getMyColor()}`);
+        let soldierIcon = this.add.image(-35, 0, `Soldier_${this.player.getColor()}`);
         soldierIcon.setDisplaySize(60, 60);
         soldierIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let villagerIcon = this.add.image(-20, 2, `Villager_${Client.getMyColor()}`);
+        let villagerIcon = this.add.image(-20, 2, `Villager_${this.player.getColor()}`);
         villagerIcon.setDisplaySize(60, 60);
         villagerIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let population = this.add.text(-5, -10, '42/50', { color: '#000000' });
+        this.populationCounter = this.add.text(-5, -10, `0/${PlayerData.MAX_POPULATION}`, { color: '#000000' });
 
         let populationContainer = this.add.container(midX, 45);
         let populationBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
@@ -68,7 +73,7 @@ export default class Hud extends Phaser.Scene {
         populationContainer.add(populationBanner);
         populationContainer.add(soldierIcon);
         populationContainer.add(villagerIcon);
-        populationContainer.add(population);
+        populationContainer.add(this.populationCounter);
 
         // Options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
@@ -112,9 +117,9 @@ export default class Hud extends Phaser.Scene {
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, `Ribbon_${Client.getMyColor()}_Left`);
+        let leftRibbon = this.add.image(55, -20, `Ribbon_${this.player.getColor()}_Left`);
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, `Ribbon_${Client.getMyColor()}_Right`);
+        let rightRibbon = this.add.image(-55, -20, `Ribbon_${this.player.getColor()}_Right`);
         rightRibbon.scale = 0.45;
         this.selectedContainer = this.add.container(0, 0);
         let selectedAreaContainer = this.add.container(midX, botY);
@@ -293,7 +298,7 @@ export default class Hud extends Phaser.Scene {
     }
 
     // Add banner of a resource to TopHud
-    addResourceBanner(posX, resource, amount) {
+    addResourceBanner(posX: number, resource: string | Phaser.Textures.Texture, amount: number | string): Phaser.GameObjects.Text {
         let container = this.add.container(posX, 45);
 
         let banner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
@@ -302,15 +307,17 @@ export default class Hud extends Phaser.Scene {
         let icon = this.add.image(-20, -3, resource);
         icon.setDisplaySize(60, 60);
         icon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let amountText = this.add.text(0, -10, amount, { color: '#000000' });
+        let amountText = this.add.text(0, -10, `${amount}`, { color: '#000000' });
 
         container.add(banner);
         container.add(icon);
         container.add(amountText);
+
+        return amountText;
     }
 
     // Calculate 
-    calculateHealthBar(currentHealth, totalHealth) {
+    calculateHealthBar(currentHealth: number, totalHealth: number) {
         const healthRatio = currentHealth / totalHealth;
         if (healthRatio >= 0.875) { // 100%
             return 0;
@@ -357,4 +364,11 @@ export default class Hud extends Phaser.Scene {
         this.actionsContainer.removeAll(true);
     }
 
+    update(time: number, delta: number) {
+        this.woodCounter.setText(`${this.player.getWood()}`);
+        this.foodCounter.setText(`${this.player.getFood()}`);
+        this.goldCounter.setText(`${this.player.getGold()}`);
+
+        this.populationCounter.setText(`${this.player.getNPCs().length}/${PlayerData.MAX_POPULATION}`);
+    }
 }

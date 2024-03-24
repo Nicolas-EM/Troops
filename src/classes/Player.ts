@@ -49,4 +49,29 @@ export default class Player {
   getBuildings(): Building[] {
     return this.buildings;
   }
+
+  getGold(): number {
+    return this.resources.gold;
+  }
+
+  getWood(): number {
+    return this.resources.wood;
+  }
+
+  getFood(): number {
+    return this.resources.food;
+  }
+
+  hasResource(resources: Resources): boolean {
+    if(this.resources.gold >= resources.gold && this.resources.wood >= resources.wood && this.resources.food >= resources.food)
+      return true;
+    
+    return false;
+  }
+
+  pay(resources: Resources) {
+    this.resources.gold -= resources.gold;
+    this.resources.wood -= resources.wood;
+    this.resources.food -= resources.food;
+  }
 }

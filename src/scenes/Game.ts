@@ -45,14 +45,14 @@ export default class Game extends Phaser.Scene {
       this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
     });
 
-    Client.setScene(this);    
-    // Townhalls
+    Client.setScene(this);
+
+    // Players
     this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
     this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);
-    
 
     // Hud
-    this.scene.run('hud');
+    this.scene.run('hud', {player: (this.p1.getColor() === Client.getMyColor() ? this.p1 : this.p2)});
     this.events.on('menuOpened', () => {
       this.optionsMenuOpened = true;
     });
@@ -60,20 +60,11 @@ export default class Game extends Phaser.Scene {
       this.optionsMenuOpened = false;
     });
 
+    // Map
     this._map = new Map(this, this.mapId);
 
     // Event listener al hacer scroll
-    this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-      if (!this.optionsMenuOpened) {
-        if (deltaY > 0) {
-          this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom - ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
-        }
-        if (deltaY < 0) {
-          this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom + ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
-        }
-      }
-    });
-
+    this.input.on('wheel', this.cameraZoom, this);
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
 
@@ -121,7 +112,17 @@ export default class Game extends Phaser.Scene {
         this.cameraMoveRight(delta);
       }
     }
+  }
 
+  cameraZoom(pointer, gameObjects, deltaX, deltaY, deltaZ) {
+    if (!this.optionsMenuOpened) {
+      if (deltaY > 0) {
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom - ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
+      }
+      if (deltaY < 0) {
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom + ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
+      }
+    }
   }
 
   cameraMoveUp(delta) {
