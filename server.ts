@@ -194,6 +194,13 @@ io.on('connection', socket => {
     // Set NPC Target
     socket.on('npctarget', (lobbyCode, npc, position) => {
         io.to(lobbyCode).emit('npctarget', npc, position);
+    });
+
+    // Spawn NPC
+    socket.on('spawnNPC', (lobbyCode, npcType: any, x: number, y: number, ownerColor: string) => {
+        console.log("NPC TYPE:")
+        console.log(npcType);
+        io.to(lobbyCode).emit('spawnNPC', npcType, x, y, ownerColor);
     })
 });
 

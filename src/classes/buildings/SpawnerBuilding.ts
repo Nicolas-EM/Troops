@@ -1,3 +1,4 @@
+import Client from "../../client";
 import Game from "../../scenes/Game";
 import { IconInfo } from "../../utils";
 import Archer from "../npcs/Archer";
@@ -33,7 +34,7 @@ export default abstract class SpawnerBuilding extends Building {
     spawn(): void {
         if (this.spawnQueue.length > 0 && this._owner.getNPCs().length < this._owner.getMaxPopulation()) {
             const npcType = this.spawnQueue.shift();
-            new npcType(<Game>(this.scene), this.x + this.width, this.y, this._owner)
+            Client.spawnNpc(npcType.name, this.x + this.width, this.y, this._owner.getColor());
         }
         if (this.spawnQueue.length === 0) {
             // No more NPCs in queue, stop timer
