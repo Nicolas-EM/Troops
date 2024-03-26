@@ -3,19 +3,17 @@ import NPC from "./NPC";
 import AttackUnit from "./AttackUnit";
 import Player from "../Player";
 import Game from "../../scenes/Game";
-
-// TODO: move to magic numbers
-const damage = 10;
-const attackRange = 5;
-const visionRange = 10;
-const GOBLIN_HEALTH = 100;
-const GOBLIN_ICON = "Goblin_Blue";
-const GOBLIN_WIDTH = 100;
-const GOBLIN_HEIGHT = 100;
+import { Resources } from "../../utils";
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Goblin extends AttackUnit {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, GOBLIN_HEALTH, GOBLIN_HEALTH, visionRange, { name: GOBLIN_ICON, width: GOBLIN_WIDTH, height: GOBLIN_HEIGHT }, attackRange, damage, frame);
+    static readonly COST: Resources = NPCsData.Goblin.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Goblin.SPAWNING_TIME;
+
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...NPCsData.Goblin.ICON_INFO };
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Goblin.HEALTH, NPCsData.Goblin.HEALTH, NPCsData.Goblin.SPAWNING_TIME, NPCsData.Goblin.SPAWNING_COST, NPCsData.Goblin.VISION_RANGE, NPCsData.Goblin.SPEED, iconInfo, NPCsData.Goblin.ATTACK_RANGE, NPCsData.Goblin.DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {

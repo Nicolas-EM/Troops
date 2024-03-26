@@ -1,33 +1,28 @@
+import Client from "../../client";
+import { HudInfo, Resources } from "../../utils";
 import Player from "../Player";
-import NPC from "../npcs/NPC";
+import Archer from "../npcs/Archer";
+import Soldier from "../npcs/Soldier";
 import SpawnerBuilding from "./SpawnerBuilding";
-
-const TOWER_HEALTH = 100;
-const TOWER_ICON = "Tower_Blue";
-const TOWER_WIDTH = 100;
-const TOWER_HEIGHT = 100;
+import BuildingsData from "../../magic_numbers/buildings_data";
 
 export default class TownHall extends SpawnerBuilding {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, TOWER_HEALTH, TOWER_HEALTH, visionRange, { name: TOWER_ICON, width: TOWER_WIDTH, height: TOWER_HEIGHT }, frame);
+    static readonly COST: Resources = BuildingsData.Tower.SPAWNING_COST;
+
+    constructor(scene: Phaser.Scene, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...BuildingsData.Tower.ICON_INFO };
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, iconInfo.name, owner, BuildingsData.Tower.HEALTH, BuildingsData.Tower.HEALTH, BuildingsData.Tower.SPAWNING_TIME, BuildingsData.Tower.SPAWNING_COST, BuildingsData.Tower.VISION_RANGE, iconInfo, frame);
     }
 
-    spawn(): NPC {
-        throw new Error("Method not implemented.");
-    }
-    queueNPC(npc: NPC) {
-        throw new Error("Method not implemented.");
-    }
-
-    getHudInfo() {
-        return {
-            entity: this._iconInfo,
-            info: {
-                health: this._health,
-                totalHealth: this._totalHealth
-            },
-            actions: [0, 8]
-        };
+    _hudInfo: HudInfo = {
+        entity: this._iconInfo,
+        info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
+            health: this._health,
+            totalHealth: this._totalHealth
+        },
+        actions: [{run: () => this.queueNPC(Soldier), actionFrame: `Soldier_${this._owner.getColor()}`}, {run: () => this.queueNPC(Archer), actionFrame: `Archer_${this._owner.getColor()}`}]
     }
 }

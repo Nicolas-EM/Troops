@@ -3,25 +3,28 @@ import Player from '../Player'
 import PlayerEntity from '../PlayerEntity';
 import Game from '../../scenes/Game';
 import { PhaserNavMesh } from "phaser-navMesh";
-import { IconInfo } from '../../utils';
+import { IconInfo, Resources } from '../../utils';
+import Client from '../../client';
 
 export default abstract class NPC extends PlayerEntity {
-    // protected attributes:
-    protected _id: string;
-    protected _owner: Player;
-    protected _health: number;
-    protected _visionRange: number;
-    protected _movementSpeed: number = 1;   // TODO: Cada NPC debería tener su propia velocidad
+    
+    protected _movementSpeed: number;
 
     /**
      * @constructor
      * @param owner is the player who created the entity, not optional.
      * @returns NPC instance
      */
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
-        
-        this.scene.events.on("update", this.update, this);
+    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, spawningTime: number, spawningCost: Resources, visionRange: number, movementSpeed: number, iconInfo: IconInfo, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, totalHealth, spawningTime, spawningCost, visionRange, iconInfo, frame);
+        this._movementSpeed = movementSpeed;
+
+        this._id = `${owner.getColor()}_NPC_${owner.getNPCs().length}`;
+        owner.addNPC(this);
+    }
+
+    getId(): string {
+        return this._id;
     }
 
     setTarget(targetPoint: Phaser.Math.Vector2, navMesh: PhaserNavMesh): void {

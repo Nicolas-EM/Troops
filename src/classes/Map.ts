@@ -9,10 +9,10 @@ import Tree from "./resources/Tree";
 import Sheep from "./resources/Sheep";
 import GoldMine from "./resources/GoldMine";
 import Villager from "./npcs/Villager";
-import Player from '../classes/Player';
 import Game from '../scenes/Game';
 
 import { PhaserNavMesh } from "phaser-navmesh";
+import Client from '../client';
 
 export default class Map {
     private _map: Phaser.Tilemaps.Tilemap;
@@ -21,7 +21,7 @@ export default class Map {
     private NPCs: NPC[] = [];
     public navMesh: PhaserNavMesh;
 
-    constructor(private scene: Game, private mapId: string, private p1: string, private p2: string) {
+    constructor(private scene: Game, private mapId: string) {
         // Crear mapa
         this._map = this.scene.make.tilemap({ key: this.mapId });
 
@@ -36,26 +36,35 @@ export default class Map {
         // Resources
         const foodSpawners = this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
         this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-        this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'Gold_Inactive', classType: GoldMine });
-
-        // Townhalls
-        let x = new Player(1, "Player 1", this.p1, this.scene); // TODO: Crear jugador real o algo
+        this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'GoldMine', classType: GoldMine });
 
         this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
             if (obj.type === "Townhall_P1") {
-                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${this.p1}`, x);
+                const p1 = (<Game>(this.scene)).getP1();
+
+                if (Client.getMyColor() === p1.getColor()){
+                    this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                    this.scene.cameras.main.zoom = 0.7;
+                }
+                const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, p1);
                 this.buildings.push(p1_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${this.p1}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, `Villager_${this.p1}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, `Villager_${this.p1}`, x));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, p1));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x + 64, <number>obj.y + 320, p1));
             } else if (obj.type === "Townhall_P2") {
-                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, `Townhall_${this.p2}`, x);
+                const p2 = (<Game>(this.scene)).getP2();
+
+                if(Client.getMyColor() === p2.getColor()){
+                    this.scene.cameras.main.centerOn(<number>obj.x, <number>obj.y);
+                    this.scene.cameras.main.zoom = 0.7;
+                }
+                const p2_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, p2);
                 this.buildings.push(p2_TownHall);
 
-                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, `Villager_${this.p2}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, `Villager_${this.p2}`, x));
-                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, `Villager_${this.p2}`, x));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 320, <number>obj.y + 64, p2));
+                this.NPCs.push(new Villager(this.scene, <number>obj.x - 64, <number>obj.y + 320, p2));
             }
         });
 

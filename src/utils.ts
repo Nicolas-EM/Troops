@@ -1,8 +1,31 @@
- // Información que tiene un icono en el HUD
- export interface IconInfo {
+// Información de un lobby
+export default interface lobbyData {
+    code: string;
+    players: { id: string, color: string, ready: boolean }[],
+    availableColors: ('Red' | 'Blue' | 'Purple' | 'Yellow')[],
+    readyPlayers: 0
+}
+
+// Información que tiene un icono en el HUD
+export interface IconInfo {
     name: string;
     width: number;
     height: number;
+}
+
+// Otra información del HUD
+export interface HudInfo {
+    entity: IconInfo,
+    info: {
+        isMine: boolean,
+        health: number,
+        totalHealth: number,
+        damage?: number
+    } | {
+        remainingResources: number,
+        resource: string,
+    },
+    actions: {run: () => void, actionFrame: string}[]
 }
 
 // Array de recursos de un jugador

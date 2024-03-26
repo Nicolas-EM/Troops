@@ -1,27 +1,40 @@
 import * as Phaser from 'phaser'
 import Map from "../classes/Map";
-import Hud from './Hud';
 import { PhaserNavMeshPlugin } from "phaser-navMesh";
 import PlayerEntity from '../classes/PlayerEntity';
 import NPC from '../classes/npcs/NPC';
 import ResourceSpawner from '../classes/resources/ResourceSpawner';
+import Client from '../client';
+import Player from '../classes/Player';
+import * as Sprites from "../../assets/sprites";
+import Archer from '../classes/npcs/Archer';
+import Goblin from '../classes/npcs/Goblin';
+import Soldier from '../classes/npcs/Soldier';
+import Villager from '../classes/npcs/Villager';
 
 // MAGIC NUMBER
-const MIN_ZOOM = 0.6;
+const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 1;
 const ZOOM_AMOUNT = 0.05;
 const MOVEMENT_OFFSET = 10;
 
+const npcConstructors: { [key: string]: new (scene: Phaser.Scene, x: number, y: number, owner: Player) => NPC } = {
+  "Archer": Archer,
+  "Goblin": Goblin,
+  "Soldier": Soldier,
+  "Villager": Villager
+};
+
 export default class Game extends Phaser.Scene {
   public navMeshPlugin: PhaserNavMeshPlugin;
-  private p1: string;
-  private p2: string;
+
+  private p1: Player;
+  private p2: Player;
   private pointerInMap = true;
   private mapId: string;
   private _map: Map;
   private _selectedEntity: PlayerEntity | ResourceSpawner;
-  private _buildingsLayer: Phaser.GameObjects.GameObject[];
-  cursors: any;
+  private cursors: any;
   private optionsMenuOpened = false;
 
   constructor() {
@@ -32,34 +45,38 @@ export default class Game extends Phaser.Scene {
   // En este caso, pasamos el ID del mapa
   init(data) {
     this.mapId = data.mapId;
-    this.p1 = data.p1;
-    this.p2 = data.p2;
   }
 
   create() {
+    // Cursor
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer_Pressed}), pointer`);
+    });
+    this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+      this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
+    });
+
+    Client.setScene(this);
+
+    // Players
+    this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
+    this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);
+
     // Hud
-    this.scene.run('hud');
+    this.scene.run('hud', {player: (this.p1.getColor() === Client.getMyColor() ? this.p1 : this.p2)});
     this.events.on('menuOpened', () => {
       this.optionsMenuOpened = true;
     });
     this.events.on('menuClosed', () => {
       this.optionsMenuOpened = false;
     });
+    
+    // Map
+    this._map = new Map(this, this.mapId);
     this.createAnimations();
-    this._map = new Map(this, this.mapId, this.p1, this.p2);
 
     // Event listener al hacer scroll
-    this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-      if (!this.optionsMenuOpened) {
-        if (deltaY > 0) {
-          this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom - ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
-        }
-        if (deltaY < 0) {
-          this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom + ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
-        }
-      }
-    });
-
+    this.input.on('wheel', this.cameraZoom, this);
     this.input.on('gameout', () => this.pointerInMap = false);
     this.input.on('gameover', () => this.pointerInMap = true);
 
@@ -78,11 +95,14 @@ export default class Game extends Phaser.Scene {
       if (pointer.rightButtonDown() && this.pointerInMap && this._selectedEntity) {
         const pointerPosition = new Phaser.Math.Vector2(pointer.worldX, pointer.worldY);
 
-        if (this._selectedEntity instanceof NPC) {
-          this._selectedEntity.setTarget(pointerPosition, this._map.navMesh);
+        if (this._selectedEntity instanceof NPC && this._selectedEntity.belongsToMe()) {
+          Client.setNpcTarget(this._selectedEntity.getId(), pointerPosition);
         }
       }
     });
+
+    // Sound
+    this.sound.removeAll();
   }
 
    //TODO PROVISIONAL; REEMPLAZAR CON COLOR DEL PLAYER EN CUESTION!!!!
@@ -332,7 +352,17 @@ export default class Game extends Phaser.Scene {
         this.cameraMoveRight(delta);
       }
     }
+  }
 
+  cameraZoom(pointer, gameObjects, deltaX, deltaY, deltaZ) {
+    if (!this.optionsMenuOpened) {
+      if (deltaY > 0) {
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom - ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
+      }
+      if (deltaY < 0) {
+        this.cameras.main.zoom = Phaser.Math.Clamp(this.cameras.main.zoom + ZOOM_AMOUNT, MIN_ZOOM, MAX_ZOOM);
+      }
+    }
   }
 
   cameraMoveUp(delta) {
@@ -374,11 +404,36 @@ export default class Game extends Phaser.Scene {
     }
   }
 
+  getP1(): Player {
+    return this.p1;
+  }
+
+  getP2(): Player {
+    return this.p2;
+  }
+
+  getPlayerByColor(color: string): Player {
+    if(this.p1.getColor() === color)
+      return this.p1;
+    else
+      return this.p2;
+  }
+
   setSelectedEntity(entity: PlayerEntity | ResourceSpawner) {
     if (!this.optionsMenuOpened) {
       console.log("Game: Entity Selected");
       this._selectedEntity = entity;
       this.scene.get('hud').events.emit('entityClicked', this._selectedEntity.getHudInfo());
     }
+  }
+
+  setNpcTarget(npcId: string, position: Phaser.Math.Vector2) {
+    this.p1.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
+    this.p2.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
+  }
+
+  spawnNPC(npcType: string, x: number, y: number, ownerColor: string) {
+    console.log(npcConstructors[npcType]);
+    new npcConstructors[npcType](this, x, y, this.getPlayerByColor(ownerColor));
   }
 }

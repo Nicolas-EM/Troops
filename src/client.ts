@@ -1,46 +1,80 @@
 import { io, Socket } from 'socket.io-client';
+import Lobby from "./scenes/Lobby";
+import lobbyData from './utils';
+import Game from './scenes/Game';
+import Menu from './scenes/Menu';
 
-interface Client {
-    socket: Socket;
-    sendTest: () => void;
-    askNewPlayer: () => void;
-    sendClick: (x: number, y: number) => void;
+export default class Client {
+    static socket: Socket = io();
+    static lobby: lobbyData;
+    static scene: Phaser.Scene;
+
+    static init() {
+        Client.socket.on('lobbyCreated', (code) => {
+            Client.joinLobby(code);
+        });
+
+        Client.socket.on('updateLobby', (data: {lobby: lobbyData}) => {
+            Client.lobby = data.lobby;
+        });
+
+        Client.socket.on('npctarget', (npcId: string, position: Phaser.Math.Vector2) => {
+            if (Client.scene.scene.isActive('game')) {
+                (<Game>(Client.scene)).setNpcTarget(npcId, position);
+            }
+        });
+
+        Client.socket.on('spawnNPC', (npcType: string, x: number, y: number, ownerColor: string) => {
+            if (Client.scene.scene.isActive('game')) {
+                (<Game>(Client.scene)).spawnNPC(npcType, x, y, ownerColor);
+            }
+        });
+    }
+
+    static setScene(scene: Phaser.Scene) {
+        Client.scene = scene;
+    }
+
+    static getMyColor(): string {
+        return Client.lobby.players.find(player => player.id === Client.socket.id)?.color;
+    }
+
+    static sendTest(): void {
+        console.log("test sent");
+        Client.socket.emit('test');
+    }
+
+    // Menu functions
+    static quickPlay(): void {
+        Client.socket.emit('quickPlay');
+    }
+
+    static createLobby(): void {
+        Client.socket.emit('createLobby');
+    }
+
+    // Lobby Functions
+    static joinLobby(code: string): void {
+        (<Menu>(Client.scene)).startLobby();
+        Client.socket.emit('joinLobby', code);
+    }
+
+    static chooseColor(color: string): void {
+        Client.socket.emit('chooseColor', Client.lobby.code, color);
+    }
+
+    static readyUp(): void {
+        Client.socket.emit('ready', Client.lobby.code);
+    }
+
+    // Game Functions
+    static setNpcTarget(npcId: string, position: Phaser.Math.Vector2):void {
+        Client.socket.emit('npctarget', Client.lobby.code, npcId, position);
+    }
+
+    static spawnNpc(npcType: string, x: number, y: number, ownerColor: string) {
+        Client.socket.emit('spawnNPC', Client.lobby.code, npcType, x, y, ownerColor);
+    }
 }
 
-const socket = io();
-export const Client: Client = {
-    socket: socket,
-
-    sendTest: function (): void {
-        console.log("test sent");
-        this.socket.emit('test');
-    },
-
-    askNewPlayer: function (): void {
-        this.socket.emit('newplayer');
-    },
-
-    sendClick: function (x: number, y: number): void {
-        this.socket.emit('click', { x: x, y: y });
-    }
-};
-
-Client.socket.on('newplayer', function (data: { id: string; x: number; y: number }): void {
-    // Assuming Game is defined elsewhere
-    // Game.addNewPlayer(data.id, data.x, data.y);
-    console.log(`new player ${data.id}`);
-});
-
-// Client.socket.on('allplayers', function (data: { id: string; x: number; y: number }[]): void {
-//     for (let i = 0; i < data.length; i++) {
-//         Game.addNewPlayer(data[i].id, data[i].x, data[i].y);
-//     }
-
-//     Client.socket.on('move', function (data: { id: string; x: number; y: number }): void {
-//         Game.movePlayer(data.id, data.x, data.y);
-//     });
-
-//     Client.socket.on('remove', function (id: string): void {
-//         Game.removePlayer(id);
-//     });
-// });
+Client.init();

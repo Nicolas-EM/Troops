@@ -1,29 +1,30 @@
+import Client from '../../client';
 import Game from '../../scenes/Game';
+import { HudInfo, Resources } from '../../utils';
 import Player from '../Player';
 import NPC from './NPC';
-
-// TODO: Magic numbers
-const visionRange = 5;
-const VILLAGER_HEALTH = 100;
-const VILLAGER_ICON = "Villager_Blue";
-const VILLAGER_WIDTH = 200;
-const VILLAGER_HEIGHT = 200;
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Villager extends NPC {
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
-        super(scene, x, y, texture, owner, VILLAGER_HEALTH, VILLAGER_HEALTH, visionRange, { name: VILLAGER_ICON, width: VILLAGER_WIDTH, height: VILLAGER_HEIGHT }, frame);
+    static readonly COST: Resources = NPCsData.Villager.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Villager.SPAWNING_TIME;
+
+    constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
+        let iconInfo = { ...NPCsData.Villager.ICON_INFO };
+        iconInfo.name += owner.getColor();
+        console.log(iconInfo.name);
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Villager.HEALTH, NPCsData.Villager.HEALTH, NPCsData.Villager.SPAWNING_TIME, NPCsData.Villager.SPAWNING_COST, NPCsData.Villager.VISION_RANGE, NPCsData.Villager.SPEED, iconInfo, frame);
     }
 
-    getHudInfo() {
-        return {
-            entity: this._iconInfo,
-            info: {
-                health: this._health,
-                totalHealth: this._totalHealth,
-            },
-            actions: [16, 20, 24] // TODO
-        };
-    }
+    _hudInfo: HudInfo = {
+        entity: this._iconInfo,
+        info: {
+            isMine: this._owner.getColor() === Client.getMyColor(),
+            health: this._health,
+            totalHealth: this._totalHealth,
+        },
+        actions: [{run: () => {}, actionFrame: `House_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Tower_${this._owner.getColor()}`}, {run: () => {}, actionFrame: `Hut_${this._owner.getColor()}`}] // TODO: set build functions
+    };
 
     /**
      * @param buildingId id of the building (town hall, hut, etc...)
@@ -45,4 +46,5 @@ export default class Villager extends NPC {
     gather(){
 
     }
+    
 }

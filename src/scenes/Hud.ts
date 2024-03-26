@@ -1,10 +1,14 @@
 import * as Phaser from 'phaser';
+import { HudInfo } from '../utils';
+import Player from '../classes/Player';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
-    private woodCounter: number;
-    private goldCounter: number;
-    private sheepCounter: number;
+    private woodCounter: Phaser.GameObjects.Text;
+    private goldCounter: Phaser.GameObjects.Text;
+    private foodCounter: Phaser.GameObjects.Text;
+    private populationCounter: Phaser.GameObjects.Text;
+
     private displayedEntity: Phaser.GameObjects.Sprite;
     // UI
     private selectedContainer: Phaser.GameObjects.Container;
@@ -14,14 +18,17 @@ export default class Hud extends Phaser.Scene {
     // Options menu
     private optionsBackground: Phaser.GameObjects.Rectangle;
     private optionsButton: Phaser.GameObjects.Image;
+
+    // Player
+    private player: Player;
     
     // Constructor
     constructor() {
         super({ key: 'hud' });
     }
 
-    preload() {
-        this.load.setPath('assets/sprites/');
+    init(data) {
+        this.player = data.player;
     }
 
     create() {
@@ -31,7 +38,6 @@ export default class Hud extends Phaser.Scene {
     }
 
     createTopHud() {
-
         const midX = this.cameras.main.width / 2;
 
         // Team
@@ -39,25 +45,25 @@ export default class Hud extends Phaser.Scene {
         let squareTeam = this.add.image(0, 0, 'Carved_Square');
         squareTeam.setDisplaySize(45, 45);
         squareTeam.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let king = this.add.image(0, 0, 'King_Purple');
+        let king = this.add.image(0, 0, `King_${this.player.getColor()}`);
         king.setDisplaySize(25, 25);
         king.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         teamContainer.add(squareTeam);
         teamContainer.add(king);
 
         // Resources
-        this.addResourceBanner(120, "Wood", "150");
-        this.addResourceBanner(222, "Food", "230");      
-        this.addResourceBanner(324, "Gold", "100");
+        this.woodCounter = this.addResourceBanner(120, "Wood", this.player.getWood());
+        this.foodCounter = this.addResourceBanner(222, "Food", this.player.getFood());      
+        this.goldCounter = this.addResourceBanner(324, "Gold", this.player.getGold());
 
         // Population
-        let soldierIcon = this.add.image(-35, 0, "Soldier_Purple");
+        let soldierIcon = this.add.image(-35, 0, `Soldier_${this.player.getColor()}`);
         soldierIcon.setDisplaySize(60, 60);
         soldierIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let villagerIcon = this.add.image(-20, 2, "Villager_Purple");
+        let villagerIcon = this.add.image(-20, 2, `Villager_${this.player.getColor()}`);
         villagerIcon.setDisplaySize(60, 60);
         villagerIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let population = this.add.text(-5, -10, '42/50', { color: '#000000' });
+        this.populationCounter = this.add.text(-5, -10, `0/${this.player.getMaxPopulation()}`, { color: '#000000' });
 
         let populationContainer = this.add.container(midX, 45);
         let populationBanner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
@@ -66,7 +72,7 @@ export default class Hud extends Phaser.Scene {
         populationContainer.add(populationBanner);
         populationContainer.add(soldierIcon);
         populationContainer.add(villagerIcon);
-        populationContainer.add(population);
+        populationContainer.add(this.populationCounter);
 
         // Options button
         let optionsContainer = this.add.container(this.cameras.main.width - 55, 45);
@@ -79,14 +85,18 @@ export default class Hud extends Phaser.Scene {
         settingsIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
         optionsContainer.add(settingsIcon);
         this.optionsButton.setInteractive();
-        this.optionsButton.on("pointerdown", () => {
-            this.optionsButton.setTexture("Button_Yellow_Pressed");
-            settingsIcon.setTexture("Settings_Pressed");
+        this.optionsButton.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                this.optionsButton.setTexture("Button_Yellow_Pressed");
+                settingsIcon.setTexture("Settings_Pressed");
+            }
         });
-        this.optionsButton.on("pointerup", () => {
-            this.optionsButton.setTexture("Button_Yellow");
-            settingsIcon.setTexture("Settings");
-            this.openOptionsMenu();
+        this.optionsButton.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                this.optionsButton.setTexture("Button_Yellow");
+                settingsIcon.setTexture("Settings");
+                this.openOptionsMenu();
+            }
         });
 
     }
@@ -106,9 +116,9 @@ export default class Hud extends Phaser.Scene {
         // Selected Entity
         let entityBox = this.add.image(0, 0, "Carved_Big_Shadow");
         entityBox.scale = 0.55;
-        let leftRibbon = this.add.image(55, -20, "Ribbon_Purple_Left");
+        let leftRibbon = this.add.image(55, -20, `Ribbon_${this.player.getColor()}_Left`);
         leftRibbon.scale = 0.45;
-        let rightRibbon = this.add.image(-55, -20, "Ribbon_Purple_Right");
+        let rightRibbon = this.add.image(-55, -20, `Ribbon_${this.player.getColor()}_Right`);
         rightRibbon.scale = 0.45;
         this.selectedContainer = this.add.container(0, 0);
         let selectedAreaContainer = this.add.container(midX, botY);
@@ -127,7 +137,7 @@ export default class Hud extends Phaser.Scene {
 
         let entityIcon;
 
-        this.events.on('entityClicked', (hudInfo) => {
+        this.events.on('entityClicked', (hudInfo: HudInfo) => {
             
             // -----------------------------------------------
             // TODO - Move to Game onclick
@@ -146,7 +156,7 @@ export default class Hud extends Phaser.Scene {
                 let resourceIcon = this.add.image(-58, 0, hudInfo.info.resource);
                 resourceIcon.setDisplaySize(60, 60);
                 resourceIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-                let resourceAmount = this.add.text(-36, -8, hudInfo.info.remainingResources, { color: '#000000' });
+                let resourceAmount = this.add.text(-36, -8, `${hudInfo.info.remainingResources}`, { color: '#000000' });
                 this.infoContainer.add(resourceIcon);
                 this.infoContainer.add(resourceAmount);
             }
@@ -169,25 +179,27 @@ export default class Hud extends Phaser.Scene {
                     sword.setFlipX(true);
                     this.infoContainer.add(sword);
                     // Damage
-                    let damageAmount = this.add.text(45, -5, hudInfo.info.damage, { color: '#000000' });
+                    let damageAmount = this.add.text(45, -5, `${hudInfo.info.damage}`, { color: '#000000' });
                     this.infoContainer.add(damageAmount);
                 }                
             }
             
             // ----- Actions -----
-            let startX = -45;
-            hudInfo.actions.forEach((action, i) => {
-                let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action);
-                actionIcon.setDisplaySize(35, 35);
-                actionIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-                // Funcionalidad acción
-                actionIcon.setInteractive();
-                actionIcon.on("pointerdown", () => {
-                    console.log(`Nueva acción pulsada: ${action}`);
-                    // TODO
+            if("isMine" in hudInfo.info && hudInfo.info.isMine) {
+                let startX = -45;
+                hudInfo.actions.forEach((action, i) => {
+                    let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action.actionFrame);
+                    actionIcon.setDisplaySize(35, 35);
+                    actionIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+                    // Funcionalidad acción
+                    actionIcon.setInteractive();
+                    actionIcon.on("pointerdown", () => {
+                        console.log(`Nueva acción pulsada: ${action.run}`);
+                        action.run();
+                    });
+                    this.actionsContainer.add(actionIcon);
                 });
-                this.actionsContainer.add(actionIcon);
-            });
+            }
         });
 
     }
@@ -235,14 +247,18 @@ export default class Hud extends Phaser.Scene {
         fullscreenBtnContainer.add(fullscreenIcon);
         // Fullscreen function
         fullscreenBtnImg.setInteractive();
-        fullscreenBtnImg.on("pointerdown", () => {
-            fullscreenIcon.setPosition(105, 102);
-            fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
+        fullscreenBtnImg.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                fullscreenIcon.setPosition(105, 102);
+                fullscreenBtnImg.setTexture("Button_Yellow_Pressed");
+            }
         });
-        fullscreenBtnImg.on("pointerup",() => {
-            fullscreenIcon.setPosition(105, 100);
-            fullscreenBtnImg.setTexture("Button_Yellow");
-            this.changeFullscreen();
+        fullscreenBtnImg.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                fullscreenIcon.setPosition(105, 100);
+                fullscreenBtnImg.setTexture("Button_Yellow");
+                this.changeFullscreen();
+            }
         });
 
         // Close button
@@ -257,14 +273,18 @@ export default class Hud extends Phaser.Scene {
         closeBtnContainer.add(closeIcon);
         // Close function
         closeBtnImg.setInteractive();
-        closeBtnImg.on("pointerdown", () => {
-            closeBtnImg.setTexture("Button_Red_Pressed");
-            closeIcon.setTexture("X_Pressed");
+        closeBtnImg.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown()) {
+                closeBtnImg.setTexture("Button_Red_Pressed");
+                closeIcon.setTexture("X_Pressed");
+            }
         });
-        closeBtnImg.on("pointerup", () => {
-            closeBtnImg.setTexture("Button_Red");
-            closeIcon.setTexture("X");
-            this.closeOptionsMenu();            
+        closeBtnImg.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonReleased()) {
+                closeBtnImg.setTexture("Button_Red");
+                closeIcon.setTexture("X");
+                this.closeOptionsMenu();            
+            }
         });
 
         this.optionsContainer = this.add.container(midX, midY);
@@ -277,7 +297,7 @@ export default class Hud extends Phaser.Scene {
     }
 
     // Add banner of a resource to TopHud
-    addResourceBanner(posX, resource, amount) {
+    addResourceBanner(posX: number, resource: string | Phaser.Textures.Texture, amount: number | string): Phaser.GameObjects.Text {
         let container = this.add.container(posX, 45);
 
         let banner = this.add.nineslice(0, 0, 'Connection_Up', undefined, 450, 198, 35, 35, 0, 10);
@@ -286,15 +306,17 @@ export default class Hud extends Phaser.Scene {
         let icon = this.add.image(-20, -3, resource);
         icon.setDisplaySize(60, 60);
         icon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
-        let amountText = this.add.text(0, -10, amount, { color: '#000000' });
+        let amountText = this.add.text(0, -10, `${amount}`, { color: '#000000' });
 
         container.add(banner);
         container.add(icon);
         container.add(amountText);
+
+        return amountText;
     }
 
     // Calculate 
-    calculateHealthBar(currentHealth, totalHealth) {
+    calculateHealthBar(currentHealth: number, totalHealth: number) {
         const healthRatio = currentHealth / totalHealth;
         if (healthRatio >= 0.875) { // 100%
             return 0;
@@ -341,4 +363,11 @@ export default class Hud extends Phaser.Scene {
         this.actionsContainer.removeAll(true);
     }
 
+    update(time: number, delta: number) {
+        this.woodCounter.setText(`${this.player.getWood()}`);
+        this.foodCounter.setText(`${this.player.getFood()}`);
+        this.goldCounter.setText(`${this.player.getGold()}`);
+
+        this.populationCounter.setText(`${this.player.getNPCs().length}/${this.player.getMaxPopulation()}`);
+    }
 }

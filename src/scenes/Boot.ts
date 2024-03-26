@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser'
 
 import * as Sprites from '../../assets/sprites';
+import * as Sounds from '../../assets/sound';
 
 // maps
 import map_test from '../../assets/maps/test.json';
@@ -172,7 +173,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('X_Disable', Sprites.UI.Icons.X_Disable);
     this.load.image('X_Pressed', Sprites.UI.Icons.X_Pressed);
     this.load.image('X', Sprites.UI.Icons.X);
-    this.load.spritesheet('Icons', Sprites.UI.Icons.Icons, { frameWidth: 64, frameHeight: 64 });
+    this.load.multiatlas('Icons');
 
     // UI - Pointers
     this.load.image('Axe', Sprites.UI.Pointers.Axe);
@@ -229,6 +230,9 @@ export default class Boot extends Phaser.Scene {
     this.load.image('King_Purple', Sprites.Kings.Purple);
     this.load.image('King_Red', Sprites.Kings.Red);
     this.load.image('King_Yellow', Sprites.Kings.Yellow);
+
+    // Sounds
+    this.load.audio('TroopsTheme', Sounds.Themes.Troops);
   }
 
   /**
@@ -237,6 +241,7 @@ export default class Boot extends Phaser.Scene {
    */
   create() {
     this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
-    this.scene.start('game', { mapId: 'desert', p1: 'Blue', p2: 'Red' });
+    this.scene.start('menu');
   }
+
 }
