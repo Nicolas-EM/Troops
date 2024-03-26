@@ -1,6 +1,7 @@
 import Client from "../../client";
 import { HudInfo, Resources } from "../../utils";
 import Player from "../Player";
+import Goblin from "../npcs/Goblin";
 import SpawnerBuilding from "./SpawnerBuilding";
 import BuildingsData from "../../magic_numbers/buildings_data";
 
@@ -21,7 +22,6 @@ export default class GoblinHut extends SpawnerBuilding {
             health: this._health,
             totalHealth: this._totalHealth
         },
-        actions: [{run: () => {}, actionFrame: `Goblin_${this._owner.getColor()}`}]
-    }
-
+        actions: [{run: () => this.queueNPC(Goblin), actionFrame: `Goblin_${this._owner.getColor()}`}]
+    };
 }

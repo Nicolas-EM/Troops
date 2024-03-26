@@ -7,8 +7,8 @@ import { Resources } from "../../utils";
 import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Archer extends AttackUnit {
-
     static readonly COST: Resources = NPCsData.Archer.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Archer.SPAWNING_TIME;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
         let iconInfo = { ...NPCsData.Archer.ICON_INFO };

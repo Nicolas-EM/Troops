@@ -1,6 +1,5 @@
 import { IconInfo, Resources } from "../utils";
 
-// TODO revisar dimensiones
 namespace BuildingsData {
 
     // Townhall
@@ -18,8 +17,8 @@ namespace BuildingsData {
     export class VillagerHouse {
         public static ICON_INFO: IconInfo = {
             name: "House_",        
-            width: 100,
-            height: 100
+            width: 55,
+            height: 85
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 10;
@@ -36,8 +35,8 @@ namespace BuildingsData {
     export class Tower {
         public static ICON_INFO: IconInfo = {
             name: "Tower_",
-            width: 100,
-            height: 100
+            width: 55,
+            height: 110
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 10;
@@ -53,8 +52,8 @@ namespace BuildingsData {
     export class Hut {
         public static ICON_INFO: IconInfo = {
             name: "Hut_",
-            width: 100,
-            height: 100
+            width: 55,
+            height: 85
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 10;

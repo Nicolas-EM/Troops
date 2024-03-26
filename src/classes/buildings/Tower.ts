@@ -25,5 +25,4 @@ export default class TownHall extends SpawnerBuilding {
         },
         actions: [{run: () => this.queueNPC(Soldier), actionFrame: `Soldier_${this._owner.getColor()}`}, {run: () => this.queueNPC(Archer), actionFrame: `Archer_${this._owner.getColor()}`}]
     }
-
 }

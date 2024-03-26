@@ -1,7 +1,6 @@
 import { io, Socket } from 'socket.io-client';
 import Lobby from "./scenes/Lobby";
 import lobbyData from './utils';
-import NPC from './classes/npcs/NPC';
 import Game from './scenes/Game';
 import Menu from './scenes/Menu';
 
@@ -23,7 +22,13 @@ export default class Client {
             if (Client.scene.scene.isActive('game')) {
                 (<Game>(Client.scene)).setNpcTarget(npcId, position);
             }
-        })
+        });
+
+        Client.socket.on('spawnNPC', (npcType: string, x: number, y: number, ownerColor: string) => {
+            if (Client.scene.scene.isActive('game')) {
+                (<Game>(Client.scene)).spawnNPC(npcType, x, y, ownerColor);
+            }
+        });
     }
 
     static setScene(scene: Phaser.Scene) {
@@ -65,6 +70,10 @@ export default class Client {
     // Game Functions
     static setNpcTarget(npcId: string, position: Phaser.Math.Vector2):void {
         Client.socket.emit('npctarget', Client.lobby.code, npcId, position);
+    }
+
+    static spawnNpc(npcType: string, x: number, y: number, ownerColor: string) {
+        Client.socket.emit('spawnNPC', Client.lobby.code, npcType, x, y, ownerColor);
     }
 }
 

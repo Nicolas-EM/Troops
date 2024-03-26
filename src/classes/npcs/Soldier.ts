@@ -7,8 +7,8 @@ import { Resources } from "../../utils";
 import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Soldier extends AttackUnit {
-
     static readonly COST: Resources = NPCsData.Soldier.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Soldier.SPAWNING_TIME;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
         let iconInfo = { ...NPCsData.Soldier.ICON_INFO };

@@ -1,3 +1,4 @@
+import Client from "../../client";
 import Game from "../../scenes/Game";
 import { IconInfo, Resources } from "../../utils";
 import Archer from "../npcs/Archer";
@@ -19,7 +20,6 @@ export default abstract class SpawnerBuilding extends Building {
     queueNPC(npcType: typeof Archer | typeof Goblin | typeof Soldier | typeof Villager): void {
         if(this._owner.hasResource(npcType.COST)) {
             this._owner.pay(npcType.COST);
-            console.log("NPC queued");
             this.spawnQueue.push(npcType);
             if (!this.spawnTimer)
                 this.startSpawnTimer(npcType.SPAWN_TIME_MS);
@@ -33,7 +33,7 @@ export default abstract class SpawnerBuilding extends Building {
     spawn(): void {
         if (this.spawnQueue.length > 0 && this._owner.getNPCs().length < this._owner.getMaxPopulation()) {
             const npcType = this.spawnQueue.shift();
-            new npcType(<Game>(this.scene), this.x + this.width, this.y, this._owner)
+            Client.spawnNpc(npcType.name, this.x + this.width, this.y, this._owner.getColor());
         }
         if (this.spawnQueue.length === 0) {
             // No more NPCs in queue, stop timer

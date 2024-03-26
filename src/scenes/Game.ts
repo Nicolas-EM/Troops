@@ -7,12 +7,23 @@ import ResourceSpawner from '../classes/resources/ResourceSpawner';
 import Client from '../client';
 import Player from '../classes/Player';
 import * as Sprites from "../../assets/sprites";
+import Archer from '../classes/npcs/Archer';
+import Goblin from '../classes/npcs/Goblin';
+import Soldier from '../classes/npcs/Soldier';
+import Villager from '../classes/npcs/Villager';
 
 // MAGIC NUMBER
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 1;
 const ZOOM_AMOUNT = 0.05;
 const MOVEMENT_OFFSET = 10;
+
+const npcConstructors: { [key: string]: new (scene: Phaser.Scene, x: number, y: number, owner: Player) => NPC } = {
+  "Archer": Archer,
+  "Goblin": Goblin,
+  "Soldier": Soldier,
+  "Villager": Villager
+};
 
 export default class Game extends Phaser.Scene {
   public navMeshPlugin: PhaserNavMeshPlugin;
@@ -172,6 +183,13 @@ export default class Game extends Phaser.Scene {
     return this.p2;
   }
 
+  getPlayerByColor(color: string): Player {
+    if(this.p1.getColor() === color)
+      return this.p1;
+    else
+      return this.p2;
+  }
+
   setSelectedEntity(entity: PlayerEntity | ResourceSpawner) {
     if (!this.optionsMenuOpened) {
       console.log("Game: Entity Selected");
@@ -183,5 +201,10 @@ export default class Game extends Phaser.Scene {
   setNpcTarget(npcId: string, position: Phaser.Math.Vector2) {
     this.p1.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
     this.p2.getNPCById(npcId)?.setTarget(position, this._map.navMesh);
+  }
+
+  spawnNPC(npcType: string, x: number, y: number, ownerColor: string) {
+    console.log(npcConstructors[npcType]);
+    new npcConstructors[npcType](this, x, y, this.getPlayerByColor(ownerColor));
   }
 }

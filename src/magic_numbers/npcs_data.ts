@@ -1,7 +1,5 @@
 import { IconInfo, Resources } from "../utils";
 
-// TODO revisar dimensiones
-
 namespace NPCsData {
 
     // Villager
@@ -26,8 +24,8 @@ namespace NPCsData {
     export class Soldier {
         public static ICON_INFO: IconInfo = {
             name: "Soldier_",
-            width: 100,
-            height: 100
+            width: 150,
+            height: 150
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 5;
@@ -46,8 +44,8 @@ namespace NPCsData {
     export class Archer {
         public static ICON_INFO: IconInfo = {
             name: "Archer_",
-            width: 100,
-            height: 100
+            width: 150,
+            height: 150
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 10;
@@ -66,8 +64,8 @@ namespace NPCsData {
     export class Goblin {
         public static ICON_INFO: IconInfo = {
             name: "Goblin_",
-            width: 100,
-            height: 100
+            width: 150,
+            height: 150
         }
         public static HEALTH = 100;
         public static VISION_RANGE = 5;
