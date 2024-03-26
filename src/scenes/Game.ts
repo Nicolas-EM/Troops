@@ -184,7 +184,7 @@ export default class Game extends Phaser.Scene {
   }
 
   getPlayerByColor(color: string): Player {
-    if(this.p1.getColor() === color)
+    if (this.p1.getColor() === color)
       return this.p1;
     else
       return this.p2;

@@ -38,8 +38,8 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
-        
-        this.setInteractive();
+        this.setInteractive({ pixelPerfect: true });
+       // this.body.setSize(this._iconInfo.width, this._iconInfo.height);
         this.on('pointerdown', this.onEntityClicked, this);
 
         this.scene.events.on("update", this.update, this);

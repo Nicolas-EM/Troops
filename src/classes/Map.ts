@@ -9,14 +9,17 @@ import Tree from "./resources/Tree";
 import Sheep from "./resources/Sheep";
 import GoldMine from "./resources/GoldMine";
 import Villager from "./npcs/Villager";
-import Game from '../scenes/Game';
+import Tower from './buildings/Tower';
+import GoblinHut from './buildings/GoblinHut';
+import VillagerHouse from './buildings/VillagerHouse';
 
-import { PhaserNavMesh } from "phaser-navmesh";
+import Game from '../scenes/Game';
 import Client from '../client';
+import { PhaserNavMesh } from "phaser-navmesh";
 
 export default class Map {
     private _map: Phaser.Tilemaps.Tilemap;
-    private resourceSpawners: ResourceSpawner[];
+    private resourceSpawners: ResourceSpawner[] = [];
     private buildings: Building[] = [];
     private NPCs: NPC[] = [];
     public navMesh: PhaserNavMesh;
@@ -34,9 +37,9 @@ export default class Map {
         const grassLayer = this._map.createLayer('Fondo/Grass', tileset!);
 
         // Resources
-        const foodSpawners = this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep });
-        this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree });
-        this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'GoldMine', classType: GoldMine });
+        this.resourceSpawners = this.resourceSpawners.concat(<ResourceSpawner[]>this._map.createFromObjects('Resources/Food', { type: "Sheep", key: 'Sheep', classType: Sheep }));
+        this.resourceSpawners = this.resourceSpawners.concat(<ResourceSpawner[]>this._map.createFromObjects('Resources/Wood', { type: "Tree", key: 'Tree', classType: Tree }));
+        this.resourceSpawners = this.resourceSpawners.concat(<ResourceSpawner[]>this._map.createFromObjects('Resources/Gold', { type: "GoldMine", key: 'GoldMine', classType: GoldMine }));
 
         this._map.getObjectLayer("Buildings")?.objects.forEach(obj => {
             if (obj.type === "Townhall_P1") {
@@ -48,6 +51,10 @@ export default class Map {
                 }
                 const p1_TownHall = new TownHall(this.scene, <number>obj.x, <number>obj.y, p1);
                 this.buildings.push(p1_TownHall);
+
+                this.buildings.push(new Tower(this.scene, <number>obj.x + 600, <number>obj.y, p1));
+                this.buildings.push(new GoblinHut(this.scene, <number>obj.x + 600, <number>obj.y + 350, p1));
+                this.buildings.push(new VillagerHouse(this.scene, <number>obj.x + 600, <number>obj.y - 350, p1));
 
                 this.NPCs.push(new Villager(this.scene, <number>obj.x, <number>obj.y - 192, p1));
                 this.NPCs.push(new Villager(this.scene, <number>obj.x + 320, <number>obj.y + 64, p1));
@@ -71,37 +78,23 @@ export default class Map {
         // (<Game>this.scene).setSelectedEntity(this.NPCs[0]);
 
         ////////////////////////////// NAVMESH PATHFINDER //////////////////////////////    
-        const layers = [waterLayer, groundLayer, grassLayer];
+        const layers = [waterLayer];
 
         this.navMesh = (<Game>this.scene).navMeshPlugin.buildMeshFromTilemap("mesh", this._map, layers, (tile) => this.navMeshIsWalkable(tile));
-        // this.navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
-        // this.navMesh.debugDrawClear(); // Clears the overlay
+        this.navMesh.enableDebug(); // Creates a Phaser.Graphics overlay on top of the screen
+        this.navMesh.debugDrawClear(); // Clears the overlay
         // Visualize the underlying navmesh
-
-        // -->  okay wtf ? 
-        // this.navMesh.debugDrawMesh({
-        //     drawCentroid: true,
-        //     drawBounds: false,
-        //     drawNeighbors: true,
-        //     drawPortals: true
-        // });
-
-        // Prueba de colision con spawner
-        // let testSpawner: Sheep = <Sheep>foodSpawners[0];
-        // const path = this.navMesh.findPath({ x: 4050, y: 3500 }, { x: testSpawner.x, y: testSpawner.y });
-
-        // // Visualize an individual path
-        // this.navMesh.debugDrawPath(path, 0xffd900);
+        this.navMesh.debugDrawMesh({
+            drawCentroid: true,
+            drawBounds: false,
+            drawNeighbors: true,
+            drawPortals: true
+        });
     }
 
     tileHasObject(tile: Phaser.Tilemaps.Tile): boolean {
         for (let building of this.buildings) {
-            if (tile.x >= building.x && tile.x + tile.width <= building.x && tile.y >= building.y && tile.y + tile.height <= building.y)
-                return true;
-        }
-
-        for (let npc of this.NPCs) {
-            if (tile.x >= npc.x && tile.x + tile.width <= npc.x && tile.y >= npc.y && tile.y + tile.height <= npc.y)
+            if(tile.pixelX >= building.x - building.width / 2 && tile.pixelX <= building.x + building.width / 2 - tile.width && tile.pixelY >= building.y - building.height / 2 && tile.pixelY <= building.y + building.height / 2 - tile.height)
                 return true;
         }
 
@@ -110,10 +103,6 @@ export default class Map {
 
     navMeshIsWalkable(tile: Phaser.Tilemaps.Tile): boolean {
         if (tile.properties.collides || this.tileHasObject(tile)) {
-            if (this.tileHasObject(tile)) {
-                console.log("Tile has object");
-                console.log(tile);
-            }
             return false;
         }
         return true;
