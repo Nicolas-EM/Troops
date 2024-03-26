@@ -6,9 +6,9 @@ import Soldier from "../npcs/Soldier";
 import SpawnerBuilding from "./SpawnerBuilding";
 
 const TOWER_HEALTH = 100;
-const TOWER_ICON = "Tower_Blue";
-const TOWER_WIDTH = 100;
-const TOWER_HEIGHT = 100;
+const TOWER_WIDTH = 55;
+const TOWER_HEIGHT = 110;
+const TOWER_VISION = 10;
 
 export default class TownHall extends SpawnerBuilding {
     _hudInfo: HudInfo = {
@@ -24,7 +24,7 @@ export default class TownHall extends SpawnerBuilding {
     // TODO: magic number
     static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, visionRange: number, frame?: string | number) {
-        super(scene, x, y, texture, owner, TOWER_HEALTH, TOWER_HEALTH, visionRange, { name: TOWER_ICON, width: TOWER_WIDTH, height: TOWER_HEIGHT }, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, frame?: string | number) {
+        super(scene, x, y, texture, owner, TOWER_HEALTH, TOWER_HEALTH, TOWER_VISION, { name: `Tower_${owner.getColor()}`, width: TOWER_WIDTH, height: TOWER_HEIGHT }, frame);
     }
 }

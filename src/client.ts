@@ -25,8 +25,6 @@ export default class Client {
         });
 
         Client.socket.on('spawnNPC', (npcType: string, x: number, y: number, ownerColor: string) => {
-            console.log("received spawn order");
-            console.log(npcType);
             if (Client.scene.scene.isActive('game')) {
                 (<Game>(Client.scene)).spawnNPC(npcType, x, y, ownerColor);
             }
@@ -75,7 +73,7 @@ export default class Client {
     }
 
     static spawnNpc(npcType: string, x: number, y: number, ownerColor: string) {
-        Client.socket.emit('spawnNPC', Client.lobby.code, npcType.name, x, y, ownerColor);
+        Client.socket.emit('spawnNPC', Client.lobby.code, npcType, x, y, ownerColor);
     }
 }
 

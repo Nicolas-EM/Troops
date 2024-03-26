@@ -20,7 +20,6 @@ export default abstract class SpawnerBuilding extends Building {
     queueNPC(npcType: typeof Archer | typeof Goblin | typeof Soldier | typeof Villager): void {
         if(this._owner.hasResource(npcType.COST)) {
             this._owner.pay(npcType.COST);
-            console.log("NPC queued");
             this.spawnQueue.push(npcType);
             if (!this.spawnTimer)
                 this.startSpawnTimer(npcType.SPAWN_TIME_MS);
