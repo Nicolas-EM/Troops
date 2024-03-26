@@ -1,6 +1,9 @@
 import * as Phaser from 'phaser';
 import { HudInfo } from '../utils';
 import Player from '../classes/Player';
+import PlayerEntity from '../classes/PlayerEntity';
+import ResourceSpawner from '../classes/resources/ResourceSpawner';
+import { Sleeping } from 'matter';
 
 export default class Hud extends Phaser.Scene {
     // Attributes
@@ -9,12 +12,19 @@ export default class Hud extends Phaser.Scene {
     private foodCounter: Phaser.GameObjects.Text;
     private populationCounter: Phaser.GameObjects.Text;
 
-    private displayedEntity: Phaser.GameObjects.Sprite;
+    private displayedEntity: PlayerEntity | ResourceSpawner;
+
     // UI
     private selectedContainer: Phaser.GameObjects.Container;
     private infoContainer: Phaser.GameObjects.Container;
     private actionsContainer: Phaser.GameObjects.Container;
     private optionsContainer: Phaser.GameObjects.Container;
+    
+    // Queue
+    private queueContainer: Phaser.GameObjects.Container;
+    private queueIcon: Phaser.GameObjects.Image;
+    private queueTime: Phaser.GameObjects.Text;
+
     // Options menu
     private optionsBackground: Phaser.GameObjects.Rectangle;
     private optionsButton: Phaser.GameObjects.Image;
@@ -135,15 +145,48 @@ export default class Hud extends Phaser.Scene {
         actionAreaContainer.add(actionBox);        
         actionAreaContainer.add(this.actionsContainer);
 
+        // Queue area
+        let queueBox = this.add.image(0, 0, "Carved_Rectangle_Shadow");
+        queueBox.scale = 0.78;
+        this.queueContainer = this.add.container(midX + 161, botY - 28);
+        this.queueContainer.add(queueBox);
+        // Queue icon
+        this.queueIcon = this.add.image(-35, 0, "X");
+        this.queueIcon.setDisplaySize(26, 26);
+        this.queueIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        // Queue time
+        this.queueTime = this.add.text(-10, -8, `0s`, { color: '#000000' });
+        this.queueTime.setSize(20, 20);
+        // Close button
+        let closeBtnImg = this.add.image(0, 0, "Button_Red");
+        closeBtnImg.scale = 0.5;
+        let closeIcon = this.add.image(-0.5, -0.8, "X");
+        closeIcon.setDisplaySize(25, 25);
+        closeIcon.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+        let closeBtnContainer = this.add.container(45, 3);
+        closeBtnContainer.add(closeBtnImg);
+        closeBtnContainer.add(closeIcon);
+        // Add all to container and set it invisible
+        this.queueContainer.add(this.queueIcon);
+        this.queueContainer.add(this.queueTime);
+        this.queueContainer.add(closeBtnContainer);
+        this.queueContainer.setVisible(false);
+        console.log("El container está visible:", this.queueContainer.visible);
+
         let entityIcon;
 
-        this.events.on('entityClicked', (hudInfo: HudInfo) => {
+        this.events.on('entityClicked', (selectedEntity: PlayerEntity | ResourceSpawner) => {
+
+            // Save selectedEntity
+            this.displayedEntity = selectedEntity;
             
             // -----------------------------------------------
             // TODO - Move to Game onclick
             this.flushHud();
             // -----------------------------------------------
            
+            let hudInfo = this.displayedEntity.getHudInfo();
+
             // ----- Selected entity -----
             entityIcon = this.add.image(0, 0, hudInfo.entity.name);
             entityIcon.setDisplaySize(hudInfo.entity.width, hudInfo.entity.height);
@@ -173,19 +216,25 @@ export default class Hud extends Phaser.Scene {
                 // if AttackUnit, show damage
                 if ("damage" in hudInfo.info) {
                     // Sword
-                    let sword = this.add.image(35, 0, 'Sword');
+                    let sword = this.add.image(30, 0, 'Sword');
                     sword.setDisplaySize(30, 30);
                     sword.texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
                     sword.setFlipX(true);
                     this.infoContainer.add(sword);
                     // Damage
-                    let damageAmount = this.add.text(45, -5, `${hudInfo.info.damage}`, { color: '#000000' });
+                    let damageAmount = this.add.text(45, -6, `${hudInfo.info.damage}`, { color: '#000000' });
                     this.infoContainer.add(damageAmount);
-                }                
+                }  
+                // if Building with queue, show queue data
+                if ("queueIcon" in hudInfo.info && hudInfo.info.queueIcon != null && "queueTime" in hudInfo.info) {
+                    this.queueIcon.setTexture("Icons", hudInfo.info.queueIcon);
+                    this.queueTime.text = `${hudInfo.info.queueTime}s`;
+                    this.queueContainer.setVisible(true);
+                }              
             }
             
             // ----- Actions -----
-            if("isMine" in hudInfo.info && hudInfo.info.isMine) {
+            if ("isMine" in hudInfo.info && hudInfo.info.isMine) {
                 let startX = -45;
                 hudInfo.actions.forEach((action, i) => {
                     let actionIcon = this.add.image(startX + 45 * i, 0, "Icons", action.actionFrame);
@@ -361,6 +410,7 @@ export default class Hud extends Phaser.Scene {
         this.selectedContainer.removeAll(true);
         this.infoContainer.removeAll(true);
         this.actionsContainer.removeAll(true);
+        this.queueContainer.setVisible(false);
     }
 
     update(time: number, delta: number) {
@@ -369,5 +419,24 @@ export default class Hud extends Phaser.Scene {
         this.goldCounter.setText(`${this.player.getGold()}`);
 
         this.populationCounter.setText(`${this.player.getNPCs().length}/${this.player.getMaxPopulation()}`);
+
+        if (this.displayedEntity) {
+            let hudInfo = this.displayedEntity.getHudInfo();
+
+            // Update queue
+            if ("queueIcon" in hudInfo.info && hudInfo.info.queueIcon != null && "queueTime" in hudInfo.info) {
+                this.queueIcon.setTexture("Icons", hudInfo.info.queueIcon);
+                this.queueTime.text = `${hudInfo.info.queueTime}s`;
+                // If not visible, set visible
+                if (!this.queueContainer.visible) {
+                    this.queueContainer.setVisible(true);
+                }                
+            }
+            // Queue empty
+            else if ("queueIcon" in hudInfo.info && "queueTime" in hudInfo.info) {
+                this.queueContainer.setVisible(false);
+            }
+        }
     }
+
 }

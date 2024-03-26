@@ -48,6 +48,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    Client.setScene(this);
+
     // Cursor
     this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
       this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer_Pressed}), pointer`);
@@ -55,9 +57,7 @@ export default class Game extends Phaser.Scene {
     this.input.on("pointerup", (pointer: Phaser.Input.Pointer) => {
       this.input.setDefaultCursor(`url(${Sprites.UI.Pointers.Pointer}), pointer`);
     });
-
-    Client.setScene(this);
-
+    
     // Players
     this.p1 = new Player(Client.lobby.players[0].color, Client.lobby.players[0].color, this);
     this.p2 = new Player(Client.lobby.players[1].color, Client.lobby.players[1].color, this);
@@ -190,11 +190,15 @@ export default class Game extends Phaser.Scene {
       return this.p2;
   }
 
+  getSelectedEntity() : PlayerEntity | ResourceSpawner {
+    return this._selectedEntity;
+  }
+
   setSelectedEntity(entity: PlayerEntity | ResourceSpawner) {
     if (!this.optionsMenuOpened) {
       console.log("Game: Entity Selected");
       this._selectedEntity = entity;
-      this.scene.get('hud').events.emit('entityClicked', this._selectedEntity.getHudInfo());
+      this.scene.get('hud').events.emit('entityClicked', this._selectedEntity);
     }
   }
 

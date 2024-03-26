@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import Player from './Player';
 import Game from '../scenes/Game';
-import { HudInfo, IconInfo, Resources } from '../utils';
+import { HudInfo, Resources } from '../utils';
 import Client from '../client';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
@@ -13,10 +13,9 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     protected _visionRange: number;
     protected _path;
     protected _currentTarget;
-    protected _iconInfo: IconInfo;
     protected _spawningTime: number;
     protected _spawningCost: Resources;
-    abstract _hudInfo: HudInfo;
+    protected _hudInfo: HudInfo;
 
     static readonly COST: Resources;
     static readonly SPAWN_TIME_MS: number;
@@ -26,7 +25,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
      * @param owner is the player who created the entity, not optional.
      * @returns Object
      */
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, spawningTime: number, spawningCost: Resources, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, spawningTime: number, spawningCost: Resources, visionRange: number, frame?: string | number) {
         super(scene, x, y, texture, frame);
         this._owner = owner;
         this._health = health;
@@ -34,13 +33,12 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         this._spawningTime = spawningTime;
         this._spawningCost = spawningCost;
         this._visionRange = visionRange;
-        this._iconInfo = iconInfo;
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         
         this.setInteractive();
-        this.on('pointerdown', this.onEntityClicked, this);
+        this.on('pointerup', this.onEntityClicked, this);
 
         this.scene.events.on("update", this.update, this);
     }
@@ -53,7 +51,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     }
 
     onEntityClicked(pointer: Phaser.Input.Pointer): void {
-        if (pointer.leftButtonDown()) {
+        if (pointer.leftButtonReleased()) {
             (<Game>(this.scene)).setSelectedEntity(this);
         }
     }
