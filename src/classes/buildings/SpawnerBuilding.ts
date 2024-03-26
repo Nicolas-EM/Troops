@@ -1,6 +1,6 @@
 import Client from "../../client";
 import Game from "../../scenes/Game";
-import { IconInfo } from "../../utils";
+import { IconInfo, Resources } from "../../utils";
 import Archer from "../npcs/Archer";
 import Goblin from "../npcs/Goblin";
 import NPC from "../npcs/NPC";
@@ -13,8 +13,8 @@ export default abstract class SpawnerBuilding extends Building {
     protected spawnQueue: (typeof Archer | typeof Goblin | typeof Soldier | typeof Villager)[] = [];
     protected spawnTimer: Phaser.Time.TimerEvent | null = null;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
-        super(scene, x, y, texture, owner, health, totalHealth, visionRange, iconInfo, frame);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, owner: Player, health: number, totalHealth: number, spawningTime: number, spawningCost: Resources, visionRange: number, iconInfo: IconInfo, frame?: string | number) {
+        super(scene, x, y, texture, owner, health, totalHealth, spawningTime, spawningCost, visionRange, iconInfo, frame);
     }
 
     queueNPC(npcType: typeof Archer | typeof Goblin | typeof Soldier | typeof Villager): void {
@@ -56,4 +56,5 @@ export default abstract class SpawnerBuilding extends Building {
             this.spawnTimer = null;
         }
     }
+    
 };

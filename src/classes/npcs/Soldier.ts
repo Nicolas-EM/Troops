@@ -4,28 +4,24 @@ import Player from "../Player";
 import NPC from "./NPC";
 import Game from "../../scenes/Game";
 import { Resources } from "../../utils";
-
-// TODO: move to magic numbers
-const damage = 10;
-const attackRange = 5;
-const visionRange = 10;
-const SOLDIER_HEALTH = 100;
-const SOLDIER_WIDTH = 150;
-const SOLDIER_HEIGHT = 150;
+import NPCsData from "../../magic_numbers/npcs_data";
 
 export default class Soldier extends AttackUnit {
-    // TODO: magic number
-    static readonly COST: Resources = { wood: 10, food: 10, gold: 10 };
-    static readonly SPAWN_TIME_MS: number = 10000;
+    static readonly COST: Resources = NPCsData.Soldier.SPAWNING_COST;
+    static readonly SPAWN_TIME_MS: number = NPCsData.Soldier.SPAWNING_TIME;
 
     constructor(scene: Game, x: number, y: number, owner: Player, frame?: string | number) {
-        super(scene, x, y, `Soldier_${owner.getColor()}`, owner, SOLDIER_HEALTH, SOLDIER_HEALTH, visionRange, { name: `Soldier_${owner.getColor()}`, width: SOLDIER_WIDTH, height: SOLDIER_HEIGHT }, attackRange, damage, frame);
+        let iconInfo = { ...NPCsData.Soldier.ICON_INFO };
+        iconInfo.name += owner.getColor();
+        super(scene, x, y, iconInfo.name, owner, NPCsData.Soldier.HEALTH, NPCsData.Soldier.HEALTH, NPCsData.Soldier.SPAWNING_TIME, NPCsData.Soldier.SPAWNING_COST, NPCsData.Soldier.VISION_RANGE, NPCsData.Soldier.SPEED, iconInfo, NPCsData.Soldier.ATTACK_RANGE, NPCsData.Soldier.DAMAGE, frame);
     }
 
     protected attack(attackedEntity: NPC) {
         throw new Error("Method not implemented.");
     }
+    
     protected hit(damage: number) {
         throw new Error("Method not implemented.");
     }
+
 }
