@@ -4,8 +4,8 @@ import Game from "../../scenes/Game";
 
 export default class Tree extends ResourceSpawner {
 
-    constructor(scene: Game, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number) {
-        super(scene, x, y, texture, { name: ResourcesData.TREE_ICON, width: ResourcesData.TREE_WIDTH, height: ResourcesData.TREE_HEIGHT }, ResourcesData.WOOD_ICON, ResourcesData.TREE_CAPACITY, ResourcesData.TREE_RATE, frame);
+    constructor(scene: Game, x: number, y: number, frame?: string | number) {
+        super(scene, x, y, ResourcesData.Wood.ICON_INFO.name, ResourcesData.Wood.ICON_INFO, ResourcesData.Wood.ICON, ResourcesData.Wood.CAPACITY, ResourcesData.Wood.RATE, frame);
     }
     
 }
