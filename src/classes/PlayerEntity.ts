@@ -3,6 +3,7 @@ import Player from './Player';
 import Game from '../scenes/Game';
 import { HudInfo, IconInfo, Resources } from '../utils';
 import Client from '../client';
+import AttackUnit from './npcs/AttackUnit';
 
 export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     // protected attributes:
@@ -48,8 +49,18 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
     /**
      * @param damage
      */
-    onAttackReceived(damage: number): void {
+    onAttackReceived(damage: number, attackUnit: AttackUnit): void {
         this._health -= damage;
+        (this._hudInfo.info as {
+            isMine: boolean;
+            health: number;
+            totalHealth: number;
+            damage?: number;
+        }).health = this._health;
+
+        if(this._health <= 0) {
+            // Kill / Destroy entity
+        }
     }
 
     onEntityClicked(pointer: Phaser.Input.Pointer): void {
@@ -71,4 +82,7 @@ export default abstract class PlayerEntity extends Phaser.GameObjects.Sprite {
         return this._hudInfo;
     };
     
+    getId(): string {
+        return this._id;
+    }
 }
