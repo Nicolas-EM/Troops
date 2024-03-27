@@ -97,7 +97,8 @@ export default class Game extends Phaser.Scene {
         return;
 
       if(this._selectedEntity instanceof AttackUnit && gameObject instanceof PlayerEntity) {
-        this._selectedEntity.setAttackTarget(gameObject.getId());
+        if(!(gameObject as PlayerEntity).belongsToMe())
+          Client.attackOrder(this._selectedEntity.getId(), gameObject.getId());
       }
     });
 
@@ -212,6 +213,17 @@ export default class Game extends Phaser.Scene {
   setNpcTarget(npcId: string, position: Phaser.Math.Vector2) {
     this.p1.getNPCById(npcId)?.setMovementTarget(position, this._map.navMesh);
     this.p2.getNPCById(npcId)?.setMovementTarget(position, this._map.navMesh);
+  }
+
+  setNPCAttackTarget(npcId: string, targetId: string) {
+    let npc = this.p1.getNPCById(npcId);
+    if(npc && npc instanceof AttackUnit) {
+      npc.setAttackTarget(targetId);
+    }
+    npc = this.p2.getNPCById(npcId);
+    if(npc && npc instanceof AttackUnit) {
+      npc.setAttackTarget(targetId);
+    }
   }
 
   spawnNPC(npcType: string, x: number, y: number, ownerColor: string) {
